@@ -1,6 +1,5 @@
-import { BodyParams, Controller, Get, Post, Req, Res } from '@tsed/common';
+import { BodyParams, Controller, Get, Post, Req, Res, Required, Email, Property } from '@tsed/common';
 import { Returns, Summary } from '@tsed/swagger';
-import { Request, Response } from 'express';
 import { COOKIE_HTTP_ONLY, COOKIE_SECURE } from '../../constants';
 import { Auth } from '../../decorators/auth.decorator';
 import { User } from '../../entities/user';
@@ -8,7 +7,39 @@ import { ResponseErrorCode } from '../../enums/response-error-code.enum';
 import { AuthService } from '../../services/auth/auth.service';
 import { UserService } from '../../services/user/user.service';
 import { BadRequest, Forbidden } from '@tsed/exceptions';
-import { RegisterData, LoginData, PasswordSettingData, RequestPasswordResetData } from './auth-models';
+
+class RegisterData {
+  @Required()
+  @Email()
+  email: string;
+
+  @Property()
+  password: string;
+}
+
+class LoginData {
+  @Required()
+  @Email()
+  email: string;
+
+  @Required()
+  password: string;
+}
+
+class PasswordSettingData {
+  @Required()
+  token: string;
+
+  @Required()
+  password: string;
+}
+
+class RequestPasswordResetData {
+  @Required()
+  @Email()
+  email: string;
+}
+
 
 @Controller('/auth')
 export class AuthController {
@@ -22,7 +53,7 @@ export class AuthController {
   @Returns(User)
   async register(
     @BodyParams() { email, password }: RegisterData,
-    @Res() res: Response,
+    @Res() res: Res,
   ): Promise<User | Response> {
     let user = await this.userService.fetch({ email });
 
@@ -40,12 +71,11 @@ export class AuthController {
   @Summary('Login')
   @Returns(User)
   async login(
-    @BodyParams() { email, password, relations }: LoginData,
-    @Res() res: Response,
+    @BodyParams() { email, password }: LoginData,
+    @Res() res: Res,
   ): Promise<User> {
     const user = await this.userService.fetch({
       email,
-      relations,
       getPasswordHash: true,
     });
 
@@ -78,8 +108,8 @@ export class AuthController {
   @Post('/logout')
   @Auth({ passUser: true, passToken: true })
   logout(
-    @Req() req: Request,
-    @Res() res: Response,
+    @Req() req: Req,
+    @Res() res: Res,
   ): void {
     this.authService.revokeToken(req.token, req.tokenData);
     res.clearCookie('token').clearCookie('sessionId').status(204);
@@ -90,7 +120,7 @@ export class AuthController {
   @Returns(User)
   async activate(
     @BodyParams() { token, password }: PasswordSettingData,
-    @Res() res: Response,
+    @Res() res: Res,
   ): Promise<User> {
     const activationResult = await this.userService.activate({ token, password });
 
@@ -107,7 +137,7 @@ export class AuthController {
   @Summary('Request password reset')
   async requestPasswordReset(
     @BodyParams() { email }: RequestPasswordResetData,
-    @Res() res: Response,
+    @Res() res: Res,
   ): Promise<void> {
     const user = await this.userService.fetch({ email, getPasswordHash: true });
 
@@ -125,7 +155,7 @@ export class AuthController {
   @Summary('Reset password')
   async resetPassword(
     @BodyParams() { token, password }: PasswordSettingData,
-    @Res() res: Response,
+    @Res() res: Res,
   ): Promise<User> {
     const resetResult = await this.userService.resetPassword({ token, password });
 
@@ -143,7 +173,7 @@ export class AuthController {
   @Summary('Get user data')
   @Returns(User)
   user(
-    @Req() req: Request,
+    @Req() req: Req,
   ): User {
     return req.user;
   }

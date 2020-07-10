@@ -1,3 +1,11 @@
 {
-  "typescript.tsdk": "node_modules/typescript/lib"
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "sqltools.connections": [
+    {
+      "database": "database.sqlite",
+      "driver": "SQLite",
+      "name": "Learn Angular Database",
+      "previewLimit": 50
+    }
+  ]
 }

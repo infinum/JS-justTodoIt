@@ -1,6 +1,4 @@
 import { EndpointInfo, IMiddleware, Middleware, Req, Res } from '@tsed/common';
-import { Request, Response } from 'express';
-import { getRepository } from 'typeorm';
 import { EXTEND_TOKEN_DURATION_AUTOMATICALLY, EXTEND_TOKEN_FREQUENCY_S, JWT_EXPIRATION_TIME_S } from '../constants';
 import { ResponseErrorCode } from '../enums/response-error-code.enum';
 import { ICustomAuthOptions } from '../interfaces/custom-auth-options.interface';
@@ -16,8 +14,8 @@ export class AuthMiddleware implements IMiddleware {
   ) {}
 
   async use(
-    @Req() req: Request,
-    @Res() res: Response,
+    @Req() req: Req,
+    @Res() res: Res,
     @EndpointInfo() endpoint: EndpointInfo,
   ): Promise<void> {
     const options: ICustomAuthOptions = endpoint.get(AuthMiddleware);
@@ -45,46 +43,13 @@ export class AuthMiddleware implements IMiddleware {
       req.tokenData = tokenData;
     }
 
-    let relations = [];
-    let userRelations: Array<string> = [];
-    if (req.query.relations) {
-      relations = (req.query.relations as string)
-        .split(',')
-        .map((r: string) => r.trim());
-      userRelations = relations
-        .filter((r: string) => /^user/.test(r));
-    }
-    // TODO: check if I want this:
-    // req.query.relations = relations.filter((r: string) => !userRelations.includes(r)).join(',');
-    // if (req.query.relations === '') {
-    //   delete req.query.relations;
-    // }
-
-    const user = await this.userService.fetch({ uuid: tokenData.uuid, relations: userRelations });
+    const user = await this.userService.fetch({ uuid: tokenData.uuid });
     if (!user) {
       throw new Forbidden(ResponseErrorCode.TOKEN_INVALID, { email: tokenData.email });
     }
 
-    if (options.passUser || options.ownerCheck) {
+    if (options.passUser) {
       req.user = user;
-    }
-
-    if (options.ownerCheck) {
-      const identifierFieldName = options.ownerCheck.identifierFieldName || 'uuid';
-      const ownerFieldName = options.ownerCheck.ownerFieldName || 'user';
-      const entity = await getRepository(options.ownerCheck.entityClass).findOne({
-        where: {
-          [identifierFieldName]: options.ownerCheck.getIdentifier(req),
-          [ownerFieldName]: req.user,
-        },
-        relations: options.ownerCheck.relations,
-      });
-
-      if (!entity) {
-        throw new Forbidden(ResponseErrorCode.ENTITY_ACCESS_FORBIDDEN, { email: user.email });
-      }
-
-      req.entity = entity;
     }
   }
 }
