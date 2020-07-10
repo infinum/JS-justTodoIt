@@ -22,7 +22,7 @@ import { join } from 'path';
   httpsPort: HTTPS_PORT,
   mount: {
     "/api": [
-      `${SRC_DIR}/controllers/**/*.ts`
+      `${SRC_DIR}/controllers/**/*.controller.ts`
     ]
   },
   typeorm: ormConfig,

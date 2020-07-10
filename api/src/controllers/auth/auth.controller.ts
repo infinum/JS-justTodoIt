@@ -1,12 +1,12 @@
-import { BodyParams, Controller, Get, Post, Req, Required, Res, QueryParams } from '@tsed/common';
+import { BodyParams, Controller, Get, Post, Req, Res } from '@tsed/common';
 import { Returns, Summary } from '@tsed/swagger';
 import { Request, Response } from 'express';
-import { COOKIE_HTTP_ONLY, COOKIE_SECURE } from '../constants';
-import { Auth } from '../decorators/auth.decorator';
-import { User } from '../entities/user';
-import { ResponseErrorCode } from '../enums/response-error-code.enum';
-import { AuthService } from '../services/auth/auth.service';
-import { UserService } from '../services/user/user.service';
+import { COOKIE_HTTP_ONLY, COOKIE_SECURE } from '../../constants';
+import { Auth } from '../../decorators/auth.decorator';
+import { User } from '../../entities/user';
+import { ResponseErrorCode } from '../../enums/response-error-code.enum';
+import { AuthService } from '../../services/auth/auth.service';
+import { UserService } from '../../services/user/user.service';
 import { BadRequest, Forbidden } from '@tsed/exceptions';
 import { RegisterData, LoginData, PasswordSettingData, RequestPasswordResetData } from './auth-models';
 
