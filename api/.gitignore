@@ -41,10 +41,6 @@ test/**/*.js.map
 /.tmp
 /.nyc_output
 
-# IDE
-.vscode
-.idea
-
 # Project
 /public
 /dist
