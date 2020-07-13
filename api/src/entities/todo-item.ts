@@ -21,6 +21,7 @@ export class TodoItem extends BaseEntity {
 
   @ManyToOne(() => Todo, todo => todo.items, {
     onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
   })
   todo: Todo;
 }

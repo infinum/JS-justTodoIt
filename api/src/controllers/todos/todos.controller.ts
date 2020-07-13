@@ -1,11 +1,10 @@
-import { Controller, Req, Get, Post, BodyParams, QueryParams, PathParams, Res, Required, PropertyType, Delete } from '@tsed/common';
+import { Controller, Req, Get, Post, BodyParams, QueryParams, PathParams, Res, Required, PropertyType, Delete, Patch, Property } from '@tsed/common';
 import { Todo } from '../../entities/todo';
 import { Summary, ReturnsArray, Returns } from '@tsed/swagger';
 import { TodosService } from '../../services/todos/todos.service';
 import { Auth } from '../../decorators/auth.decorator';
 import { TodoItem } from '../../entities/todo-item';
 import { NotFound } from '@tsed/exceptions';
-import { DeleteResult } from 'typeorm';
 
 class CreateTodoItemData {
   @Required()
@@ -18,6 +17,14 @@ class CreateTodoData {
 
   @PropertyType(CreateTodoItemData)
   items: Array<CreateTodoItemData>;
+}
+
+class PatchTodoData {
+  @Property()
+  title: string;
+
+  @PropertyType(TodoItem)
+  items: Array<TodoItem>;
 }
 
 @Controller('/todos')
@@ -82,6 +89,40 @@ export class AuthController {
     });
 
     res.sendStatus(204);
+  }
+
+  @Patch('/:uuid')
+  @Auth({
+    passUser: true,
+  })
+  async update(
+    @PathParams('uuid') uuid: string,
+    @BodyParams() todoData: PatchTodoData,
+    @Req() req: Req,
+  ): Promise<Todo> {
+    const todo = await this.todosService.fetchOne({
+      uuid,
+      user: req.user,
+      relations: ['items'],
+    });
+
+    if ('title' in todoData) {
+      todo.title = todoData.title;
+    }
+
+    if ('items' in todoData) {
+      const oldItems = todo.items;
+      todo.items = todoData.items;
+      const newUuids = todo.items.map(({ uuid }) => uuid).filter(Boolean);
+
+      for (const oldItem of oldItems) {
+        if (!newUuids.includes(oldItem.uuid)) {
+          await oldItem.remove();
+        }
+      }
+    }
+
+    return this.todosService.save(todo);
   }
 
   @Post('/')
