@@ -28,7 +28,7 @@ class PatchTodoData {
 }
 
 @Controller('/todos')
-export class AuthController {
+export class TodosController {
   constructor(
     private readonly todosService: TodosService,
   ) {}
