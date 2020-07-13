@@ -28,13 +28,13 @@ class PatchTodoData {
 }
 
 @Controller('/todos')
-@Summary('Get all of the user\'s todos')
 export class AuthController {
   constructor(
     private readonly todosService: TodosService,
   ) {}
 
   @Get('/')
+  @Summary('Get all of the user\'s Todos')
   @Auth({
     passUser: true,
   })
@@ -50,6 +50,7 @@ export class AuthController {
   }
 
   @Get('/:uuid')
+  @Summary('Get Todo by uuid')
   @Auth({
     passUser: true,
   })
@@ -75,6 +76,7 @@ export class AuthController {
   }
 
   @Delete('/:uuid')
+  @Summary('Delete Todo by uuid')
   @Auth({
     passUser: true,
   })
@@ -92,6 +94,7 @@ export class AuthController {
   }
 
   @Patch('/:uuid')
+  @Summary('Partial or full opdate of a Todo by uuid')
   @Auth({
     passUser: true,
   })
@@ -126,6 +129,7 @@ export class AuthController {
   }
 
   @Post('/')
+  @Summary('Create new Todo')
   @Auth({
     passUser: true,
   })

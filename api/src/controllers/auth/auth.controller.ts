@@ -1,5 +1,5 @@
 import { BodyParams, Controller, Get, Post, Req, Res, Required, Email, Property } from '@tsed/common';
-import { Returns, Summary } from '@tsed/swagger';
+import { Returns, Summary, Description } from '@tsed/swagger';
 import { COOKIE_HTTP_ONLY, COOKIE_SECURE } from '../../constants';
 import { Auth } from '../../decorators/auth.decorator';
 import { User } from '../../entities/user';
@@ -14,6 +14,7 @@ class RegisterData {
   email: string;
 
   @Property()
+  @Description('User will automatically be activated if password is set during registration')
   password: string;
 }
 
@@ -106,6 +107,7 @@ export class AuthController {
   }
 
   @Post('/logout')
+  @Summary('Logout')
   @Auth({ passUser: true, passToken: true })
   logout(
     @Req() req: Req,

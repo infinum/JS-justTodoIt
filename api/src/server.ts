@@ -22,7 +22,7 @@ import { UnknownRelationMiddleware } from './middlewares/unknown-relation.middle
   httpPort: HTTP_PORT,
   httpsPort: HTTPS_PORT,
   mount: {
-    '/api': [
+    '/': [
       `${SRC_DIR}/controllers/**/*.controller.ts`
     ]
   },
