@@ -1,6 +1,7 @@
 import { Service } from '@tsed/di';
 import { Todo } from '../../entities/todo';
 import { User } from '../../entities/user';
+import { DeleteResult } from 'typeorm';
 
 interface ITodoFetchingOptions {
   relations?: Array<string>;
@@ -11,15 +12,20 @@ interface ITodoFetchOneOptions extends ITodoFetchingOptions {
   uuid: string;
 }
 
+interface IDeleteTodoOptions {
+  uuid: string;
+  user?: User;
+}
+
 @Service()
 export class TodosService {
-  private readonly todosRepositry = Todo.getRepository();
+  private readonly repositry = Todo.getRepository();
 
   public fetchAll({
     relations,
     user,
   }: ITodoFetchingOptions): Promise<Array<Todo>> {
-    return this.todosRepositry.find({
+    return this.repositry.find({
       where: {
         user,
       },
@@ -32,7 +38,7 @@ export class TodosService {
     relations,
     user,
   }: ITodoFetchOneOptions): Promise<Todo> {
-    return this.todosRepositry.findOne({
+    return this.repositry.findOne({
       where: {
         uuid,
         user,
@@ -41,7 +47,17 @@ export class TodosService {
     });
   }
 
+  public delete({
+    uuid,
+    user
+  }: IDeleteTodoOptions): Promise<DeleteResult> {
+    return this.repositry.delete({
+      uuid,
+      user,
+    });
+  }
+
   public save(todo: Todo): Promise<Todo> {
-    return this.todosRepositry.save(todo);
+    return this.repositry.save(todo);
   }
 }

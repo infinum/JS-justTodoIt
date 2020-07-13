@@ -9,8 +9,18 @@ export class Todo extends BaseEntity {
   @Property()
   uuid: string;
 
-  @ManyToOne(() => User, user => user.todos)
-  user: User;
+  @Column({
+    nullable: false,
+    unique: true,
+  })
+  @Property()
+  title: string;
+
+  @Column({
+    nullable: false,
+  })
+  @Property()
+  created: Date;
 
   @OneToMany(() => TodoItem, todoItem => todoItem.todo, {
     cascade: true,
@@ -18,9 +28,8 @@ export class Todo extends BaseEntity {
   @Property()
   items: Array<TodoItem>;
 
-  @Column({
-    nullable: false,
+  @ManyToOne(() => User, user => user.todos, {
+    onDelete: 'CASCADE',
   })
-  @Property()
-  created: Date;
+  user: User;
 }

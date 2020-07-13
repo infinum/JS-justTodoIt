@@ -1,10 +1,11 @@
-import { Controller, Req, Get, Post, BodyParams, QueryParams, PathParams, Res, Required, PropertyType } from '@tsed/common';
+import { Controller, Req, Get, Post, BodyParams, QueryParams, PathParams, Res, Required, PropertyType, Delete } from '@tsed/common';
 import { Todo } from '../../entities/todo';
 import { Summary, ReturnsArray, Returns } from '@tsed/swagger';
 import { TodosService } from '../../services/todos/todos.service';
 import { Auth } from '../../decorators/auth.decorator';
 import { TodoItem } from '../../entities/todo-item';
 import { NotFound } from '@tsed/exceptions';
+import { DeleteResult } from 'typeorm';
 
 class CreateTodoItemData {
   @Required()
@@ -13,6 +14,8 @@ class CreateTodoItemData {
 
 class CreateTodoData {
   @Required()
+  title: string;
+
   @PropertyType(CreateTodoItemData)
   items: Array<CreateTodoItemData>;
 }
@@ -64,6 +67,23 @@ export class AuthController {
     return todo;
   }
 
+  @Delete('/:uuid')
+  @Auth({
+    passUser: true,
+  })
+  async delete(
+    @PathParams('uuid') uuid: string,
+    @Req() req: Req,
+    @Res() res: Res,
+  ): Promise<void> {
+    await this.todosService.delete({
+      uuid,
+      user: req.user,
+    });
+
+    res.sendStatus(204);
+  }
+
   @Post('/')
   @Auth({
     passUser: true,
@@ -74,19 +94,17 @@ export class AuthController {
     @Req() req: Req,
   ): Promise<Todo> {
     const todo = new Todo();
+    todo.title = todoData.title;
     todo.created = new Date();
     todo.user = req.user;
 
-    console.log(todoData.items);
-
-    const todoItems = todoData.items.map((todoItemData) => {
+    const todoItems = (todoData.items ?? []).map((todoItemData) => {
       const todoItem = new TodoItem();
       todoItem.title = todoItemData.title;
       todoItem.done = false;
 
       return todoItem;
-    })
-
+    });
     todo.items = todoItems;
 
     console.log(todo.items);

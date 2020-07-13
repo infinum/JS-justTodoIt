@@ -17,7 +17,6 @@ export class User extends BaseEntity {
 
   @OneToMany(() => Todo, todo => todo.user, {
     cascade: true,
-    nullable: true,
   })
   todos: Array<Todo>;
 
