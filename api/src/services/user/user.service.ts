@@ -42,7 +42,7 @@ export class UserService {
         uuid: user.uuid,
       });
       user.activationToken = activationToken;
-      const activationLink = `${FRONTEND_URL}/activation?email=${user.email}&token=${activationToken}`;
+      const activationLink = `${FRONTEND_URL}/activation?token=${activationToken}`;
 
       await this.emailService.sendEmail({
         to: user.email,
@@ -85,7 +85,7 @@ export class UserService {
     });
     user.passwordResetToken = passwordResetToken;
 
-    const passwordResetLink = `${FRONTEND_URL}/reset-password?email=${user.email}&token=${passwordResetToken}`;
+    const passwordResetLink = `${FRONTEND_URL}/reset-password?token=${passwordResetToken}`;
 
     await this.emailService.sendEmail({
       to: user.email,
