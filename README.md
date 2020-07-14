@@ -19,7 +19,7 @@ This repository contains README.md file and `api/` directory. To get started, in
 - api/
   - package.json
   - ...
-- learn-angular/
+- learn-angular/ - _created by @angular/cli_
   - package.json
   - angular.json
   - ...
