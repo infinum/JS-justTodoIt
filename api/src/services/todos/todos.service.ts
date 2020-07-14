@@ -1,10 +1,11 @@
 import { Service } from '@tsed/di';
 import { Todo } from '../../entities/todo';
 import { User } from '../../entities/user';
-import { DeleteResult } from 'typeorm';
+import { DeleteResult, Like, FindConditions } from 'typeorm';
 import { TodoSortBy } from '../../enums/todo-sort-by.enum';
 import { SortDirection } from '../../enums/sort-direction.enum';
 import { DEFAULT_PAGE_SIZE, DEFAULT_PAGE } from '../../constants';
+import { IPagedResult } from '../../interfaces/paged-result.interface';
 
 interface IBaseTodoFetchingOptions {
   relations?: Array<string>;
@@ -18,6 +19,7 @@ interface ITodoFetchingOptions extends IBaseTodoFetchingOptions {
   };
   sortBy?: TodoSortBy;
   sortDirection?: SortDirection;
+  title?: string;
 }
 
 interface ITodoFetchOneOptions extends IBaseTodoFetchingOptions {
@@ -33,13 +35,14 @@ interface IDeleteTodoOptions {
 export class TodosService {
   private readonly repositry = Todo.getRepository();
 
-  public fetchAll({
+  public async fetchAll({
     relations,
     user,
     page,
     sortBy,
     sortDirection,
-  }: ITodoFetchingOptions): Promise<Array<Todo>> {
+    title,
+  }: ITodoFetchingOptions): Promise<IPagedResult<Todo>> {
     // Pagination
     page = {
       size: page?.size ?? DEFAULT_PAGE_SIZE,
@@ -53,15 +56,30 @@ export class TodosService {
       [sortBy ?? TodoSortBy.CREATED]: sortDirection ?? SortDirection.DESC,
     };
 
-    return this.repositry.find({
-      where: {
-        user,
-      },
+    const where: FindConditions<Todo> = {
+      user,
+    }
+
+    if (title) {
+      where.title = Like(`%${title}%`);
+    }
+
+    const results = await this.repositry.find({
+      where,
       skip,
       take,
       relations,
       order,
     });
+
+    const count = await this.repositry.count({
+      where
+    })
+
+    return {
+      count,
+      results,
+    }
   }
 
   public fetchOne({

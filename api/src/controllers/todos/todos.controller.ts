@@ -48,9 +48,11 @@ export class TodosController {
     @QueryParams('pageSize') @BaseParameter({ default: DEFAULT_PAGE_SIZE }) pageSize: number,
     @QueryParams('sortBy') @BaseParameter({ default: TodoSortBy.CREATED, enum: TodoSortBy }) sortBy: TodoSortBy,
     @QueryParams('sortDirection') @BaseParameter({ default: SortDirection.DESC, enum: SortDirection  }) sortDirection: SortDirection,
+    @QueryParams('title') title: string,
     @Req() req: Req,
+    @Res() res: Res,
   ): Promise<Array<Todo>> {
-    return this.todosService.fetchAll({
+    const pagedResult = await this.todosService.fetchAll({
       user: req.user,
       relations,
       page: {
@@ -59,7 +61,12 @@ export class TodosController {
       },
       sortBy,
       sortDirection,
+      title,
     });
+
+    res.setHeader('X-TOTAL-COUNT', pagedResult.count);
+
+    return pagedResult.results;
   }
 
   @Get('/:uuid')
