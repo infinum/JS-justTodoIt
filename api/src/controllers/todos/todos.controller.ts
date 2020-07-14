@@ -1,12 +1,13 @@
 import { Controller, Req, Get, Post, BodyParams, QueryParams, PathParams, Res, Required, PropertyType, Delete, Patch, Property } from '@tsed/common';
 import { Todo } from '../../entities/todo';
-import { Summary, ReturnsArray, Returns } from '@tsed/swagger';
+import { Summary, ReturnsArray, Returns, BaseParameter } from '@tsed/swagger';
 import { TodosService } from '../../services/todos/todos.service';
 import { Auth } from '../../decorators/auth.decorator';
 import { TodoItem } from '../../entities/todo-item';
 import { NotFound } from '@tsed/exceptions';
 import { SortDirection } from '../../enums/sort-direction.enum';
 import { TodoSortBy } from '../../enums/todo-sort-by.enum';
+import { DEFAULT_PAGE_SIZE, DEFAULT_PAGE } from '../../constants';
 
 class CreateTodoItemData {
   @Required()
@@ -43,10 +44,10 @@ export class TodosController {
   @ReturnsArray(Todo)
   async fetchAll(
     @QueryParams('relations', String) relations: Array<string>,
-    @QueryParams('pageNumber') pageNumber: number,
-    @QueryParams('pageSize') pageSize: number,
-    @QueryParams('sortBy') sortBy: TodoSortBy,
-    @QueryParams('sortDirection') sortDirection: SortDirection,
+    @QueryParams('pageNumber') @BaseParameter({ default: DEFAULT_PAGE }) pageNumber: number,
+    @QueryParams('pageSize') @BaseParameter({ default: DEFAULT_PAGE_SIZE }) pageSize: number,
+    @QueryParams('sortBy') @BaseParameter({ default: TodoSortBy.CREATED, enum: TodoSortBy }) sortBy: TodoSortBy,
+    @QueryParams('sortDirection') @BaseParameter({ default: SortDirection.DESC, enum: SortDirection  }) sortDirection: SortDirection,
     @Req() req: Req,
   ): Promise<Array<Todo>> {
     return this.todosService.fetchAll({

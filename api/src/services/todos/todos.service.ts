@@ -4,7 +4,7 @@ import { User } from '../../entities/user';
 import { DeleteResult } from 'typeorm';
 import { TodoSortBy } from '../../enums/todo-sort-by.enum';
 import { SortDirection } from '../../enums/sort-direction.enum';
-import { DEFAULT_PAGE_SIZE } from '../../constants';
+import { DEFAULT_PAGE_SIZE, DEFAULT_PAGE } from '../../constants';
 
 interface IBaseTodoFetchingOptions {
   relations?: Array<string>;
@@ -13,8 +13,8 @@ interface IBaseTodoFetchingOptions {
 
 interface ITodoFetchingOptions extends IBaseTodoFetchingOptions {
   page?: {
-    number: number; // starts at 1, default = 1
-    size: number; // default = DEFAULT_PAGE_SIZE
+    number: number;
+    size: number;
   };
   sortBy?: TodoSortBy;
   sortDirection?: SortDirection;
@@ -40,10 +40,15 @@ export class TodosService {
     sortBy,
     sortDirection,
   }: ITodoFetchingOptions): Promise<Array<Todo>> {
-    const skip = Math.max(page ? ((page.number ?? DEFAULT_PAGE_SIZE) - 1) * (page.size ?? DEFAULT_PAGE_SIZE) : 0, 0);
+    // Pagination
+    page = {
+      size: page?.size ?? DEFAULT_PAGE_SIZE,
+      number: page?.number ?? DEFAULT_PAGE,
+    };
+    const skip = Math.max((page.number - 1) * page.size, 0);
     const take = page?.size ?? DEFAULT_PAGE_SIZE;
-    console.log(skip, take);
 
+    // Sorting
     const order = {
       [sortBy ?? TodoSortBy.CREATED]: sortDirection ?? SortDirection.DESC,
     };
