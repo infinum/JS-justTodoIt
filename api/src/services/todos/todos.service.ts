@@ -2,13 +2,25 @@ import { Service } from '@tsed/di';
 import { Todo } from '../../entities/todo';
 import { User } from '../../entities/user';
 import { DeleteResult } from 'typeorm';
+import { TodoSortBy } from '../../enums/todo-sort-by.enum';
+import { SortDirection } from '../../enums/sort-direction.enum';
+import { DEFAULT_PAGE_SIZE } from '../../constants';
 
-interface ITodoFetchingOptions {
+interface IBaseTodoFetchingOptions {
   relations?: Array<string>;
   user?: User;
 }
 
-interface ITodoFetchOneOptions extends ITodoFetchingOptions {
+interface ITodoFetchingOptions extends IBaseTodoFetchingOptions {
+  page?: {
+    number: number; // starts at 1, default = 1
+    size: number; // default = DEFAULT_PAGE_SIZE
+  };
+  sortBy?: TodoSortBy;
+  sortDirection?: SortDirection;
+}
+
+interface ITodoFetchOneOptions extends IBaseTodoFetchingOptions {
   uuid: string;
 }
 
@@ -24,12 +36,26 @@ export class TodosService {
   public fetchAll({
     relations,
     user,
+    page,
+    sortBy,
+    sortDirection,
   }: ITodoFetchingOptions): Promise<Array<Todo>> {
+    const skip = Math.max(page ? ((page.number ?? DEFAULT_PAGE_SIZE) - 1) * (page.size ?? DEFAULT_PAGE_SIZE) : 0, 0);
+    const take = page?.size ?? DEFAULT_PAGE_SIZE;
+    console.log(skip, take);
+
+    const order = {
+      [sortBy ?? TodoSortBy.CREATED]: sortDirection ?? SortDirection.DESC,
+    };
+
     return this.repositry.find({
       where: {
         user,
       },
+      skip,
+      take,
       relations,
+      order,
     });
   }
 

@@ -15,6 +15,9 @@ const originsString = process.env.CORS_ALLOWED_ORIGINS || '';
 const origins = originsString.split(',').map((s) => s.trim()).filter(Boolean);
 export const CORS_ALLOWED_ORIGINS = [...origins, FRONTEND_URL];
 
+export const DEFAULT_PAGE_SIZE = 5;
+export const DEFAULT_PAGE = 1;
+
 // JWT & Cookie
 if (!process.env.JWT_SECRET) {
   console.warn('No JWT secret set!');

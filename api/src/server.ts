@@ -15,6 +15,7 @@ import { ormConfig } from './orm.config';
 import { SRC_DIR, HTTP_PORT, HTTPS_PORT, CORS_ALLOWED_ORIGINS, ROOT_DIR } from './constants';
 import { join } from 'path';
 import { UnknownRelationMiddleware } from './middlewares/unknown-relation.middleware';
+import { UniqueConstraintMiddleware } from './middlewares/unique-constraint.middleware';
 
 @Configuration({
   rootDir: SRC_DIR,
@@ -65,5 +66,6 @@ export class Server implements BeforeRoutesInit, AfterRoutesInit {
 
   $afterRoutesInit(): void {
     this.app.use(UnknownRelationMiddleware);
+    this.app.use(UniqueConstraintMiddleware);
   }
 }

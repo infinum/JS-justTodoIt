@@ -5,6 +5,8 @@ import { TodosService } from '../../services/todos/todos.service';
 import { Auth } from '../../decorators/auth.decorator';
 import { TodoItem } from '../../entities/todo-item';
 import { NotFound } from '@tsed/exceptions';
+import { SortDirection } from '../../enums/sort-direction.enum';
+import { TodoSortBy } from '../../enums/todo-sort-by.enum';
 
 class CreateTodoItemData {
   @Required()
@@ -41,11 +43,21 @@ export class TodosController {
   @ReturnsArray(Todo)
   async fetchAll(
     @QueryParams('relations', String) relations: Array<string>,
+    @QueryParams('pageNumber') pageNumber: number,
+    @QueryParams('pageSize') pageSize: number,
+    @QueryParams('sortBy') sortBy: TodoSortBy,
+    @QueryParams('sortDirection') sortDirection: SortDirection,
     @Req() req: Req,
   ): Promise<Array<Todo>> {
     return this.todosService.fetchAll({
       user: req.user,
       relations,
+      page: {
+        number: pageNumber,
+        size: pageSize,
+      },
+      sortBy,
+      sortDirection,
     });
   }
 
