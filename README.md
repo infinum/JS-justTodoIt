@@ -27,7 +27,20 @@ This repository contains README.md file and `api/` directory. To get started, in
 
 ## 3. Application requirements / notes
 
-Application structure:
+Please follow these requirements:
+
+- Use lazy loading of modules
+- Use SCSS
+- Use OnPush change detection
+  - Run this command right after you generate the project
+    ```bash
+    ng config schematics.@schematics/angular.component.changeDetection OnPush
+    ```
+- Use [Angular Material](https://material.angular.io/guide/getting-started) to speed up component development
+  - Use whichever theme you prefer
+- Use [jwt-decode](https://github.com/auth0/jwt-decode) to parse data from tokens
+
+Application UI structure:
 
 - Header section with application title and user menu
   - User menu shows `Log in` and `Register` links if the user is not logged in
@@ -49,7 +62,7 @@ You should implement the following routes/pages:
 Additional notes:
 - User should be able to log out
 - Application should load user data upon full page reload
-  - Utilize `GET` `/auth/user` API call and `APP_INITIALIZER`
+  - Utilize `GET` `/auth/user` API call and think about what is the best way to load user data during app initialization
 - If user enters `/login` route while already logged in, he should be redirected to `/`
 - If user enters any secure route (e.g. `/`, `/:uuid`) while not logged in, he should be redirected to `/login`
 
