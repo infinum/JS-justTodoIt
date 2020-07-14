@@ -165,8 +165,6 @@ export class TodosController {
     });
     todo.items = todoItems;
 
-    console.log(todo.items);
-
     return this.todosService.save(todo);
   }
 }
