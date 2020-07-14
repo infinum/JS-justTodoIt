@@ -124,6 +124,16 @@ Todo titles have to be unique for the user. Two user can have Todos with same ti
 
 One specific Todo must have items of unique titles.
 
+#### Pagination
+
+Todo fetching results are paginated. To find out how many pages there are, check value of `X-TOTAL-COUNT` response header. If there are 12 Todos in the database, first page will return 5 results and the header will contain value `12. You can use this value together with request query parameters (current page and page size) to determine whether you can load next or previous page of results.
+
+#### Relations
+
+When fetching all or some specific Todo, you can send relation query param with a list of relations which should be loaded. Currently available values for relations are:
+
+- `items` - includes all Todo items in the response
+
 #### Partial updates
 
 When updating a specific Todo, you can make a PATCH call with JSON which contains only those values which you want to update.
