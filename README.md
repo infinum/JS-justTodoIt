@@ -29,6 +29,7 @@ This repository contains README.md file and `api/` directory. To get started, in
 
 Please follow these requirements:
 
+- Choose some nice prefix
 - Use lazy loading of modules
 - Use SCSS
 - Use OnPush change detection
@@ -39,6 +40,8 @@ Please follow these requirements:
 - Use [Angular Material](https://material.angular.io/guide/getting-started) to speed up component development
   - Use whichever theme you prefer
 - Use [jwt-decode](https://github.com/auth0/jwt-decode) to parse data from tokens
+- Create `src/app/styles` directory for your shared SCSS partials
+  - Use [Style preprocessor options](https://angular.io/guide/workspace-config#style-preprocessor-options) to make SCSS import paths nicer
 
 Application UI structure:
 

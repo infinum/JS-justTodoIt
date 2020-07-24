@@ -20,9 +20,6 @@ export class ErrorHandlingMiddleware implements IMiddlewareError {
       ) {
         return res.status(400).send(error.message);
       }
-
-      console.error(error);
-      return res.status(500).send(error.message);
     }
 
     return next(error);

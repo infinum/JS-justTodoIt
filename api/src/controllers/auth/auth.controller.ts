@@ -81,18 +81,18 @@ export class AuthController {
     });
 
     if (!user) {
-      throw new Forbidden(ResponseErrorCode.INCORRECT_EMAIL_OR_PASSWORD, { email });
+      throw new Forbidden(ResponseErrorCode.INCORRECT_EMAIL_OR_PASSWORD);
     }
 
     if (!user.isActivated) {
-      throw new Forbidden(ResponseErrorCode.USER_NOT_ACTIVATED, { email });
+      throw new Forbidden(ResponseErrorCode.USER_NOT_ACTIVATED);
     }
 
     const passwordOk = await this.userService.compareHash(password, user.passwordHash);
     delete user.passwordHash;
 
     if (!passwordOk) {
-      throw new Forbidden(ResponseErrorCode.INCORRECT_EMAIL_OR_PASSWORD, { email });
+      throw new Forbidden(ResponseErrorCode.INCORRECT_EMAIL_OR_PASSWORD);
     }
 
     const token = await this.authService.createToken(user);
@@ -127,7 +127,7 @@ export class AuthController {
     const activationResult = await this.userService.activate({ token, password });
 
     if (!activationResult) {
-      throw new Forbidden(ResponseErrorCode.ACTIVATION_TOKEN_EXPIRED_OR_INVALID, { token });
+      throw new Forbidden(ResponseErrorCode.ACTIVATION_TOKEN_EXPIRED_OR_INVALID);
     }
 
     res.user = activationResult;
@@ -144,7 +144,7 @@ export class AuthController {
     const user = await this.userService.fetch({ email, getPasswordHash: true });
 
     if (!user) {
-      throw new Forbidden(ResponseErrorCode.INCORRECT_EMAIL_OR_PASSWORD, { email });
+      throw new Forbidden(ResponseErrorCode.INCORRECT_EMAIL_OR_PASSWORD);
     }
 
     await this.userService.requestPasswordReset(user);
@@ -162,7 +162,7 @@ export class AuthController {
     const resetResult = await this.userService.resetPassword({ token, password });
 
     if (!resetResult) {
-      throw new Forbidden(ResponseErrorCode.PASSWORD_RESET_TOKEN_EXPIRED_OR_INVALID, { token });
+      throw new Forbidden(ResponseErrorCode.PASSWORD_RESET_TOKEN_EXPIRED_OR_INVALID);
     }
 
     res.user = resetResult;
