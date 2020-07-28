@@ -81,18 +81,18 @@ export class AuthController {
     });
 
     if (!user) {
-      throw new Forbidden(ResponseErrorCode.INCORRECT_EMAIL_OR_PASSWORD);
+      throw new BadRequest(ResponseErrorCode.INCORRECT_EMAIL_OR_PASSWORD);
     }
 
     if (!user.isActivated) {
-      throw new Forbidden(ResponseErrorCode.USER_NOT_ACTIVATED);
+      throw new BadRequest(ResponseErrorCode.USER_NOT_ACTIVATED);
     }
 
     const passwordOk = await this.userService.compareHash(password, user.passwordHash);
     delete user.passwordHash;
 
     if (!passwordOk) {
-      throw new Forbidden(ResponseErrorCode.INCORRECT_EMAIL_OR_PASSWORD);
+      throw new BadRequest(ResponseErrorCode.INCORRECT_EMAIL_OR_PASSWORD);
     }
 
     const token = await this.authService.createToken(user);
@@ -163,7 +163,7 @@ export class AuthController {
     const resetResult = await this.userService.resetPassword({ token, password });
 
     if (!resetResult) {
-      throw new Forbidden(ResponseErrorCode.PASSWORD_RESET_TOKEN_EXPIRED_OR_INVALID);
+      throw new BadRequest(ResponseErrorCode.PASSWORD_RESET_TOKEN_EXPIRED_OR_INVALID);
     }
 
     res.user = resetResult;
