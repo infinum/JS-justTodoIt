@@ -144,7 +144,8 @@ export class AuthController {
     const user = await this.userService.fetch({ email, getPasswordHash: true });
 
     if (!user) {
-      throw new Forbidden(ResponseErrorCode.INCORRECT_EMAIL_OR_PASSWORD);
+      res.sendStatus(204);
+      return;
     }
 
     await this.userService.requestPasswordReset(user);
