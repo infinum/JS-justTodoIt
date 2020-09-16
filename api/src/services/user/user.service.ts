@@ -42,7 +42,7 @@ export class UserService {
         uuid: user.uuid,
       });
       user.activationToken = activationToken;
-      const activationLink = `${FRONTEND_URL}/activation?token=${activationToken}`;
+      const activationLink = `${FRONTEND_URL}/activate-account?token=${activationToken}`;
 
       await this.emailService.sendEmail({
         to: user.email,
