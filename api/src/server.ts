@@ -15,6 +15,7 @@ import { ormConfig } from './orm.config';
 import { SRC_DIR, HTTP_PORT, HTTPS_PORT, CORS_ALLOWED_ORIGINS, ROOT_DIR } from './constants';
 import { join } from 'path';
 import { ErrorHandlingMiddleware } from './middlewares/error-handling.middleware';
+import { CustomHeader } from './enums/custom-headers.enum';
 
 @Configuration({
   rootDir: SRC_DIR,
@@ -49,6 +50,7 @@ export class Server implements BeforeRoutesInit, AfterRoutesInit {
       .use(cors({
         origin: CORS_ALLOWED_ORIGINS,
         credentials: true,
+        exposedHeaders: Object.values(CustomHeader)
       }))
       .use(helmet())
       .use(GlobalAcceptMimesMiddleware)

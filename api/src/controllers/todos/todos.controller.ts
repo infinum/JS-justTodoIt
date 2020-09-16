@@ -8,6 +8,7 @@ import { NotFound } from '@tsed/exceptions';
 import { SortDirection } from '../../enums/sort-direction.enum';
 import { TodoSortBy } from '../../enums/todo-sort-by.enum';
 import { DEFAULT_PAGE_SIZE, DEFAULT_PAGE } from '../../constants';
+import { CustomHeader } from '../../enums/custom-headers.enum';
 
 class CreateTodoItemData {
   @Required()
@@ -64,7 +65,7 @@ export class TodosController {
       title,
     });
 
-    res.setHeader('X-TOTAL-COUNT', pagedResult.count);
+    res.setHeader(CustomHeader.PAGINATION_TOTAL_COUNT, pagedResult.count);
 
     return pagedResult.results;
   }
