@@ -52,9 +52,12 @@ export class TodosService {
     const take = page?.size ?? DEFAULT_PAGE_SIZE;
 
     // Sorting
-    const order = {
-      [sortBy ?? TodoSortBy.CREATED]: sortDirection ?? SortDirection.DESC,
-    };
+    let order: Record<string, SortDirection>;
+    if (sortBy) {
+      order = {
+        [sortBy]: sortDirection ?? SortDirection.ASC
+      }
+    }
 
     const where: FindConditions<Todo> = {
       user,
