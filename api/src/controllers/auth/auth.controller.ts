@@ -55,7 +55,7 @@ export class AuthController {
   async register(
     @BodyParams() { email, password }: RegisterData,
     @Res() res: Res,
-  ): Promise<User | Response> {
+  ): Promise<User> {
     let user = await this.userService.fetch({ email });
 
     if (user) {

@@ -81,16 +81,14 @@ export class TodosController {
     @PathParams('uuid') uuid: string,
     @QueryParams('relations', String) relations: Array<string>,
     @Req() req: Req,
-    @Res() res: Res,
-  ): Promise<Todo | NotFound> {
+  ): Promise<Todo> {
     const todo = await this.todosService.fetchOne({
       user: req.user,
       relations,
       uuid,
     });
     if (!todo) {
-      res.status(404);
-      return new NotFound(`Todo with uuid "${uuid}" not found`);
+      throw new NotFound(`Todo with uuid "${uuid}" not found`);
     }
 
     return todo;
