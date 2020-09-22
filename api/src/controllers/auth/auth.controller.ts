@@ -1,4 +1,4 @@
-import { BodyParams, Controller, Get, Post, Req, Res, Required, Email, Property } from '@tsed/common';
+import { BodyParams, Controller, Get, Post, Req, Res, Required, Email, Property, QueryParams, Enum } from '@tsed/common';
 import { Returns, Summary, Description } from '@tsed/swagger';
 import { COOKIE_HTTP_ONLY, COOKIE_SECURE } from '../../constants';
 import { Auth } from '../../decorators/auth.decorator';
@@ -6,7 +6,10 @@ import { User } from '../../entities/user';
 import { ResponseErrorCode } from '../../enums/response-error-code.enum';
 import { AuthService } from '../../services/auth/auth.service';
 import { UserService } from '../../services/user/user.service';
-import { BadRequest, Forbidden } from '@tsed/exceptions';
+import { BadRequest, Forbidden, NotFound } from '@tsed/exceptions';
+import { DemographicProfile } from '../../entities/demographic-profile';
+import { Gender } from '../../enums/gender.enum';
+import { NewsletterPreferences } from '../../entities/newsletter-preferences';
 
 class RegisterData {
   @Required()
@@ -41,6 +44,22 @@ class RequestPasswordResetData {
   email: string;
 }
 
+class DemographicProfileSettingData {
+  @Required()
+  @Enum(Gender)
+  gender: Gender;
+
+  @Required()
+  age: number;
+}
+
+class NewsletterPreferencesSettingData {
+  @Required()
+  weeklyNewsletter: boolean;
+
+  @Required()
+  specialOffers: boolean;
+}
 
 @Controller('/auth')
 export class AuthController {
@@ -175,9 +194,85 @@ export class AuthController {
   @Auth({ passUser: true })
   @Summary('Get user data')
   @Returns(User)
-  user(
+  async user(
+    @Description('Relationships to load. Possible values: `todos`, `demographicProfile`, `newsletterPreferences`') @QueryParams('relations', String) relations: Array<string>,
     @Req() req: Req,
-  ): User {
-    return req.user;
+  ): Promise<User> {
+    if (!relations?.length) {
+      return req.user;
+    }
+
+    return this.userService.fetch({
+      uuid: req.user.uuid,
+      relations,
+    });
+  }
+
+  @Get('/demographic-profile')
+  @Summary('Get demographic profile')
+  @Auth({ passUser: true })
+  async getDemographicProfile(
+    @Req() req: Req,
+  ): Promise<DemographicProfile> {
+    const demographicProfile = await this.userService.fetchDemographicProfile(req.user.uuid);
+
+    if (!demographicProfile) {
+      throw new NotFound('User has no demographic profile set');
+    }
+
+    return demographicProfile;
+  }
+
+  @Post('/demographic-profile')
+  @Summary('Set demographic profile')
+  @Auth({ passUser: true })
+  async setDemographicProfile(
+    @Req() req: Req,
+    @BodyParams() { gender, age }: DemographicProfileSettingData,
+  ): Promise<DemographicProfile> {
+    const demographicProfile = await this.userService.fetchDemographicProfile(req.user.uuid) ?? new DemographicProfile();
+
+    demographicProfile.gender = gender;
+    demographicProfile.age = age;
+    await demographicProfile.save();
+
+    req.user.demographicProfile = demographicProfile;
+    await req.user.save();
+
+    return req.user.demographicProfile;
+  }
+
+  @Get('/newsletter-preferences')
+  @Summary('Get newsletter preferences')
+  @Auth({ passUser: true })
+  async getNewsletterPreferences(
+    @Req() req: Req,
+  ): Promise<NewsletterPreferences> {
+    const newsletterPreferences = await this.userService.fetchNewsletterPreferences(req.user.uuid);
+
+    if (!newsletterPreferences) {
+      throw new NotFound('User has no newsletter preferences set');
+    }
+
+    return newsletterPreferences;
+  }
+
+  @Post('/newsletter-preferences')
+  @Summary('Set newsletter preferences')
+  @Auth({ passUser: true })
+  async setNewsletterPreferences(
+    @Req() req: Req,
+    @BodyParams() { weeklyNewsletter, specialOffers }: NewsletterPreferencesSettingData,
+  ): Promise<NewsletterPreferences> {
+    const newsletterPreferences = await this.userService.fetchNewsletterPreferences(req.user.uuid) ?? new NewsletterPreferences();
+
+    newsletterPreferences.weeklyNewsletter = weeklyNewsletter;
+    newsletterPreferences.specialOffers = specialOffers;
+    await newsletterPreferences.save();
+
+    req.user.newsletterPreferences = newsletterPreferences;
+    await req.user.save();
+
+    return req.user.newsletterPreferences;
   }
 }

@@ -9,6 +9,8 @@ import { IRegistrationData } from '../../interfaces/registration-data.interface'
 import { AuthService } from '../auth/auth.service';
 import { EmailService } from '../email/email.service';
 import { InternalServerError, BadRequest } from '@tsed/exceptions';
+import { DemographicProfile } from '../../entities/demographic-profile';
+import { NewsletterPreferences } from '../../entities/newsletter-preferences';
 
 interface IUserFetchingOptions {
   email?: string;
@@ -87,7 +89,7 @@ export class UserService {
 
     const passwordResetLink = `${FRONTEND_URL}/reset-password?token=${passwordResetToken}`;
 
-    await this.emailService.sendEmail({
+    this.emailService.sendEmail({
       to: user.email,
       subject: 'Learn Angular: Password reset link',
       content: {
@@ -120,6 +122,24 @@ export class UserService {
     user.passwordResetToken = null;
 
     return user.save();
+  }
+
+  async fetchDemographicProfile(userUuid: string): Promise<DemographicProfile> {
+    const user = await this.fetch({
+      uuid: userUuid,
+      relations: ['demographicProfile'],
+    })
+
+    return user.demographicProfile;
+  }
+
+  async fetchNewsletterPreferences(userUuid: string): Promise<NewsletterPreferences> {
+    const user = await this.fetch({
+      uuid: userUuid,
+      relations: ['newsletterPreferences'],
+    })
+
+    return user.newsletterPreferences;
   }
 
   fetch({
