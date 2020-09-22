@@ -13,6 +13,9 @@ import { CustomHeader } from '../../enums/custom-headers.enum';
 class CreateTodoItemData {
   @Required()
   title: string;
+
+  @Property()
+  done: boolean;
 }
 
 class CreateTodoData {
