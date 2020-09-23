@@ -1,8 +1,8 @@
 import { Service } from '@tsed/di';
-import { Todo } from '../../entities/todo';
+import { TodoList } from '../../entities/todo-list';
 import { User } from '../../entities/user';
 import { DeleteResult, Like, FindConditions } from 'typeorm';
-import { TodoSortBy } from '../../enums/todo-sort-by.enum';
+import { TodoListSortBy } from '../../enums/todo-list-sort-by.enum';
 import { SortDirection } from '../../enums/sort-direction.enum';
 import { DEFAULT_PAGE_SIZE, DEFAULT_PAGE } from '../../constants';
 import { IPagedResult } from '../../interfaces/paged-result.interface';
@@ -17,7 +17,7 @@ interface ITodoFetchingOptions extends IBaseTodoFetchingOptions {
     number: number;
     size: number;
   };
-  sortBy?: TodoSortBy;
+  sortBy?: TodoListSortBy;
   sortDirection?: SortDirection;
   title?: string;
 }
@@ -33,7 +33,7 @@ interface IDeleteTodoOptions {
 
 @Service()
 export class TodosService {
-  private readonly repositry = Todo.getRepository();
+  private readonly repositry = TodoList.getRepository();
 
   public async fetchAll({
     relations,
@@ -42,7 +42,7 @@ export class TodosService {
     sortBy,
     sortDirection,
     title,
-  }: ITodoFetchingOptions): Promise<IPagedResult<Todo>> {
+  }: ITodoFetchingOptions): Promise<IPagedResult<TodoList>> {
     // Pagination
     page = {
       size: page?.size ?? DEFAULT_PAGE_SIZE,
@@ -59,7 +59,7 @@ export class TodosService {
       }
     }
 
-    const where: FindConditions<Todo> = {
+    const where: FindConditions<TodoList> = {
       user,
     }
 
@@ -89,7 +89,7 @@ export class TodosService {
     uuid,
     relations,
     user,
-  }: ITodoFetchOneOptions): Promise<Todo> {
+  }: ITodoFetchOneOptions): Promise<TodoList> {
     return this.repositry.findOne({
       where: {
         uuid,
@@ -109,7 +109,7 @@ export class TodosService {
     });
   }
 
-  public save(todo: Todo): Promise<Todo> {
+  public save(todo: TodoList): Promise<TodoList> {
     return this.repositry.save(todo);
   }
 }

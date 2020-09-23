@@ -1,4 +1,4 @@
-export enum TodoSortBy {
+export enum TodoListSortBy {
   TITLE = 'title',
   CREATED = 'created',
 }

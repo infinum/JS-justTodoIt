@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany, BaseEntity, OneToOne, JoinColumn } from 'typeorm';
 import { Property } from '@tsed/common';
-import { Todo } from './todo';
+import { TodoList } from './todo-list';
 import { DemographicProfile } from './demographic-profile';
 import { NewsletterPreferences } from './newsletter-preferences';
 
@@ -18,10 +18,10 @@ export class User extends BaseEntity {
   email: string;
 
   @Property()
-  @OneToMany(() => Todo, todo => todo.user, {
+  @OneToMany(() => TodoList, todoList => todoList.user, {
     cascade: true,
   })
-  todos: Array<Todo>;
+  todoLists: Array<TodoList>;
 
   @Property()
   @OneToOne(() => DemographicProfile)

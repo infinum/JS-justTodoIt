@@ -195,7 +195,7 @@ export class AuthController {
   @Summary('Get user data')
   @Returns(User)
   async user(
-    @Description('Relationships to load. Possible values: `todos`, `demographicProfile`, `newsletterPreferences`') @QueryParams('relations', String) relations: Array<string>,
+    @Description('Relationships to load. Possible values: `todoLists`, `todoLists.todos`, `demographicProfile`, `newsletterPreferences`') @QueryParams('relations', String) relations: Array<string>,
     @Req() req: Req,
   ): Promise<User> {
     if (!relations?.length) {

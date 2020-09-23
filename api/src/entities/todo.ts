@@ -1,9 +1,9 @@
-import { Entity, PrimaryGeneratedColumn, ManyToOne, Column, BaseEntity, OneToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, ManyToOne, Unique } from 'typeorm';
 import { Property } from '@tsed/common';
-import { User } from './user';
-import { TodoItem } from './todo-item';
+import { TodoList } from './todo-list';
 
 @Entity()
+@Unique('TODO_TITLE', ['title', 'todo.uuid'])
 export class Todo extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   @Property()
@@ -11,25 +11,16 @@ export class Todo extends BaseEntity {
 
   @Column({
     nullable: false,
-    unique: true,
   })
   @Property()
   title: string;
 
-  @Column({
-    nullable: false,
-  })
+  @Column()
   @Property()
-  created: Date;
+  done: boolean;
 
-  @OneToMany(() => TodoItem, todoItem => todoItem.todo, {
-    cascade: true,
-  })
-  @Property()
-  items: Array<TodoItem>;
-
-  @ManyToOne(() => User, user => user.todos, {
+  @ManyToOne(() => TodoList, todoList => todoList.todos, {
     onDelete: 'CASCADE',
   })
-  user: User;
+  todo: TodoList;
 }
