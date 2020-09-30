@@ -1,27 +1,31 @@
-import { Err, IMiddlewareError, MiddlewareError, Next, Res } from '@tsed/common';
-import { NextFunction, Response } from 'express';
+import { Err, IMiddlewareError, Middleware, Req, Res } from '@tsed/common';
+import { Exception } from '@tsed/exceptions';
+import { Response } from 'express';
 
 const relationErrorRegEx = /(Relation.*was not found)|(".*" alias was not found)/i;
 const uniqueConstraintRegEx = /UNIQUE constraint failed: (.*)/i;
 const columnNotFoundRegEx = /(.*) column was not found in the (.*) entity/i
 
-@MiddlewareError()
+@Middleware()
 export class ErrorHandlingMiddleware implements IMiddlewareError {
   use(
-    @Err() error: unknown,
-    @Res() res: Response,
-    @Next() next: NextFunction,
-  ): Response | void {
-    if (error instanceof Error) {
-      if (
-        relationErrorRegEx.test(error.message) ||
-        uniqueConstraintRegEx.test(error.message) ||
-        columnNotFoundRegEx.test(error.message)
-      ) {
-        return res.status(400).send(error.message);
-      }
+    @Err() error: Exception,
+    @Req() req: Req,
+    @Res() res: Res,
+  ): Response {
+    let status = error.status || 500;
+
+    if (
+      relationErrorRegEx.test(error.message) ||
+      uniqueConstraintRegEx.test(error.message) ||
+      columnNotFoundRegEx.test(error.message)
+    ) {
+      status = 400;
     }
 
-    return next(error);
+    return res.status(status).json({
+      requestId: req.id,
+      message: error.message,
+    });
   }
 }
