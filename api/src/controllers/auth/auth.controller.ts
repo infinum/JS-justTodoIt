@@ -6,7 +6,7 @@ import { User } from '../../entities/user';
 import { ResponseErrorCode } from '../../enums/response-error-code.enum';
 import { AuthService } from '../../services/auth/auth.service';
 import { UserService } from '../../services/user/user.service';
-import { BadRequest, Forbidden, NotFound } from '@tsed/exceptions';
+import { BadRequest, Forbidden, NotFound, PreconditionFailed } from '@tsed/exceptions';
 import { DemographicProfile } from '../../entities/demographic-profile';
 import { Gender } from '../../enums/gender.enum';
 import { NewsletterPreferences } from '../../entities/newsletter-preferences';
@@ -104,7 +104,7 @@ export class AuthController {
     }
 
     if (!user.isActivated) {
-      throw new BadRequest(ResponseErrorCode.USER_NOT_ACTIVATED);
+      throw new PreconditionFailed(ResponseErrorCode.USER_NOT_ACTIVATED);
     }
 
     const passwordOk = await this.userService.compareHash(password, user.passwordHash);
