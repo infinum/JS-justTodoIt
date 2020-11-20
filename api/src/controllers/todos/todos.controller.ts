@@ -28,6 +28,9 @@ class CreateTodoData {
 
 class PatchTodoData {
   @Property()
+  uuid: string;
+
+  @Property()
   title: string;
 
   @PropertyType(Todo)
