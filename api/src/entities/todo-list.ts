@@ -25,7 +25,7 @@ export class TodoList extends BaseEntity {
   @OneToMany(() => Todo, todoItem => todoItem.todo, {
     cascade: true,
   })
-  @Property()
+  @Property({ use: Todo })
   todos: Array<Todo>;
 
   @ManyToOne(() => User, user => user.todoLists, {

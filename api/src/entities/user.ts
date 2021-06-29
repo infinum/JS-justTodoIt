@@ -17,10 +17,10 @@ export class User extends BaseEntity {
   @Property()
   email: string;
 
-  @Property()
   @OneToMany(() => TodoList, todoList => todoList.user, {
     cascade: true,
   })
+  @Property({ use: TodoList })
   todoLists: Array<TodoList>;
 
   @Property()
