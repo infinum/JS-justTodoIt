@@ -251,7 +251,7 @@ The [MIT License](LICENSE)
 
 # Credits
 
-eslint-config is maintained and sponsored by
+learnAngular is maintained and sponsored by
 [Infinum](https://www.infinum.com).
 
 <img src="https://infinum.com/infinum.png" width="264">
