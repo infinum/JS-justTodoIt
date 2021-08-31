@@ -12,6 +12,8 @@ You will be developing a simple to-do list application. Requirements are simple 
 
 Learn Angular is more of a practical application of that gained knowledge, without too much hand-holding. There is a big focus on authentication handling because that is a part of almost every application but is rarely covered in various Angular tutorial/courses.
 
+Please take a look at this short video demonstrating what the final application might look like:
+
 ## 2. Project structure
 
 This repository contains README.md file and `api/` directory. To get started, install `@angular/cli` globally (if you have not already) and create a new Angular project in the repository. Your final structure might look something like this:
