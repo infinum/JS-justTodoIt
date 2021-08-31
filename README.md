@@ -14,6 +14,12 @@ Learn Angular is more of a practical application of that gained knowledge, witho
 
 Please take a look at this short video demonstrating what the final application might look like:
 
+
+
+https://user-images.githubusercontent.com/3170728/131492134-b85e0e60-8981-4a6a-a9ac-d8d49db62b79.mp4
+
+
+
 ## 2. Project structure
 
 This repository contains README.md file and `api/` directory. To get started, install `@angular/cli` globally (if you have not already) and create a new Angular project in the repository. Your final structure might look something like this:
