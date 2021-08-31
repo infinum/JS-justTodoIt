@@ -244,3 +244,14 @@ If you want to update items, you always have to send all the items. Any missing 
 If you want to mark some todo item as done or simply rename it, sent a PATCH call with all other items as well and for this one specific item keep the same `uuid` but change `done` and/or `title` properties.
 
 You can do all these partial updates at the same time or one by one.
+
+# License
+
+The [MIT License](LICENSE)
+
+# Credits
+
+eslint-config is maintained and sponsored by
+[Infinum](https://www.infinum.com).
+
+<img src="https://infinum.com/infinum.png" width="264">
