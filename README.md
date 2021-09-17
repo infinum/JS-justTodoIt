@@ -81,13 +81,13 @@ _Note_: Backend server that is running locally does not sent an actual email. Ac
 
 #### 3.1.3. Request password reset
 
-Similar to registration, password reset sends and email with password reset link that includes a token. Again, no actual email is sent, you can get the link from the terminal log of the server.
+Similar to registration, password reset sends an email with password reset link that includes a token. Again, no actual email is sent, you can get the link from the terminal log of the server.
 
 ![Request password reset](./.assets/app/request-password-reset.png)
 
 #### 3.1.4. Account activation
 
-Account activation and password reset pages are a bit different from other pages in that they do not have the same layout - there is no header component and the content of the page is centred in the middle of the screen. Think about how you can achieve this without having `*ngIf`s for hiding/showing elements or style adjustments.
+Account activation and password reset pages are a bit different from other pages - they do not have the same layout - there is no header component and the content of the page is centred in the middle of the screen. Think about how you can achieve this without having `*ngIf`s for hiding/showing elements or style adjustments.
 
 ![Account activation](./.assets/app/account-activation.png)
 
