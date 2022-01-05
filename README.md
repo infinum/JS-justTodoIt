@@ -42,6 +42,8 @@ As for the Angular application file and folder organization, please refer to [Fi
 When implementing the application, please:
 
 - Choose some nice prefix
+- Add eslint, prettier and husky
+  - Use Infinum's [config for eslint](https://github.com/infinum/js-linters/tree/master/packages/eslint-config-angular-ts) and follow the [handbook](https://infinum.com/handbook/frontend/code-quality/tools)
 - Use lazy loading of modules
 - Use SCSS
 - Use OnPush change detection
