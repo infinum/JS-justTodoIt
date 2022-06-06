@@ -1,4 +1,4 @@
-import { Err, IMiddlewareError, Middleware, Req, Res } from '@tsed/common';
+import { Err, Middleware, MiddlewareMethods, Req, Res } from '@tsed/common';
 import { Exception } from '@tsed/exceptions';
 import { Response } from 'express';
 
@@ -7,7 +7,7 @@ const uniqueConstraintRegEx = /UNIQUE constraint failed: (.*)/i;
 const columnNotFoundRegEx = /(.*) column was not found in the (.*) entity/i
 
 @Middleware()
-export class ErrorHandlingMiddleware implements IMiddlewareError {
+export class ErrorHandlingMiddleware implements MiddlewareMethods {
   use(
     @Err() error: Exception,
     @Req() req: Req,

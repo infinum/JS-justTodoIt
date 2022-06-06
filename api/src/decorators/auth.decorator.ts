@@ -1,16 +1,16 @@
 import { UseAuth } from '@tsed/common';
-import { applyDecorators } from '@tsed/core';
-import { Responses, Security } from '@tsed/swagger';
+import {useDecorators} from "@tsed/core";
+import { Returns, Security } from '@tsed/schema';
 import { ICustomAuthOptions } from '../interfaces/custom-auth-options.interface';
 import { AuthMiddleware } from '../middlewares/auth.middleware';
 
 export function Auth(options: ICustomAuthOptions = {
   passToken: true,
 }): Function { // eslint-disable-line @typescript-eslint/ban-types
-  return applyDecorators(
+  return useDecorators(
     UseAuth(AuthMiddleware, options),
     Security('cookieAuth'),
-    Responses(401, {description: 'Unauthorized'}),
-    Responses(403, {description: 'Forbidden'}),
+    Returns(401).Description('Unauthorized'),
+    Returns(403).Description('Forbidden'),
   );
 }

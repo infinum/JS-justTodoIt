@@ -1,5 +1,5 @@
-import { BodyParams, Controller, Get, Post, Req, Res, Required, Email, Property, QueryParams, Enum } from '@tsed/common';
-import { Returns, Summary, Description } from '@tsed/swagger';
+import { BodyParams, Controller, Get, Post, Req, Res, QueryParams } from '@tsed/common';
+import { Required, Email, Property, Enum, Returns, Summary, Description } from '@tsed/schema';
 import { COOKIE_HTTP_ONLY, COOKIE_SECURE } from '../../constants';
 import { Auth } from '../../decorators/auth.decorator';
 import { User } from '../../entities/user';
@@ -70,7 +70,7 @@ export class AuthController {
 
   @Post('/register')
   @Summary('Registration')
-  @Returns(User)
+  @Returns(200, User)
   async register(
     @BodyParams() { email, password }: RegisterData,
     @Res() res: Res,
@@ -89,7 +89,7 @@ export class AuthController {
 
   @Post('/login')
   @Summary('Login')
-  @Returns(User)
+  @Returns(200, User)
   async login(
     @BodyParams() { email, password }: LoginData,
     @Res() res: Res,
@@ -138,7 +138,7 @@ export class AuthController {
 
   @Post('/activate')
   @Summary('Activation')
-  @Returns(User)
+  @Returns(200, User)
   async activate(
     @BodyParams() { token, password }: PasswordSettingData,
     @Res() res: Res,
@@ -193,7 +193,7 @@ export class AuthController {
   @Get('/user')
   @Auth({ passUser: true })
   @Summary('Get user data')
-  @Returns(User)
+  @Returns(200, User)
   async user(
     @Description('Relationships to load. Possible values: `todoLists`, `todoLists.todos`, `demographicProfile`, `newsletterPreferences`') @QueryParams('relations', String) relations: Array<string>,
     @Req() req: Req,

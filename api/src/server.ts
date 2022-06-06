@@ -7,15 +7,15 @@ import * as compress from 'compression';
 import * as cookieParser from 'cookie-parser';
 import * as methodOverride from 'method-override';
 import * as cors from 'cors';
-import * as helmet from 'helmet';
+import helmet from 'helmet';
 import { Configuration, Inject } from '@tsed/di';
-import { PlatformApplication, BeforeRoutesInit, AfterRoutesInit } from '@tsed/common';
-import { GlobalAcceptMimesMiddleware } from '@tsed/platform-express';
+import { PlatformApplication, BeforeRoutesInit, AfterRoutesInit, PlatformAcceptMimesMiddleware } from '@tsed/common';
 import { ormConfig } from './orm.config';
 import { SRC_DIR, HTTP_PORT, HTTPS_PORT, CORS_ALLOWED_ORIGINS, ROOT_DIR } from './constants';
 import { join } from 'path';
 import { ErrorHandlingMiddleware } from './middlewares/error-handling.middleware';
 import { CustomHeader } from './enums/custom-headers.enum';
+import { Request, Response, NextFunction } from 'express';
 
 @Configuration({
   rootDir: SRC_DIR,
@@ -42,7 +42,10 @@ export class Server implements BeforeRoutesInit, AfterRoutesInit {
   @Inject()
   app: PlatformApplication;
 
-  @Configuration()
+  @Configuration({
+    httpsPort: HTTPS_PORT,
+    httpPort: HTTP_PORT
+  })
   settings: Configuration;
 
   $beforeRoutesInit(): void {
@@ -52,10 +55,17 @@ export class Server implements BeforeRoutesInit, AfterRoutesInit {
         credentials: true,
         exposedHeaders: Object.values(CustomHeader)
       }))
-      .use(helmet())
-      .use(GlobalAcceptMimesMiddleware)
+      .use((req: Request, res: Response, next: NextFunction) => {
+        // Swagger has some inline styles that trigger helmet, so do not use helmet in swagger
+        if (req.originalUrl.startsWith('/swagger')) {
+          next();
+        } else {
+          helmet()(req, res, next);
+        }
+      })
+      .use(PlatformAcceptMimesMiddleware)
       .use(cookieParser())
-      .use(compress({}))
+      .use(compress())
       .use(methodOverride())
       .use(bodyParser.json())
       .use(bodyParser.urlencoded({

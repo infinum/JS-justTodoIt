@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany, BaseEntity, OneToOne, JoinColumn } from 'typeorm';
-import { Property } from '@tsed/common';
+import { Property } from '@tsed/schema';
 import { TodoList } from './todo-list';
 import { DemographicProfile } from './demographic-profile';
 import { NewsletterPreferences } from './newsletter-preferences';
