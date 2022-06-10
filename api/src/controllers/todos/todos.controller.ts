@@ -1,6 +1,6 @@
-import { Controller, Req, Get, Post, BodyParams, QueryParams, PathParams, Res, Required, PropertyType, Delete, Patch, Property } from '@tsed/common';
+import { Controller, Req, Get, Post, BodyParams, QueryParams, PathParams, Res, Delete, Patch } from '@tsed/common';
 import { TodoList } from '../../entities/todo-list';
-import { Summary, ReturnsArray, Returns, BaseParameter, Description } from '@tsed/swagger';
+import { Summary, Returns, Description, Required, Property, CollectionOf, Default } from '@tsed/schema';
 import { TodosService } from '../../services/todos/todos.service';
 import { Auth } from '../../decorators/auth.decorator';
 import { Todo } from '../../entities/todo';
@@ -22,7 +22,7 @@ class CreateTodoData {
   @Required()
   title: string;
 
-  @PropertyType(CreateTodoItemData)
+  @CollectionOf(CreateTodoItemData)
   todos: Array<CreateTodoItemData>;
 }
 
@@ -33,7 +33,7 @@ class PatchTodoData {
   @Property()
   title: string;
 
-  @PropertyType(Todo)
+  @CollectionOf(Todo)
   todos: Array<Todo>;
 }
 
@@ -48,13 +48,13 @@ export class TodosController {
   @Auth({
     passUser: true,
   })
-  @ReturnsArray(TodoList)
+  @Returns(200, Array).Of(TodoList)
   async fetchAll(
     @Description('Relationships to load. Possible values: `todos`') @QueryParams('relations', String) relations: Array<string>,
-    @QueryParams('pageNumber') @BaseParameter({ default: DEFAULT_PAGE }) pageNumber: number,
-    @QueryParams('pageSize') @BaseParameter({ default: DEFAULT_PAGE_SIZE }) pageSize: number,
-    @QueryParams('sortBy') @BaseParameter({ default: TodoListSortBy.CREATED, enum: TodoListSortBy }) sortBy: TodoListSortBy,
-    @QueryParams('sortDirection') @BaseParameter({ default: SortDirection.DESC, enum: SortDirection  }) sortDirection: SortDirection,
+    @QueryParams('pageNumber') @Default(DEFAULT_PAGE) pageNumber: number,
+    @QueryParams('pageSize') @Default(DEFAULT_PAGE_SIZE) pageSize: number,
+    @QueryParams('sortBy') @Default(TodoListSortBy.CREATED) sortBy: TodoListSortBy,
+    @QueryParams('sortDirection') @Default(SortDirection.DESC) sortDirection: SortDirection,
     @QueryParams('title') title: string,
     @Req() req: Req,
     @Res() res: Res,
@@ -81,11 +81,11 @@ export class TodosController {
   @Auth({
     passUser: true,
   })
-  @Returns(TodoList)
-  @Returns(404, { description: 'Not found', type: NotFound })
+  @Returns(200, TodoList)
+  @Returns(404).Description('Not found')
   async fetchById(
     @PathParams('uuid') uuid: string,
-    @QueryParams('relations', String) relations: Array<string>,
+    @Description('Relationships to load. Possible values: `todos`') @QueryParams('relations', String) relations: Array<string>,
     @Req() req: Req,
   ): Promise<TodoList> {
     const todoList = await this.todosService.fetchOne({
@@ -158,7 +158,7 @@ export class TodosController {
   @Auth({
     passUser: true,
   })
-  @Returns(TodoList)
+  @Returns(200, TodoList)
   async create(
     @BodyParams() todoData: CreateTodoData,
     @Req() req: Req,

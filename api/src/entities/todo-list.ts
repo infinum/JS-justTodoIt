@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, ManyToOne, Column, BaseEntity, OneToMany } from 'typeorm';
-import { Property } from '@tsed/common';
+import { Property } from "@tsed/schema";
 import { User } from './user';
 import { Todo } from './todo';
 

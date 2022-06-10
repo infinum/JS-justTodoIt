@@ -4,7 +4,7 @@ export const ROOT_DIR = process.cwd();
 export const INSIDE_DOCKER = process.env.INSIDE_DOCKER === 'true';
 
 // API
-const httpPort = parseInt(process.env.HTTP_PORT, 10) || 8080;
+const httpPort = parseInt(process.env.HTTP_PORT, 10) || '127.0.0.1:8080';
 export const HTTP_PORT = httpPort;
 
 const httpsPort = parseInt(process.env.HTTPS_PORT, 10) || false;

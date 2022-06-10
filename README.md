@@ -148,14 +148,14 @@ This page shows a paginated table of all of the user's Todos:
 #### 3.2.2. Create new Todo
 
 Todo form consists of:
-- Todo name
-- TodoItems
-  - Each TodoItem has a name and done state
+- Todo list name
+- Array of Todo items
+  - Each Todo item has a name and done state
 
 Please ensure that all the form validations are implemented:
-- Todo name is required
-- At least one TodoItem is required
-- TodoItem name is required
+- Todo list name is required
+- At least one Todo item is required
+- Todo item name is required
 
 User should not be able to trigger an API call if the form is invalid.
 
@@ -233,13 +233,13 @@ Todo fetching results are paginated. To find out how many pages there are, check
 
 When fetching all or some specific Todo, you can send relation query param with a list of relations which should be loaded. Currently available values for relations are:
 
-- `items` - includes all Todo items in the response
+- `todos` - includes all Todo items in the response
 
 #### Partial updates
 
 When updating a specific Todo, you can make a PATCH call with JSON which contains only those values which you want to update.
 
-If you want to update Todo title, just send a JSON with new `title` value and omit `items`.
+If you want to update Todo title, just send a JSON with new `title` value and omit `todos`.
 
 If you want to update items, you always have to send all the items. Any missing items from the PATCH call will get removed and any new ones will get added.
 
