@@ -1,79 +1,73 @@
-# Learn Angular
+# #neverStopTodoing
 
-Welcome to Learn Angular!
+Welcome to #neverStopTodoing!
 
-This project will help you build fundamental knowledge of various parts of Angular.
+This onboarding project will help you build fundamental knowledge of various parts of the framework that you will be working with.
 
-Before you start, we suggest reading through our [Angular Handbook](https://infinum.com/handbook/books/frontend/angular/introduction).
+After you read through this main README file, please check out framework-specific notes ([Next.js](./Nextjs.md), [Angular](./Angular.md))
 
-## 1. What is Learn Angular
+## 1. What you will build
 
-You will be developing a simple to-do list application. Requirements are simple but ensure that you make good use of various Angular features, including some features which are not covered or focused on in the official [Tour of Heroes](https://angular.io/tutorial) tutorial. We still recommend going through Tour of Heroes before starting this project as it explains many Angular features along the way.
+You will be developing a simple to-do list application. Requirements are simple but ensure that you make good use of various framework features, including areas which are not covered very often in various online tutorials.
 
-Learn Angular is more of a practical application of that gained knowledge, without too much hand-holding. There is a big focus on authentication handling because that is a part of almost every application but is rarely covered in various Angular tutorial/courses.
+#neverStopTodoing is a practical application of knowledge, without too much hand-holding. There is a big focus on authentication handling because that is a part of almost every application but is rarely covered in various framework tutorial/courses.
 
-Please take a look at this short video demonstrating what the final application might look like:
-
-
+Take a look at this short video demonstrating what the final application might look like:
 
 https://user-images.githubusercontent.com/3170728/131492134-b85e0e60-8981-4a6a-a9ac-d8d49db62b79.mp4
 
-
+Please note that the video is a recording of Angular application implementation. Next.js app might look quite a bit different, but this is the general gist of the flows.
 
 ## 2. Project structure
 
-This repository contains README.md file and `api/` directory. To get started, install `@angular/cli` globally (if you have not already) and create a new Angular project in the repository. Your final structure might look something like this:
+This repository contains some README files and `api/` directory. The frontend app you will be developing should be placed in a sibling directory, next to `/api` directory. To get started:
+
+  - React - `npx create-next-app@latest --typescript never-stop-todoing`
+  - Angular - `ng new never-stop-todoing`
+
+Your final structure might look something like this:
 
 ```
 ├── api
 │   ├── package.json
 │   └── ...
-├── learn-angular (created by @angular/cli)
+├── never-stop-todoing
 │   ├── package.json
-│   ├── angular.json
 │   └── ...
+├── ...
 └── README.md
 ```
 
-As for the Angular application file and folder organization, please refer to [File and module organization and naming](https://infinum.com/handbook/books/frontend/angular/angular-guidelines-and-best-practices/file-and-module-organization-and-naming) chapter of the Handbook.
+As for the frontend application file and folder organization, please refer to
+
+- React - [Project structure](https://infinum.com/handbook/frontend/react/project-structure) Handbook chapter
+- Angular - [File and module organization and naming](https://infinum.com/handbook/books/frontend/angular/angular-guidelines-and-best-practices/file-and-module-organization-and-naming) Handbook chapter
 
 ## 3. Application requirements & notes
 
 When implementing the application, please:
 
-- Choose some nice prefix
 - Add eslint, prettier and husky
-  - Use Infinum's [config for eslint](https://github.com/infinum/js-linters/tree/master/packages/eslint-config-angular-ts) and follow the [handbook](https://infinum.com/handbook/frontend/code-quality/tools)
-- Use lazy loading of modules
-- Use SCSS
-- Use OnPush change detection
-  - Run this command right after you generate the project
-    ```bash
-    ng config schematics.@schematics/angular.component.changeDetection OnPush
-    ```
-  - When using OnPush CD, [use async pipe at much as possible](https://infinum.com/handbook/books/frontend/angular/angular-guidelines-and-best-practices/formatting-naming-and-best-practices#avoid-manual-subscriptions-and-asynchronous-property-assignment)
-- Use [Angular Material](https://material.angular.io/guide/getting-started) to speed up component development
-  - Use whichever theme you prefer
+  - Use Infinum's [config for eslint](https://github.com/infinum/js-linters) and follow the [handbook](https://infinum.com/handbook/frontend/code-quality/tools)
+  - Run linters and check if the app compiles (e.g. using `tsc --no-emit`) in a pre-commit hook
 - Use [jwt-decode](https://github.com/auth0/jwt-decode) to parse data from tokens
-- Create `src/app/styles` directory for your shared SCSS partials
-  - Use [Style preprocessor options](https://angular.io/guide/workspace-config#style-preprocessor-options) to make SCSS import paths nicer
-- Use `APP_INITIALIZER` to fetch user data on initial application load
-  - Initialize User/Auth service with user data on success
-- Use [the single observable pattern](https://infinum.com/handbook/books/frontend/angular/angular-guidelines-and-best-practices/formatting-naming-and-best-practices#the-single-observable-pattern) in order to avoid `ng-container` hell
 - Store table pagination, sorting and filtering state in URL
-- [Create multiple layout components](https://indepth.dev/posts/1235/how-to-reuse-common-layouts-in-angular-using-router-2)
 - Re-use certain forms that have the same structure
   - e.g. activation and reset password forms
 
+Please make sure to follow any additional framework-specific requirements for [Next.js](./Nextjs.md) and [Angular](./Angular.md).
+
 ### 3.1. Authorization flow
 
-All of the authorization flow pages should be accessible to unauthorized users. If a logged in user tries to navigate to some of these routes, they should be redirected to the homepage, since it does not make sense for logged in user to see the login page.
+If a logged in user tries to navigate to some of authorization pages, they should be redirected to the homepage, since it does not make sense for logged in user to see the login page.
+
+If a logged out user tries to navigate to some of the pages that require login, they should be redirected to the login page.
 
 #### 3.1.1. Registration
 
 During registration, user enters only their e-mail address. An email is sent with activation link that the user can click. This link contains a token that you can read more about in a later section of this readme.
 
-_Note_: Backend server that is running locally does not sent an actual email. Activation link can be seen in terminal log of the server.
+_Note_: Backend server that is running locally does not sent an actual email. Activation link can be seen in terminal log of the server (as demonstrated in the video).
 
 ![Register](./.assets/app/register.png)
 
@@ -89,7 +83,7 @@ Similar to registration, password reset sends an email with password reset link 
 
 #### 3.1.4. Account activation
 
-Account activation and password reset pages are a bit different from other pages - they do not have the same layout - there is no header component and the content of the page is centred in the middle of the screen. Think about how you can achieve this without having `*ngIf`s for hiding/showing elements or style adjustments.
+Account activation and password reset pages are a bit different from other pages - they do not have the same layout - there is no header component and the content of the page is centred in the middle of the screen. Think about how you can achieve this without having `if`s for hiding/showing elements or style adjustments.
 
 ![Account activation](./.assets/app/account-activation.png)
 
@@ -109,14 +103,14 @@ Once the user is logged in, they can see their email in the header menu and trig
 
 All of the todo management routes should be protected with a guard that does not allow unauthorized users to see these pages. If an unauthorized user tries opening one of these routes, they should be redirected to login page.
 
-#### 3.2.1. Todos table
+#### 3.2.1. Table of Todo lists
 
-This page shows a paginated table of all of the user's Todos:
+This page shows a paginated table of all of the user's Todo lists:
 
 - User can go to next/previous page
-- User can sort Todos by name and creation date
+- User can sort Todo lists by name and creation date
   - Default sort: creation date, descending
-- User can filter Todos by name
+- User can filter Todo lists by name
   - API calls should be made on-the-fly as the user types (there is no submit button), with some debounce time
   - Avoid making unnecessary API calls
   - Ensure that results from the API are processed in correct order and that there are no race conditions
@@ -145,7 +139,7 @@ This page shows a paginated table of all of the user's Todos:
 ![Delete action prompt](./.assets/app/todo-list-delete-confirmation.png)
 
 
-#### 3.2.2. Create new Todo
+#### 3.2.2. Create a new Todo list
 
 Todo form consists of:
 - Todo list name
@@ -171,7 +165,7 @@ User should not be able to trigger an API call if the form is invalid.
 ##### Validation error example #2
 ![Create new Todo error example #2](./.assets/app/todo-form-error-2.png)
 
-#### 3.2.3. Edit existing Todo
+#### 3.2.3. Edit existing Todo list
 
 When the users clicks "Details" action in the table, he is navigated to a particular Todo page where they can edit the Todo. The form is identical, but the API call is different. Find a way to re-use this form.
 
@@ -219,15 +213,15 @@ In production and for real projects, token cookie would be flagged as `secure` a
 
 Since the cookie is HTTP-only, you have to make an API call to clear the cookie.
 
-### 4.2. Managing Todos
+### 4.2. Managing Todo lists
 
-Todo titles have to be unique for the user. Two user can have Todos with same title, but one user's specific Todos must all have unique titles.
+Todo titles have to be unique for the user. Two different users can have Todo lists with the same title, but one specific user's Todo lists must all have unique titles.
 
-One specific Todo must have items of unique titles.
+All items of a specific Todo list must have unique titles.
 
 #### Pagination
 
-Todo fetching results are paginated. To find out how many pages there are, check value of `X-TOTAL-COUNT` response header. If there are 12 Todos in the database, first page will return 5 results and the header will contain value `12. You can use this value together with request query parameters (current page and page size) to determine whether you can load next or previous page of results.
+Todo fetching results are paginated. To find out how many pages there are, check value of `X-TOTAL-COUNT` response header. If there are 12 Todo lists in the database, first page will return 5 results and the header will contain value `12`. You can use this value together with request query parameters (current page and page size) to determine whether you can load next or previous page of results.
 
 #### Relations
 
