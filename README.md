@@ -1,6 +1,6 @@
-# #neverStopTodoing
+# Just Todo It
 
-Welcome to #neverStopTodoing!
+Welcome to Just Todo It!
 
 This onboarding project will help you build fundamental knowledge of various parts of the framework that you will be working with.
 
@@ -10,7 +10,7 @@ After you read through this main README file, please check out framework-specifi
 
 You will be developing a simple to-do list application. Requirements are simple but ensure that you make good use of various framework features, including areas which are not covered very often in various online tutorials.
 
-#neverStopTodoing is a practical application of knowledge, without too much hand-holding. There is a big focus on authentication handling because that is a part of almost every application but is rarely covered in various framework tutorial/courses.
+Just Todo It is a practical application of knowledge, without too much hand-holding. There is a big focus on authentication handling because that is a part of almost every application but is rarely covered in various framework tutorial/courses.
 
 Take a look at this short video demonstrating what the final application might look like:
 
@@ -22,8 +22,8 @@ Please note that the video is a recording of Angular application implementation.
 
 This repository contains some README files and `api/` directory. The frontend app you will be developing should be placed in a sibling directory, next to `/api` directory. To get started:
 
-  - React - `npx create-next-app@latest --typescript never-stop-todoing`
-  - Angular - `ng new never-stop-todoing`
+  - React - `npx create-next-app@latest --typescript just-todo-it`
+  - Angular - `ng new just-todo-it`
 
 Your final structure might look something like this:
 
@@ -31,7 +31,7 @@ Your final structure might look something like this:
 ├── api
 │   ├── package.json
 │   └── ...
-├── never-stop-todoing
+├── just-todo-it
 │   ├── package.json
 │   └── ...
 ├── ...
