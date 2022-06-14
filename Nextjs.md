@@ -1,39 +1,10 @@
 # Notes for Next.js
 
-This project will help you build fundamental knowledge of various parts of React and Next.js framework.
-
 Before you start, we suggest reading through our [Getting started with React](https://infinum.com/handbook/frontend/react/getting-started-with-react/ecosystem) guide. During development, we recommend referencing our more in-depth [React guidelines and practices](https://infinum.com/handbook/books/frontend/react/react-guidelines-and-best-practices) handbook.
 
 You will build this app with Next.js framework so we also suggest you to go through official [Learn Next.js](https://nextjs.org/learn/basics/create-nextjs-app) tutorial.
 
-## 1. What you will build
-
-You will be developing a simple to-do list application. Requirements are simple but ensure that you make good use of various React features.
-
-Learn React is more of a practical application of that gained knowledge, without too much hand-holding. There is a big focus on authentication handling because that is part of almost every application you will be developing in the future, so it is good to learn some best practices early-on.
-
-## 2. Project structure
-
-This repository contains README.md file and `api/` directory.
-To get started, use `create-next-app` and create a new Next.js project in the repository.
-
-```bash
-npx create-next-app@latest learn-react -e https://github.com/infinum/JS-React-Example/tree/onboarding-starter --use-npm
-```
-
-Your final structure might look something like this:
-
-- api/
-  - package.json
-  - ...
-- learn-react/ - _created by create-next-app_
-  - src/
-  - package.json
-  - tsconfig.json
-  - ...
-- README.md
-
-## 3. Application requirements / notes
+## 1. Application requirements & notes
 
 Please follow these requirements:
 
@@ -64,13 +35,13 @@ API Development proxy setup:
 To make it work you just need to duplicate `.env.example` file, rename it to `.env.local`.
 If you need more info about the setup you can find it here [here](https://infinum.com/handbook/frontend/react/next/development-proxy).
 
-### 3.1. Authorization flow
+### 1.1. Authorization flow
 
 If a logged in user tries to navigate to some of authorization pages, they should be redirected to the homepage, since it does not make sense for logged in user to see the login page.
 
 If a logged out user tries to navigate to some of the pages that require login, they should be redirected to the login page.
 
-#### 3.1.1. Registration
+#### 1.1.1. Registration
 
 During registration, user enters only their e-mail address. An email is sent with activation link that the user can click. This link contains a token that you can read more about in a later section of this readme.
 
@@ -99,37 +70,37 @@ _Note_: Backend server that is running locally does not sent an actual email. Ac
 
 ![Register](./.assets/app/rnextjs/egister.png)
 
-#### 3.1.2. Login
+#### 1.1.2. Login
 
 ![Login](./.assets/app/nextjs/login.png)
 
-#### 3.1.3. Request password reset
+#### 1.1.3. Request password reset
 
 Similar to registration, password reset sends an email with password reset link that includes a token. Again, no actual email is sent, you can get the link from the terminal log of the server.
 
 ![Request password reset](./.assets/app/nextjs/forgot-password.png)
 
-#### 3.1.4. Account activation
+#### 1.1.4. Account activation
 
 ![Account activation](./.assets/app/nextjs/activation.png)
 
-#### 3.1.5. Password reset
+#### 1.1.5. Password reset
 
 This page is opened once the user follows the link from request password reset email. URL contains a token similar to the one for activation. Again, more info about these tokens can be found in a later chapter.
 
 ![Reset password](./.assets/app/nextjs/reset-password.png)
 
-#### 3.1.6. User menu
+#### 1.1.6. User menu
 
 Once the user is logged in, they can see avatar icon in the header menu and trigger log out action from the dropdown menu that is opened when the user clicks on their email.
 
 ![Reset password](./.assets/app/nextjs/user-menu.png)
 
-### 3.2. Managing Todos
+### 1.2. Managing Todos
 
 All of the todo management routes should be protected with a guard that does not allow unauthorized users to see these pages. If an unauthorized user tries opening one of these routes, they should be redirected to login page.
 
-#### 3.2.1. Table of Todo lists
+#### 1.2.1. Table of Todo lists
 
 This page shows a paginated table of all of the user's Todo lists:
 
@@ -169,7 +140,7 @@ This page shows a paginated table of all of the user's Todo lists:
 
 ![Delete action prompt](./.assets/app/nextjs/todo-list-delete-confirmation.png)
 
-#### 3.2.2. Create a new Todo list
+#### 1.2.2. Create a new Todo list
 
 Todo form consists of:
 - Todo list name
@@ -196,9 +167,8 @@ User should not be able to trigger an API call if the form is invalid.
 
 ![Create new Todo error example #1](./.assets/app/nextjs/todo-form-error.png)
 
-#### 3.2.3. Edit existing Todo
+#### 1.2.3. Edit existing Todo
 
 When the users clicks "Details" action in the table, he is navigated to a particular Todo page where they can edit the Todo. The form is identical, but the API call is different. Find a way to re-use this form.
 
 ![Edit existing Todo](./.assets/app/nextjs/todo-form-edit-existing.png)
-
