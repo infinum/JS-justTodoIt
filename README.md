@@ -4,7 +4,9 @@ Welcome to Just Todo It!
 
 This onboarding project will help you build fundamental knowledge of various parts of the framework that you will be working with.
 
-After you read through this main README file, please check out framework-specific notes ([Next.js](./Nextjs.md), [Angular](./Angular.md))
+After you read through this main README file, please check out framework-specific notes:
+- [Next.js](./Nextjs.md)
+- [Angular](./Angular.md)
 
 ## 1. What you will build
 
