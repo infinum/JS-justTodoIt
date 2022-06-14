@@ -66,7 +66,9 @@ If you need more info about the setup you can find it here [here](https://infinu
 
 ### 3.1. Authorization flow
 
-All of the authorization flow pages should be accessible to unauthorized users. If a logged in user tries to navigate to some of these routes, they should be redirected to the homepage, since it does not make sense for logged in user to see the login page.
+If a logged in user tries to navigate to some of authorization pages, they should be redirected to the homepage, since it does not make sense for logged in user to see the login page.
+
+If a logged out user tries to navigate to some of the pages that require login, they should be redirected to the login page.
 
 #### 3.1.1. Registration
 
@@ -127,14 +129,14 @@ Once the user is logged in, they can see avatar icon in the header menu and trig
 
 All of the todo management routes should be protected with a guard that does not allow unauthorized users to see these pages. If an unauthorized user tries opening one of these routes, they should be redirected to login page.
 
-#### 3.2.1. Todos table
+#### 3.2.1. Table of Todo lists
 
-This page shows a paginated table of all of the user's Todos:
+This page shows a paginated table of all of the user's Todo lists:
 
 - User can go to next/previous page
-- User can sort Todos by title and creation date
+- User can sort Todo lists by name and creation date
   - Default sort: creation date, descending
-- User can filter Todos by title
+- User can filter Todo lists by name
   - API calls should be made on-the-fly as the user types (there is no submit button), with some debounce time
   - Avoid making unnecessary API calls
   - Ensure that results from the API are processed in correct order and that there are no race conditions
@@ -167,19 +169,17 @@ This page shows a paginated table of all of the user's Todos:
 
 ![Delete action prompt](./.assets/app/nextjs/todo-list-delete-confirmation.png)
 
-#### 3.2.2. Create new Todo
+#### 3.2.2. Create a new Todo list
 
 Todo form consists of:
-
-- Todo name
-- TodoItems
-  - Each TodoItem has a name and done state
+- Todo list name
+- Array of Todo items
+  - Each Todo item has a name and done state
 
 Please ensure that all the form validations are implemented:
-
-- Todo name is required
-- At least one TodoItem is required
-- TodoItem name is required
+- Todo list name is required
+- At least one Todo item is required
+- Todo item name is required
 
 User should not be able to trigger an API call if the form is invalid.
 
