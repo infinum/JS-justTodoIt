@@ -95,33 +95,33 @@ Additional notes:
 
 _Note_: Backend server that is running locally does not sent an actual email. Activation link can be seen in terminal log of the server.
 
-![Register](./.assets/app/register.png)
+![Register](./.assets/app/rnextjs/egister.png)
 
 #### 3.1.2. Login
 
-![Login](./.assets/app/login.png)
+![Login](./.assets/app/nextjs/login.png)
 
 #### 3.1.3. Request password reset
 
 Similar to registration, password reset sends an email with password reset link that includes a token. Again, no actual email is sent, you can get the link from the terminal log of the server.
 
-![Request password reset](./.assets/app/forgot-password.png)
+![Request password reset](./.assets/app/nextjs/forgot-password.png)
 
 #### 3.1.4. Account activation
 
-![Account activation](./.assets/app/activation.png)
+![Account activation](./.assets/app/nextjs/activation.png)
 
 #### 3.1.5. Password reset
 
 This page is opened once the user follows the link from request password reset email. URL contains a token similar to the one for activation. Again, more info about these tokens can be found in a later chapter.
 
-![Reset password](./.assets/app/reset-password.png)
+![Reset password](./.assets/app/nextjs/reset-password.png)
 
 #### 3.1.6. User menu
 
 Once the user is logged in, they can see avatar icon in the header menu and trigger log out action from the dropdown menu that is opened when the user clicks on their email.
 
-![Reset password](./.assets/app/user-menu.png)
+![Reset password](./.assets/app/nextjs/user-menu.png)
 
 ### 3.2. Managing Todos
 
@@ -149,23 +149,23 @@ This page shows a paginated table of all of the user's Todos:
 
 ##### Empty state
 
-![Empty state](./.assets/app/todo-list-empty.png)
+![Empty state](./.assets/app/nextjs/todo-list-empty.png)
 
 ##### Table with some items
 
-![Empty state](./.assets/app/todo-list.png)
+![Empty state](./.assets/app/nextjs/todo-list.png)
 
 ##### Sorted by title
 
-![Sort by name](./.assets/app/todo-list-sort.png)
+![Sort by name](./.assets/app/nextjs/todo-list-sort.png)
 
 ##### Filters
 
-![Name filter](./.assets/app/todo-list-filters.png)
+![Name filter](./.assets/app/nextjs/todo-list-filters.png)
 
 ##### Delete action prompt
 
-![Delete action prompt](./.assets/app/todo-list-delete-confirmation.png)
+![Delete action prompt](./.assets/app/nextjs/todo-list-delete-confirmation.png)
 
 #### 3.2.2. Create new Todo
 
@@ -185,20 +185,20 @@ User should not be able to trigger an API call if the form is invalid.
 
 ##### Empty state
 
-![Create new Todo empty state](./.assets/app/todo-form-create-new-empty.png)
+![Create new Todo empty state](./.assets/app/nextjs/todo-form-create-new-empty.png)
 
 ##### Filled out
 
-![Create new Todo empty state](./.assets/app/todo-form-create-new-filled.png)
+![Create new Todo empty state](./.assets/app/nextjs/todo-form-create-new-filled.png)
 
 
 ##### Validation error example #1
 
-![Create new Todo error example #1](./.assets/app/todo-form-error.png)
+![Create new Todo error example #1](./.assets/app/nextjs/todo-form-error.png)
 
 #### 3.2.3. Edit existing Todo
 
 When the users clicks "Details" action in the table, he is navigated to a particular Todo page where they can edit the Todo. The form is identical, but the API call is different. Find a way to re-use this form.
 
-![Edit existing Todo](./.assets/app/todo-form-edit-existing.png)
+![Edit existing Todo](./.assets/app/nextjs/todo-form-edit-existing.png)
 
