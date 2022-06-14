@@ -6,7 +6,7 @@ Before you start, we suggest reading through our [Getting started with React](ht
 
 You will build this app with Next.js framework so we also suggest you to go through official [Learn Next.js](https://nextjs.org/learn/basics/create-nextjs-app) tutorial.
 
-## 1. What is Learn React
+## 1. What you will build
 
 You will be developing a simple to-do list application. Requirements are simple but ensure that you make good use of various React features.
 
