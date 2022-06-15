@@ -68,7 +68,7 @@ Additional notes:
 
 _Note_: Backend server that is running locally does not sent an actual email. Activation link can be seen in terminal log of the server.
 
-![Register](./.assets/app/rnextjs/egister.png)
+![Register](./.assets/app/nextjs/register.png)
 
 #### 1.1.2. Login
 
