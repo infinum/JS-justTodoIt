@@ -10,12 +10,12 @@ See [Ts.ED](https://tsed.io) project for more information.
 
 ```batch
 # install dependencies
-$ yarn install
+$ npm ci
 
 # serve
-$ yarn start
+$ npm run start
 
 # build for production
-$ yarn build
-$ yarn start:prod
+$ npm run build
+$ npm run start:prod
 ```
