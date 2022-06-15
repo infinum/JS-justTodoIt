@@ -12,7 +12,7 @@ After you read through this main README file, please check out framework-specifi
 
 You will be developing a simple to-do list application. Requirements are simple but ensure that you make good use of various framework features, including areas which are not covered very often in various online tutorials.
 
-Just Todo It is a practical application of knowledge, without too much hand-holding. There is a big focus on authentication handling because that is a part of almost every application but is rarely covered in various framework tutorial/courses.
+Just Todo It is a practical application of knowledge, without too much hand-holding. There is a big focus on authentication handling because that is a part of almost every application but is rarely covered in various framework tutorial/courses, so it is good to learn some best practices early-on.
 
 Take a look at this short video demonstrating what the final application might look like:
 
@@ -24,8 +24,14 @@ Please note that the video is a recording of Angular application implementation.
 
 This repository contains some README files and `api/` directory. The frontend app you will be developing should be placed in a sibling directory, next to `/api` directory. To get started:
 
-  - React - `npx create-next-app@latest --typescript just-todo-it`
-  - Angular - `ng new just-todo-it`
+  - React
+    ```bash
+    npx create-next-app@latest just-todo-it -e https://github.com/infinum/JS-React-Example/tree/onboarding-starter --use-npm
+    ```
+  - Angular
+    ```bash
+    ng new just-todo-it
+    ```
 
 Your final structure might look something like this:
 
@@ -40,10 +46,10 @@ Your final structure might look something like this:
 └── README.md
 ```
 
-As for the frontend application file and folder organization, please refer to
+As for the frontend application file and folder organization, please refer to:
 
-- React - [Project structure](https://infinum.com/handbook/frontend/react/project-structure) Handbook chapter
-- Angular - [File and module organization and naming](https://infinum.com/handbook/books/frontend/angular/angular-guidelines-and-best-practices/file-and-module-organization-and-naming) Handbook chapter
+  - React - [Project structure](https://infinum.com/handbook/frontend/react/project-structure) Handbook chapter
+  - Angular - [File and module organization and naming](https://infinum.com/handbook/books/frontend/angular/angular-guidelines-and-best-practices/file-and-module-organization-and-naming) Handbook chapter
 
 ## 3. Application requirements & notes
 
