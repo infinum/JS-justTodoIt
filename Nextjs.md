@@ -4,6 +4,8 @@ Before you start, we suggest reading through our [Getting started with React](ht
 
 You will build this app with Next.js framework so we also suggest you to go through official [Learn Next.js](https://nextjs.org/learn/basics/create-nextjs-app) tutorial.
 
+If you need information about React core API be sure to check [React Docs](https://reactjs.org/) and for more hooks oriented docs check [React Beta Docs](https://beta.reactjs.org/).
+
 ## 1. Application requirements & notes
 
 Please follow these requirements:
