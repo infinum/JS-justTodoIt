@@ -60,7 +60,7 @@ export class TodosService {
     }
 
     const where: FindConditions<TodoList> = {
-      user,
+      // user,
     }
 
     if (title) {

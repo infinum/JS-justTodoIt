@@ -16,15 +16,21 @@ import { join } from 'path';
 import { ErrorHandlingMiddleware } from './middlewares/error-handling.middleware';
 import { CustomHeader } from './enums/custom-headers.enum';
 import { Request, Response, NextFunction } from 'express';
+import { JsonapiResponseFilter } from './response-filters/jsonapi.response-filter';
 
 @Configuration({
   rootDir: SRC_DIR,
   acceptMimes: ['application/json'],
   httpPort: HTTP_PORT,
   httpsPort: HTTPS_PORT,
+  responseFilters: [JsonapiResponseFilter],
   mount: {
     '/': [
-      `${SRC_DIR}/controllers/**/*.controller.ts`
+      `${SRC_DIR}/controllers/**/*.controller.ts`,
+      `!${SRC_DIR}/controllers/jsonapi/**/*.controller.ts`
+    ],
+    '/jsonapi': [
+      `${SRC_DIR}/controllers/jsonapi/**/*.controller.ts`,
     ]
   },
   typeorm: ormConfig,
