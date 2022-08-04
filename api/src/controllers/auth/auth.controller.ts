@@ -102,7 +102,7 @@ export class AuthController {
     @BodyParams() { email }: ResendActivationEmailData,
     @Res() res: Res,
   ): Promise<void> {
-    const user = await this.userService.fetch({ email });
+    const user = await this.userService.fetch({ email, getActivationToken: true, getPasswordHash: true });
 
     if (!user) {
       throw new BadRequest(ResponseErrorCode.USER_DOES_NOT_EXISTS, { email });
@@ -114,6 +114,8 @@ export class AuthController {
 
     const activationToken = await this.userService.createActivationToken(user);
     this.userService.sendActivationEmail(user.email, activationToken);
+
+    await user.save();
 
     res.sendStatus(204);
   }
