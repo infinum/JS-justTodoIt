@@ -39,24 +39,36 @@ export class UserService {
       user.passwordHash = await this.generateHash(registrationData.password);
     } else {
       user = await user.save();
-      const activationToken = await this.authService.createActivationToken({
-        email: registrationData.email,
-        uuid: user.uuid,
-      });
-      user.activationToken = activationToken;
-      const activationLink = `${FRONTEND_URL}/activate-account?token=${activationToken}`;
 
-      await this.emailService.sendEmail({
-        to: user.email,
-        subject: 'Learn Angular: Account activation link',
-        content: {
-          plain: activationLink,
-          html: `<a href="${activationLink}">${activationLink}</a>`,
-        },
-      });
+      const activationToken = await this.createActivationToken(user);
+      await this.sendActivationEmail(user.email, activationToken);
     }
 
     return user.save();
+  }
+
+  async createActivationToken(user: User): Promise<string> {
+    const activationToken = await this.authService.createActivationToken({
+      email: user.email,
+      uuid: user.uuid,
+    });
+
+    user.activationToken = activationToken;
+
+    return activationToken;
+  }
+
+  async sendActivationEmail(email: string, activationToken: string): Promise<void> {
+    const activationLink = `${FRONTEND_URL}/activate-account?token=${activationToken}`;
+
+    return this.emailService.sendEmail({
+      to: email,
+      subject: 'Learn Angular: Account activation link',
+      content: {
+        plain: activationLink,
+        html: `<a href="${activationLink}">${activationLink}</a>`,
+      },
+    });
   }
 
   async activate(activationData: IPasswordSettingData): Promise<false | User> {

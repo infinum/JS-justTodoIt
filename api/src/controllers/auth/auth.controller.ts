@@ -6,7 +6,7 @@ import { User } from '../../entities/user';
 import { ResponseErrorCode } from '../../enums/response-error-code.enum';
 import { AuthService } from '../../services/auth/auth.service';
 import { UserService } from '../../services/user/user.service';
-import { BadRequest, Forbidden, NotFound, PreconditionFailed } from '@tsed/exceptions';
+import { BadRequest, Forbidden, NotFound, PreconditionFailed, UnprocessableEntity } from '@tsed/exceptions';
 import { DemographicProfile } from '../../entities/demographic-profile';
 import { Gender } from '../../enums/gender.enum';
 import { NewsletterPreferences } from '../../entities/newsletter-preferences';
@@ -19,6 +19,12 @@ class RegisterData {
   @Property()
   @Description('User will automatically be activated if password is set during registration')
   password: string;
+}
+
+class ResendActivationEmailData {
+  @Required()
+  @Email()
+  email: string;
 }
 
 class LoginData {
@@ -85,6 +91,31 @@ export class AuthController {
     res.user = user;
 
     return user;
+  }
+
+  @Post('/resend-activation-email')
+  @Summary('Resend activation email')
+  @Returns(204)
+  @Returns(BadRequest.STATUS).Description('User with given email does not exist')
+  @Returns(UnprocessableEntity.STATUS).Description('User with given email has already been activated')
+  async resendActivationEmail(
+    @BodyParams() { email }: ResendActivationEmailData,
+    @Res() res: Res,
+  ): Promise<void> {
+    const user = await this.userService.fetch({ email });
+
+    if (!user) {
+      throw new BadRequest(ResponseErrorCode.USER_DOES_NOT_EXISTS, { email });
+    }
+
+    if (user.isActivated) {
+      throw new UnprocessableEntity(ResponseErrorCode.USER_ALREADY_ACTIVATED, { email });
+    }
+
+    const activationToken = await this.userService.createActivationToken(user);
+    this.userService.sendActivationEmail(user.email, activationToken);
+
+    res.sendStatus(204);
   }
 
   @Post('/login')
