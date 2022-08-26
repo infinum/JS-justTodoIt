@@ -9,13 +9,16 @@ export const ormConfig: Array<ConnectionOptions> = [
     "synchronize": true,
     "logging": true,
     "entities": [
-      `${SRC_DIR}/entities/**/*.ts`
+      `${SRC_DIR}/entities/**/*.ts`,
+      `${SRC_DIR}/entities/**/*.js`
     ],
     "migrations": [
-      `${SRC_DIR}/migration/**/*.ts`
+      `${SRC_DIR}/migration/**/*.ts`,
+      `${SRC_DIR}/entities/**/*.js`
     ],
     "subscribers": [
-      `${SRC_DIR}/subscriber/**/*.ts`
+      `${SRC_DIR}/subscriber/**/*.ts`,
+      `${SRC_DIR}/entities/**/*.js`
     ],
     "cli": {
       "entitiesDir": `${SRC_DIR}/entity`,
