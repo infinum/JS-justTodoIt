@@ -14,11 +14,11 @@ export const ormConfig: Array<ConnectionOptions> = [
     ],
     "migrations": [
       `${SRC_DIR}/migration/**/*.ts`,
-      `${SRC_DIR}/entities/**/*.js`
+      `${SRC_DIR}/migration/**/*.js`
     ],
     "subscribers": [
       `${SRC_DIR}/subscriber/**/*.ts`,
-      `${SRC_DIR}/entities/**/*.js`
+      `${SRC_DIR}/subscriber/**/*.js`
     ],
     "cli": {
       "entitiesDir": `${SRC_DIR}/entity`,
