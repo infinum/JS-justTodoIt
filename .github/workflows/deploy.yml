@@ -55,4 +55,3 @@ jobs:
           script: |
             cd www/${{ secrets.DOMAIN_STAGING }}/
             npm ci
-            npm run build
