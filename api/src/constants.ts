@@ -31,3 +31,4 @@ export const COOKIE_SECURE = process.env.COOKIE_SECURE === 'true';
 export const EXTEND_TOKEN_DURATION_AUTOMATICALLY = process.env.EXTEND_TOKEN_DURATION_AUTOMATICALLY !== 'false';
 export const EXTEND_TOKEN_FREQUENCY_S = parseInt(process.env.EXTEND_TOKEN_FREQUENCY_S, 10) || 60 * 60; // 1h
 export const EXTEND_TOKEN_REVOCATION_DELAY_S = parseInt(process.env.EXTEND_TOKEN_REVOCATION_DELAY_S, 10) || 60; // 1min
+export const MAILGUN_API_KEY = process.env.MAILGUN_API_KEY || 'key-yourkeyhere';
