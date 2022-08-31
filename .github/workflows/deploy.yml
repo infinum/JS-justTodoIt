@@ -55,3 +55,4 @@ jobs:
           script: |
             cd www/${{ secrets.DOMAIN_STAGING }}/
             npm ci
+            secrets pull -e staging
