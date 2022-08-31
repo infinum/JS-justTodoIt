@@ -11,8 +11,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build:
-    name: Build
+  deploy:
+    name: Deploy
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -34,15 +34,6 @@ jobs:
           npm ci
           npm run build
 
-  deploy:
-    name: Deploy
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        node: [16.x]
-
-    steps:
       - name: rsync deployment to staging
         uses: burnett01/rsync-deployments@5.2.1
         with:
@@ -52,16 +43,16 @@ jobs:
           remote_host: ${{ secrets.DOMAIN_STAGING }}
           remote_port: 229
           remote_user: ${{ secrets.USER_STAGING }}
-          remote_key: ${{ secrets.SSH_PRIVATE_KEY_STAGING }}          
+          remote_key: ${{ secrets.SSH_PRIVATE_KEY_STAGING }}
 
       - name: Deploy the application to staging
-        uses: appleboy/ssh-action@0.1.5
+        uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.DOMAIN_STAGING }}
           username: ${{ secrets.USER_STAGING }}
           key: ${{ secrets.SSH_PRIVATE_KEY_STAGING }}
           port: 229
           script: |
+            cd www/${{ secrets.DOMAIN_STAGING }}/
             npm ci
             npm run build
-            node index.js
