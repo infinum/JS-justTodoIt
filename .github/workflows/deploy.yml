@@ -34,7 +34,7 @@ jobs:
           npm ci
           npm run build
 
-      - name: rsync deployment to staging
+      - name: Copy deployment to staging
         uses: burnett01/rsync-deployments@5.2.1
         with:
           switches: -avzr --delete
@@ -45,7 +45,7 @@ jobs:
           remote_user: ${{ secrets.USER_STAGING }}
           remote_key: ${{ secrets.SSH_PRIVATE_KEY_STAGING }}
 
-      - name: Deploy the application to staging
+      - name: Deploy to staging
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.DOMAIN_STAGING }}
@@ -55,4 +55,25 @@ jobs:
           script: |
             cd www/${{ secrets.DOMAIN_STAGING }}/
             npm ci
-            secrets pull -e staging
+
+      - name: Import Secrets
+        uses: hashicorp/vault-action@v2.4.0
+        with:
+          url: ${{ secrets.VAULT_ADDR }}
+          caCertificate: ${{ secrets.VAULT_CA_CERT }}
+          method: approle
+          roleId: ${{ secrets.VAULT_ROLE_ID }}
+          secretId: ${{ secrets.VAULT_SECRET_ID }}
+          secrets: |
+            secret/js/js-api-onboarding/staging secrets | staging_secrets ;
+
+      - name: Add secrets to staging
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.DOMAIN_STAGING }}
+          username: ${{ secrets.USER_STAGING }}
+          key: ${{ secrets.SSH_PRIVATE_KEY_STAGING }}
+          port: 229
+          script: |
+            cd www/${{ secrets.DOMAIN_STAGING }}/
+            echo "::add-mask::${{ env.staging_secrets }}" > .env
