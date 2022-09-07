@@ -64,7 +64,7 @@ jobs:
           roleId: ${{ secrets.VAULT_ROLE_ID }}
           secretId: ${{ secrets.VAULT_SECRET_ID }}
           secrets: |
-            js/data/js-api-onboarding/staging secrets | staging_secrets ;
+            js/js-api-onboarding/staging secrets | staging_secrets ;
 
       - name: Add secrets to staging
         uses: appleboy/ssh-action@master
