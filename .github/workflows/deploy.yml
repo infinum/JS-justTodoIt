@@ -37,9 +37,9 @@ jobs:
       - name: Copy deployment to staging
         uses: burnett01/rsync-deployments@5.2.1
         with:
-          switches: -avzr --delete
+          switches: -avzr
           path: api/dist/
-          remote_path: /home/${{ secrets.USER_STAGING }}/www/${{ secrets.DOMAIN_STAGING }}/
+          remote_path: /home/${{ secrets.USER_STAGING }}/www/${{ secrets.DOMAIN_STAGING }}/releases/${{ steps.commit.outputs.short }}/
           remote_host: ${{ secrets.DOMAIN_STAGING }}
           remote_port: 229
           remote_user: ${{ secrets.USER_STAGING }}
@@ -53,8 +53,10 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY_STAGING }}
           port: 229
           script: |
-            cd www/${{ secrets.DOMAIN_STAGING }}/
+            cd www/${{ secrets.DOMAIN_STAGING }}/releases/${{ steps.commit.outputs.short }}
             npm ci
+            cd ~/www/${{ secrets.DOMAIN_STAGING }}
+            ln -s releases/${{ steps.commit.outputs.short }} current
 
       - name: Import Secrets
         uses: hashicorp/vault-action@v2.4.0
@@ -74,5 +76,6 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY_STAGING }}
           port: 229
           script: |
-            cd www/${{ secrets.DOMAIN_STAGING }}/
+            cd www/${{ secrets.DOMAIN_STAGING }}/current/
             echo "::add-mask::${{ env.staging_secrets }}" > .env
+            passenger-config restart-app
