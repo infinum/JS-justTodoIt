@@ -45,7 +45,6 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY_STAGING }}
           port: 229
           script: |
-            ls -tl ~/www/${{ secrets.DOMAIN_STAGING }}/releases/ | tail -n +4 | awk '{print $9}' | xargs rm -rf {}
             mkdir -p ~/www/${{ secrets.DOMAIN_STAGING }}/releases/${{ steps.commit.outputs.short }}
 
       - name: Copy deployment to staging
@@ -67,10 +66,8 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY_STAGING }}
           port: 229
           script: |
-            cd www/${{ secrets.DOMAIN_STAGING }}/releases/${{ steps.commit.outputs.short }}
+            cd ~/www/${{ secrets.DOMAIN_STAGING }}/releases/${{ steps.commit.outputs.short }}
             npm ci
-            cd ~/www/${{ secrets.DOMAIN_STAGING }}
-            ln -nfs releases/${{ steps.commit.outputs.short }}/ current
 
       - name: Import Secrets
         uses: hashicorp/vault-action@v2.4.0
@@ -90,6 +87,18 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY_STAGING }}
           port: 229
           script: |
-            cd www/${{ secrets.DOMAIN_STAGING }}/current/
+            cd ~/www/${{ secrets.DOMAIN_STAGING }}
+            ln -nfs releases/${{ steps.commit.outputs.short }}/ current
+            cd current
             echo "::add-mask::${{ env.staging_secrets }}" > .env
             passenger-config restart-app ~/www/${{ secrets.DOMAIN_STAGING }}/current
+
+      - name: Clean up release folder
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.DOMAIN_STAGING }}
+          username: ${{ secrets.USER_STAGING }}
+          key: ${{ secrets.SSH_PRIVATE_KEY_STAGING }}
+          port: 229
+          script: |
+            cd ~/www/${{ secrets.DOMAIN_STAGING }}/releases/ && ls -tl | tail -n +5 | awk '{print $9}' | xargs rm -rf {}
