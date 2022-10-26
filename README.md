@@ -22,7 +22,7 @@ This repository contains some README files and `api/` directory. The frontend ap
 
   - React
     ```bash
-    npx create-next-app@latest just-todo-it -e https://github.com/infinum/JS-React-Example/tree/onboarding-starter --use-npm
+    npx create-next-app@latest just-todo-it -e https://github.com/infinum/JS-React-Example/tree/project-starter-template --use-npm
     ```
   - Angular
     ```bash
