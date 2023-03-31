@@ -13,8 +13,7 @@ Please follow these requirements:
 - Use React hooks
 - Get familiar with [Chakra UI](https://chakra-ui.com) component library
 - Use [SWR](https://swr.vercel.app/) hook for fetching data
-- Use [useMutation](https://github.com/infinum/use-mutation) hook for mutating data.
-  - This is a temporary solution until SWR adds build in support for [remote mutation](https://github.com/vercel/swr/pull/1450)
+- Use [useSWRMutation](https://swr.vercel.app/docs/mutation#useswrmutation) hook for mutating data.
 - Use [React Hook Form](https://react-hook-form.com/) for handling forms
 - Uee [React Hook Form - Error Message](https://github.com/react-hook-form/error-message)
 - Use [React Hook Form - useFieldArray](https://react-hook-form.com/api/usefieldarray) for adding and removing todos
@@ -28,7 +27,7 @@ Application UI structure:
     - User menu shows user's email and `Log out` button if the user is logged in
 - `TodoLists` component for rendering, sorting, filtering and creation of paginated `TodoList` collection
 - `TodoListDetails` component for preview and update `TodoList` details
-- `TodoListForm` component which uses `useFieldArray` and `useForm` for handling form inputs, and `useMutation` to handle mutations
+- `TodoListForm` component which uses `useFieldArray` and `useForm` for handling form inputs, and `useSWRMutation` to handle mutations
 
 > Check the [Project structure](https://infinum.com/handbook/frontend/react/project-structure) Handbook for better understanding
 
