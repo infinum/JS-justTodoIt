@@ -31,7 +31,7 @@ Application UI structure:
 - `Layout` component for sharing navigation between pages
   - `Navigation` component with application title and user menu
     - User menu shows `Log in` and `Register` links if the user is not logged in
-    - User menu shows user`s email and `Log out` button if the user is logged in
+    - User menu shows user's email and `Log out` button if the user is logged in
 - `TodoLists` component for rendering, sorting, filtering and creation of paginated `TodoList` collection
 - `TodoListDetails` component for preview and update `TodoList` details
 - `TodoListForm` component which uses `useFieldArray` and `useForm` for handling form inputs, and `useSWRMutation` to handle mutations
