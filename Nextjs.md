@@ -214,7 +214,7 @@ Implement server side rendering for Todo list page that we implemented in the pr
 
 Use `fetcher` function form `src/lib/fetcher.ts` directly because you can't use SWR on the server. Make sure to pass cookie headers to the second parameter of the `fetcher` function.
 
-Construct the `fallback` object with the key/value paris where key is the URL and value is the raw response, ad pass it to the SWRConfig component. This will ensure that the client side SWR will not make an additional request to the server.
+Construct the `fallback` object with the key-value paris where key is the URL and value is the raw response, ad pass it to the SWRConfig component. This will ensure that the client side SWR will not make an additional request to the server.
 
 ```tsx
 // src/pages/index.tsx
