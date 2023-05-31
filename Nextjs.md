@@ -204,7 +204,7 @@ Server side rendering is a technique that allows us to render the initial HTML o
 
 Common pitfalls & tricks:
 
-- Cookies are not sent to the server by default. You need to explicitly send them with the request. You read the existing cookie form the [context](https://nextjs.org/docs/pages/api-reference/functions/get-server-side-props#context-parameter) `req` object and send it with the request.
+- Cookies are not sent to the server by default. You need to explicitly send them with the request. You can read the existing cookie form the [context](https://nextjs.org/docs/pages/api-reference/functions/get-server-side-props#context-parameter) `req` object and send it with the request.
 - You need to send the request to the API server, not the Next.js server.
 - You need to handle [notFound](https://nextjs.org/docs/pages/api-reference/functions/get-server-side-props#notfound) and [redirects](https://nextjs.org/docs/pages/api-reference/functions/get-server-side-props#redirect) on the server.
 
