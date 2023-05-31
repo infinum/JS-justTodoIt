@@ -68,7 +68,7 @@ Additional notes:
 - User should be able to log out
 - Application should load user data upon full page reload
   - Utilize `GET` `/auth/user` API call and think about what is the best way to load user data during app initialization
-  - implement `useUser` hook that uses `useSWR` under the hood to leverage `caching` and API calls `deduping`
+  - implement `useUser` hook that uses `useSWR` under the hood to leverage `caching` and API calls `dedupe`
   - use `fetcher` function abstraction located in `src/lib/fetcher.ts` to handle API calls. You can provide it globally with `SWRConfig` [Global Configuration](https://swr.vercel.app/docs/global-configuration)
 - If user enters `/login` route while already logged in, he should be redirected to `/`
   - implement `AuthRedirect` component based on the handbook tutorial [Session Handling](https://infinum.com/handbook/frontend/react/recipes/session-handling)
