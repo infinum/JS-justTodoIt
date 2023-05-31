@@ -321,4 +321,4 @@ Write some tests, for example:
   - `should delete item`
   - `should navigate to edit page`
 
-> **Note:** Test cases above are just examples. Real test cases depends on how you implement the components, but they should should be similar to the ones above. Fell free to add more test cases.
+> **Note:** Test cases above are just examples. Real test cases depends on how you implement the components, but they should be similar to the ones above. Fell free to add more test cases.
