@@ -280,7 +280,7 @@ export const getServerSideProps = async ({ req }) => {
 
 ### 1.3.3. Todo details
 
-D the same as above, but for the Todo details page. Red the `id` from the context `req` and fetch the Todo details from the API server.
+Do the same as above, but for the Todo details page. Red the `id` from the context `req` and fetch the Todo details from the API server.
 
 ```tsx
 // src/pages/[id].tsx
