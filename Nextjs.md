@@ -13,11 +13,18 @@ Please follow these requirements:
 - Use React hooks
 - Get familiar with [Chakra UI](https://chakra-ui.com) component library
 - Use [SWR](https://swr.vercel.app/) hook for fetching data
+  - Use use `fetcher` function abstraction located in `src/lib/fetcher.ts` and provide it globally with [Global Configuration](https://swr.vercel.app/docs/global-configuration)
 - Use [useSWRMutation](https://swr.vercel.app/docs/mutation#useswrmutation) hook for mutating data.
+  - Use `mutator` function abstraction located in `src/lib/mutator.ts` to perform `POST`, `PUT`, `PATCH`, `DELETE` actions.
 - Use [React Hook Form](https://react-hook-form.com/) for handling forms
 - Uee [React Hook Form - Error Message](https://github.com/react-hook-form/error-message)
 - Use [React Hook Form - useFieldArray](https://react-hook-form.com/api/usefieldarray) for adding and removing todos
 - Use [jwt-decode](https://github.com/auth0/jwt-decode) to parse data from tokens
+- Get familiar with Next.js data fetching concepts:
+  - Server Side Rendering (SSR): [getStaticProps](https://nextjs.org/docs/pages/building-your-application/data-fetching/get-server-side-props)
+  - Static Site Generation (SSG): [getStaticProps](https://nextjs.org/docs/pages/building-your-application/data-fetching/get-static-props), [getStaticPaths](https://nextjs.org/docs/pages/building-your-application/data-fetching/get-static-paths)
+  - Incremental Static Regeneration (ISR): [revalidate](https://nextjs.org/docs/pages/building-your-application/data-fetching/incremental-static-regeneration)
+  - Client Side Rendering (CSR): [useSWR](https://swr.vercel.app/docs/with-nextjs)
 
 Application UI structure:
 
@@ -61,7 +68,8 @@ Additional notes:
 - User should be able to log out
 - Application should load user data upon full page reload
   - Utilize `GET` `/auth/user` API call and think about what is the best way to load user data during app initialization
-  - implement `useUser` hook that uses `useSWR` under the hood to leverage `caching` and API calls `deduping`
+  - implement `useUser` hook that uses `useSWR` under the hood to leverage `caching` and API calls `dedupe`
+  - use `fetcher` function abstraction located in `src/lib/fetcher.ts` to handle API calls. You can provide it globally with `SWRConfig` [Global Configuration](https://swr.vercel.app/docs/global-configuration)
 - If user enters `/login` route while already logged in, he should be redirected to `/`
   - implement `AuthRedirect` component based on the handbook tutorial [Session Handling](https://infinum.com/handbook/frontend/react/recipes/session-handling)
 - If user enters any secure route (e.g. `/`, `/:uuid`) while not logged in, he should be redirected to `/login`
@@ -144,16 +152,32 @@ This page shows a paginated table of all of the user's Todo lists:
 #### 1.2.2. Create a new Todo list
 
 Todo form consists of:
+
 - Todo list name
 - Array of Todo items
-  - Each Todo item has a name and done state
+  - Each Todo item has a name and `done` state
 
 Please ensure that all the form validations are implemented:
+
 - Todo list name is required
 - At least one Todo item is required
 - Todo item name is required
 
 User should not be able to trigger an API call if the form is invalid.
+
+Think about how to design component API and break it in multiple parts so you can compose both create and edit forms from the same components.
+
+Suggested composition:
+
+- `TodoForm` component that is responsible for rendering the form
+- `TodoFormFields` component that is responsible for rendering the form fields
+- `TodoFormSubmit` component that is responsible for rendering the form submit button
+
+Things to investigate:
+
+- [useFieldArray](https://react-hook-form.com/api/usefieldarray/) hook. It will help you with managing the array of Todo items.
+- [FormProvider](https://react-hook-form.com/api/formprovider/) and [useFormContext](https://react-hook-form.com/api/useformcontext/) hooks. They will help you with re-using the form for both create and edit actions.
+- [Multipart Component](https://kentcdodds.com/blog/compound-components-with-react-hooks) also known as Compound Components. It will help you with re-using the form for both create and edit actions.
 
 ##### Empty state
 
@@ -161,7 +185,7 @@ User should not be able to trigger an API call if the form is invalid.
 
 ##### Filled out
 
-![Create new Todo empty state](./.assets/app/nextjs/todo-form-create-new-filled.png)
+![Create new Todo filled state](./.assets/app/nextjs/todo-form-create-new-filled.png)
 
 
 ##### Validation error example #1
@@ -170,6 +194,131 @@ User should not be able to trigger an API call if the form is invalid.
 
 #### 1.2.3. Edit existing Todo
 
-When the users clicks "Details" action in the table, he is navigated to a particular Todo page where they can edit the Todo. The form is identical, but the API call is different. Find a way to re-use this form.
+When the users clicks "Details" action in the table, he is navigated to a particular Todo page where they can edit the Todo. The form is identical, but the API call is different. Find a way to re-use the form form the Create Todo modal.
 
 ![Edit existing Todo](./.assets/app/nextjs/todo-form-edit-existing.png)
+
+## 1.3. Server side rendering
+
+Server side rendering is a technique that allows us to render the initial HTML on the server and send it to the client. This is useful for SEO purposes and for improving the performance of the initial page load.
+
+Common pitfalls & tricks:
+
+- Cookies are not sent to the server by default. You need to explicitly send them with the request. You can read the existing cookie form the [context](https://nextjs.org/docs/pages/api-reference/functions/get-server-side-props#context-parameter) `req` object and send it with the request.
+- You need to send the request to the API server, not the Next.js server.
+- You need to handle [notFound](https://nextjs.org/docs/pages/api-reference/functions/get-server-side-props#notfound) and [redirects](https://nextjs.org/docs/pages/api-reference/functions/get-server-side-props#redirect) on the server.
+
+### 1.3.2. Todo list
+
+Implement server side rendering for Todo list page that we implemented in the previous chapter. You should use [getServerSideProps](https://nextjs.org/docs/pages/building-your-application/data-fetching/get-server-side-props) function to fetch the data on the server. 
+
+Use `fetcher` function form `src/lib/fetcher.ts` directly because you can't use SWR on the server. Make sure to pass cookie headers to the second parameter of the `fetcher` function.
+
+Construct the `fallback` object with the key-value paris, where `key` is the URL and `value` is the raw response, and pass it to the `SWRConfig` component.
+
+```tsx
+// src/pages/index.tsx
+import { SWRConfig } from 'swr';
+import { fetcher } from '../lib/fetcher';
+
+const Home = ({ fallback }) => {
+  return (
+    <SWRConfig value={{ fallback }}>
+      <Todos />
+    </SWRConfig>
+  )
+};
+
+export const getServerSideProps = async ({ req }) => {
+  const cookies = req.headers.cookie;
+  const todosKey = todosQuery();
+  const todos = await fetcher(todosKey, {
+    headers: {
+      cookie: cookies,
+    },
+  });
+
+  return {
+    props: {
+      fallback: {
+        [todosKey]: todos,
+      },
+    },
+  };
+}
+
+export default Home;
+```
+
+Redirect to the login page if the user is not authenticated.
+
+```tsx
+
+export const getServerSideProps = async ({ req }) => {
+  const cookies = req.headers.cookie;
+  const userKey = userQuery();
+
+  let user;
+  try {
+    user = await fetcher(userKey, {
+      headers: {
+        cookie: cookies,
+      },
+    });
+  } catch (error) {
+    return {
+      redirect: {
+        destination: '/login',
+        permanent: false,
+      },
+    };
+  }
+
+  //...
+}
+```
+
+### 1.3.3. Todo details
+
+Do the same as above, but for the Todo details page. Read the `id` from the context `req` and fetch the Todo details from the API server.
+
+```tsx
+// src/pages/[id].tsx
+
+export const getServerSideProps = async ({ req }) => {
+ //...
+
+  const id = req.query.id;
+  const todoKey = todoQuery(id);
+
+  const todo = await fetcher(todoKey, {
+    headers: {
+      cookie: cookies,
+    },
+  });
+
+  //...
+};
+```
+
+## 1.4. Testing
+
+Write some tests, for example:
+
+- TodoFormFields
+  - `should show title`
+  - `should update title`
+  - `should mark as done`
+  - `should handle removing`
+
+- TodoList
+  - `should show empty state`
+  - `should show list of items`
+  - `should show pagination`
+  - `should show sorting`
+  - `should show filtering`
+  - `should show delete confirmation`
+  - `should delete item`
+  - `should navigate to edit page`
+
+> **Note:** Test cases above are just examples. Real test cases depends on how you implement the components, but they should be similar to the ones above. Fell free to add more test cases.
