@@ -307,7 +307,7 @@ To get on board with testing best practices and to get familiar with the testing
 
 - [Testing Library](https://testing-library.com/docs/react-testing-library/intro/)
 - [Infinum Handbooks - Testing Best Practices](https://infinum.com/handbook/frontend/react/testing-best-practices)
-- [next.js - Testing](https://nextjs.org/docs/testing)
+- [Next.js - Testing](https://nextjs.org/docs/testing)
 
 Write some tests, for example:
 
