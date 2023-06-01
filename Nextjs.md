@@ -13,7 +13,7 @@ Please follow these requirements:
 - Use React hooks
 - Get familiar with [Chakra UI](https://chakra-ui.com) component library
 - Use [SWR](https://swr.vercel.app/) hook for fetching data
-  - Use use `fetcher` function abstraction located in `src/lib/fetcher.ts` and provide it globally with [Global Configuration](https://swr.vercel.app/docs/global-configuration)
+  - Use `fetcher` function abstraction located in `src/lib/fetcher.ts` and provide it globally with [Global Configuration](https://swr.vercel.app/docs/global-configuration)
 - Use [useSWRMutation](https://swr.vercel.app/docs/mutation#useswrmutation) hook for mutating data.
   - Use `mutator` function abstraction located in `src/lib/mutator.ts` to perform `POST`, `PUT`, `PATCH`, `DELETE` actions.
 - Use [React Hook Form](https://react-hook-form.com/) for handling forms
@@ -68,8 +68,8 @@ Additional notes:
 - User should be able to log out
 - Application should load user data upon full page reload
   - Utilize `GET` `/auth/user` API call and think about what is the best way to load user data during app initialization
-  - implement `useUser` hook that uses `useSWR` under the hood to leverage `caching` and API calls `dedupe`
-  - use `fetcher` function abstraction located in `src/lib/fetcher.ts` to handle API calls. You can provide it globally with `SWRConfig` [Global Configuration](https://swr.vercel.app/docs/global-configuration)
+  - Implement `useUser` hook that uses `useSWR` under the hood to leverage `caching` and API calls `dedupe`
+  - In this step you should use already mentioned `fetcher` function and provide it globally with `SWRConfig` [Global Configuration](https://swr.vercel.app/docs/global-configuration)
 - If user enters `/login` route while already logged in, he should be redirected to `/`
   - implement `AuthRedirect` component based on the handbook tutorial [Session Handling](https://infinum.com/handbook/frontend/react/recipes/session-handling)
 - If user enters any secure route (e.g. `/`, `/:uuid`) while not logged in, he should be redirected to `/login`
@@ -302,6 +302,12 @@ export const getServerSideProps = async ({ req }) => {
 ```
 
 ## 1.4. Testing
+
+To get on board with testing best practices and to get familiar with the testing library, make sure to read theses articles:
+
+- [Testing Library](https://testing-library.com/docs/react-testing-library/intro/)
+- [Infinum Handbooks - Testing Best Practices](https://infinum.com/handbook/frontend/react/testing-best-practices)
+- [next.js - Testing](https://nextjs.org/docs/testing)
 
 Write some tests, for example:
 
