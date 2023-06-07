@@ -11,6 +11,7 @@ import { EmailService } from '../email/email.service';
 import { InternalServerError, BadRequest } from '@tsed/exceptions';
 import { DemographicProfile } from '../../entities/demographic-profile';
 import { NewsletterPreferences } from '../../entities/newsletter-preferences';
+import { MessagesSendResult } from 'mailgun.js/interfaces/Messages';
 
 interface IUserFetchingOptions {
   email?: string;
@@ -58,7 +59,7 @@ export class UserService {
     return activationToken;
   }
 
-  async sendActivationEmail(email: string, activationToken: string): Promise<void> {
+  async sendActivationEmail(email: string, activationToken: string): Promise<MessagesSendResult> {
     const activationLink = `${FRONTEND_URL}/activate-account?token=${activationToken}`;
 
     return this.emailService.sendEmail({

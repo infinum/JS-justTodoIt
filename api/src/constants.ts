@@ -32,3 +32,6 @@ export const EXTEND_TOKEN_DURATION_AUTOMATICALLY = process.env.EXTEND_TOKEN_DURA
 export const EXTEND_TOKEN_FREQUENCY_S = parseInt(process.env.EXTEND_TOKEN_FREQUENCY_S, 10) || 60 * 60; // 1h
 export const EXTEND_TOKEN_REVOCATION_DELAY_S = parseInt(process.env.EXTEND_TOKEN_REVOCATION_DELAY_S, 10) || 60; // 1min
 export const MAILGUN_API_KEY = process.env.MAILGUN_API_KEY || 'key-yourkeyhere';
+export const MAILGUN_DOMAIN = process.env.MAILGUN_DOMAIN || 'js-api-onboarding.byinfinum.co';
+export const MAILGUN_LOGIN = process.env.MAILGUN_LOGIN || 'postmaster@js-api-onboarding.byinfinum.co'
+export const MAILGUN_SMTP = process.env.MAILGUN_SMTP || 'smtp.eu.mailgun.org'
