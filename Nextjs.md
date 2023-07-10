@@ -28,7 +28,7 @@ Please follow these requirements:
 - Get familiar with Bugsnag [React integration](https://docs.bugsnag.com/platforms/javascript/react/)
   - Check next.js setup example [here](https://github.com/bugsnag/bugsnag-js/tree/next/examples/js/nextjs)
   - Check [webpack-bugsnag-plugins](https://github.com/bugsnag/webpack-bugsnag-plugins) for more info about sending source maps to bugsnag.
-  - Initial project will get with Bugsnag integration, but you will need to add `NEXT_PUBLIC_BUGSNAG_API_KEY` to `.env` file, check the "Bugsnag setup" section for more info.
+  - Initial project will have Bugsnag integration already set up, but you will need to add `NEXT_PUBLIC_BUGSNAG_API_KEY` to `.env` file, check the "Bugsnag setup" section for more info.
 
 Application UI structure:
 
