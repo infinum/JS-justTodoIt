@@ -2,9 +2,9 @@
 
 Before you start, we suggest reading through our [Getting started with React](https://infinum.com/handbook/frontend/react/getting-started-with-react/ecosystem) guide. During development, we recommend referencing our more in-depth [React guidelines and practices](https://infinum.com/handbook/books/frontend/react/react-guidelines-and-best-practices) handbook.
 
-You will build this app with Next.js framework so we also suggest you to go through official [Learn Next.js](https://nextjs.org/learn/basics/create-nextjs-app) tutorial.
+You will build this app with Next.js framework so we also suggest you go through the official [Learn Next.js](https://nextjs.org/learn/basics/create-nextjs-app)](https://nextjs.org/learn/basics/create-nextjs-app) tutorial.
 
-If you need information about React core API be sure to check [React Docs](https://reactjs.org/) and for more hooks oriented docs check [React Beta Docs](https://beta.reactjs.org/).
+If you need information about React core API be sure to check [React Docs](https://reactjs.org/) and for more hooks-oriented docs check [React Beta Docs](https://beta.reactjs.org/).
 
 ## 1. Application requirements & notes
 
@@ -17,7 +17,7 @@ Please follow these requirements:
 - Use [useSWRMutation](https://swr.vercel.app/docs/mutation#useswrmutation) hook for mutating data.
   - Use `mutator` function abstraction located in `src/lib/mutator.ts` to perform `POST`, `PUT`, `PATCH`, `DELETE` actions.
 - Use [React Hook Form](https://react-hook-form.com/) for handling forms
-- Uee [React Hook Form - Error Message](https://github.com/react-hook-form/error-message)
+- Use [React Hook Form - Error Message](https://github.com/react-hook-form/error-message)
 - Use [React Hook Form - useFieldArray](https://react-hook-form.com/api/usefieldarray) for adding and removing todos
 - Use [jwt-decode](https://github.com/auth0/jwt-decode) to parse data from tokens
 - Get familiar with Next.js data fetching concepts:
@@ -25,13 +25,17 @@ Please follow these requirements:
   - Static Site Generation (SSG): [getStaticProps](https://nextjs.org/docs/pages/building-your-application/data-fetching/get-static-props), [getStaticPaths](https://nextjs.org/docs/pages/building-your-application/data-fetching/get-static-paths)
   - Incremental Static Regeneration (ISR): [revalidate](https://nextjs.org/docs/pages/building-your-application/data-fetching/incremental-static-regeneration)
   - Client Side Rendering (CSR): [useSWR](https://swr.vercel.app/docs/with-nextjs)
+- Get familiar with Bugsnag [React integration](https://docs.bugsnag.com/platforms/javascript/react/)
+  - Check next.js setup example [here](https://github.com/bugsnag/bugsnag-js/tree/next/examples/js/nextjs)
+  - Check [webpack-bugsnag-plugins](https://github.com/bugsnag/webpack-bugsnag-plugins) for more info about sending source maps to bugsnag.
+  - Initial project will have Bugsnag integration already set up, but you will need to add `NEXT_PUBLIC_BUGSNAG_API_KEY` to `.env` file, check the "Bugsnag setup" section for more info.
 
 Application UI structure:
 
 - `Layout` component for sharing navigation between pages
   - `Navigation` component with application title and user menu
     - User menu shows `Log in` and `Register` links if the user is not logged in
-    - User menu shows user's email and `Log out` button if the user is logged in
+    - User menu shows the user's email and `Log out` button if the user is logged in
 - `TodoLists` component for rendering, sorting, filtering and creation of paginated `TodoList` collection
 - `TodoListDetails` component for preview and update `TodoList` details
 - `TodoListForm` component which uses `useFieldArray` and `useForm` for handling form inputs, and `useSWRMutation` to handle mutations
@@ -40,8 +44,12 @@ Application UI structure:
 
 API Development proxy setup:
 
-To make it work you just need to duplicate `.env.example` file, rename it to `.env.local`.
+To make it work you just need to duplicate `.env.example` file, and rename it to `.env.local`.
 If you need more info about the setup you can find it here [here](https://infinum.com/handbook/frontend/react/next/development-proxy).
+
+Bugsnag setup:
+
+To get `NEXT_PUBLIC_BUGSNAG_API_KEY` you need to log in to the [Bugsnag dashboard](https://app.bugsnag.com/user/sign_in) using the credentials from the Infinum's 1Password app using this email `accounts.bugsnag.js@infinum.com`. After the successful login, you should see the `js-react-example` project in the dashboard. After that, open the project settings by clicking on the gear icon in the top right and selecting `Project settings`. There you will find `Notifier API key`, copy it and paste it into your `.env` file.
 
 ### 1.1. Authorization flow
 
