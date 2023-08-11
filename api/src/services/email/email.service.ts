@@ -1,18 +1,20 @@
 import { $log } from "@tsed/common";
 import { Service } from '@tsed/di';
-import FormData from 'form-data';
+import * as FormData from 'form-data';
 import Mailgun from 'mailgun.js';
 import { MessagesSendResult } from 'mailgun.js/interfaces/Messages';
-import { MAILGUN_API_KEY, MAILGUN_DOMAIN, MAILGUN_LOGIN, MAILGUN_SMTP } from '../../constants';
+import { MAILGUN_API_KEY, MAILGUN_DOMAIN, MAILGUN_LOGIN } from '../../constants';
 import { IEmail } from '../../interfaces/email.interface';
 
 @Service()
 export class EmailService {
-  private readonly mailgun = new Mailgun(FormData).client({ username: 'api', key: MAILGUN_API_KEY, url: MAILGUN_SMTP });
+  private readonly mailgun = new Mailgun(FormData).client({
+    username: 'api',
+    key: MAILGUN_API_KEY,
+  });
 
   sendEmail(email: IEmail): Promise<MessagesSendResult> {
-    console.table(email);
-
+    console.log('key mailgun', MAILGUN_API_KEY);
     return this.mailgun.messages.create(MAILGUN_DOMAIN, {
       from: `Just TODO It <${MAILGUN_LOGIN}>`,
       to: email.to,
@@ -21,11 +23,13 @@ export class EmailService {
       html: email.content.html
     })
     .then((msg) => {
+      console.log('SUCCESS', msg);
       $log.info('SUCCESS', msg);
       return msg;
     })
     .catch((err) => {
-      $log.error('FAIL', err)
+      console.log('FAIL', err);
+      $log.error('FAIL', err);
       throw err;
     });
   }
