@@ -31,7 +31,7 @@ export const COOKIE_SECURE = process.env.COOKIE_SECURE === 'true';
 export const EXTEND_TOKEN_DURATION_AUTOMATICALLY = process.env.EXTEND_TOKEN_DURATION_AUTOMATICALLY !== 'false';
 export const EXTEND_TOKEN_FREQUENCY_S = parseInt(process.env.EXTEND_TOKEN_FREQUENCY_S, 10) || 60 * 60; // 1h
 export const EXTEND_TOKEN_REVOCATION_DELAY_S = parseInt(process.env.EXTEND_TOKEN_REVOCATION_DELAY_S, 10) || 60; // 1min
-export const MAILGUN_API_KEY = process.env.MAILGUN_API_KEY || 'd1ab620e1342aa5904939dfef4bebc01-28e9457d-e7706b60';
+export const MAILGUN_API_KEY = process.env.MAILGUN_API_KEY || '';
 export const MAILGUN_DOMAIN = process.env.MAILGUN_DOMAIN || 'sandbox3a13f42e20c640b8aaf2f1b595b182a8.mailgun.org';
 export const MAILGUN_LOGIN = process.env.MAILGUN_LOGIN || 'postmaster@sandbox3a13f42e20c640b8aaf2f1b595b182a8.mailgun.org';
 export const MAILGUN_SMTP = process.env.MAILGUN_SMTP || 'smtp.mailgun.org';
