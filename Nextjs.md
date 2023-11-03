@@ -45,7 +45,7 @@ Application UI structure:
 API Development proxy setup:
 
 To make it work you just need to duplicate `.env.example` file, and rename it to `.env.local`.
-If you need more info about the setup you can find it here [here](https://infinum.com/handbook/frontend/react/next/development-proxy).
+If you need more info about the setup you can find it [here](https://infinum.com/handbook/frontend/react/next/development-proxy).
 
 Bugsnag setup:
 
@@ -109,7 +109,7 @@ This page is opened once the user follows the link from request password reset e
 
 #### 1.1.6. User menu
 
-Once the user is logged in, they can see avatar icon in the header menu and trigger log out action from the dropdown menu that is opened when the user clicks on their email.
+Once the user is logged in, they can see an avatar icon in the header menu and trigger a log out action from the dropdown menu that is opened when the user clicks on their email.
 
 ![Reset password](./.assets/app/nextjs/user-menu.png)
 
@@ -201,7 +201,7 @@ Things to investigate:
 
 #### 1.2.3. Edit existing Todo
 
-When the users clicks "Details" action in the table, he is navigated to a particular Todo page where they can edit the Todo. The form is identical, but the API call is different. Find a way to re-use the form form the Create Todo modal.
+When the user clicks "Details" action in the table, they are navigated to a particular Todo page where they can edit the Todo. The form is identical, but the API call is different. Find a way to re-use the form from the Create Todo modal.
 
 ![Edit existing Todo](./.assets/app/nextjs/todo-form-edit-existing.png)
 
@@ -211,7 +211,7 @@ Server side rendering is a technique that allows us to render the initial HTML o
 
 Common pitfalls & tricks:
 
-- Cookies are not sent to the server by default. You need to explicitly send them with the request. You can read the existing cookie form the [context](https://nextjs.org/docs/pages/api-reference/functions/get-server-side-props#context-parameter) `req` object and send it with the request.
+- Cookies are not sent to the server by default. You need to explicitly send them with the request. You can read the existing cookie from the [context](https://nextjs.org/docs/pages/api-reference/functions/get-server-side-props#context-parameter) `req` object and send it with the request.
 - You need to send the request to the API server, not the Next.js server.
 - You need to handle [notFound](https://nextjs.org/docs/pages/api-reference/functions/get-server-side-props#notfound) and [redirects](https://nextjs.org/docs/pages/api-reference/functions/get-server-side-props#redirect) on the server.
 
@@ -219,9 +219,9 @@ Common pitfalls & tricks:
 
 Implement server side rendering for Todo list page that we implemented in the previous chapter. You should use [getServerSideProps](https://nextjs.org/docs/pages/building-your-application/data-fetching/get-server-side-props) function to fetch the data on the server.
 
-Use `fetcher` function form `src/lib/fetcher.ts` directly because you can't use SWR on the server. Make sure to pass cookie headers to the second parameter of the `fetcher` function.
+Use the `fetcher` function from `src/lib/fetcher.ts` directly because you can't use SWR on the server. Make sure to pass cookie headers to the second parameter of the `fetcher` function.
 
-Construct the `fallback` object with the key-value paris, where `key` is the URL and `value` is the raw response, and pass it to the `SWRConfig` component.
+Construct the `fallback` object with the key-value pairs, where `key` is the URL and `value` is the raw response, and pass it to the `SWRConfig` component.
 
 ```tsx
 // src/pages/index.tsx
@@ -309,7 +309,7 @@ export const getServerSideProps = async ({ req }) => {
 
 ## 1.4. Testing
 
-To get on board with testing best practices and to get familiar with the testing library, make sure to read theses articles:
+To get on board with testing best practices and to get familiar with the testing library, make sure to read these articles:
 
 - [Testing Library](https://testing-library.com/docs/react-testing-library/intro/)
 - [Infinum Handbooks - Testing Best Practices](https://infinum.com/handbook/frontend/react/testing-best-practices)
@@ -334,4 +334,4 @@ Write some tests, for example:
   - `should delete item`
   - `should navigate to edit page`
 
-> **Note:** Test cases above are just examples. Real test cases depends on how you implement the components, but they should be similar to the ones above. Fell free to add more test cases.
+> **Note:** The test cases above are just examples. Real test cases depends on how you implement the components, but they should be similar to the ones above. Feel free to add more test cases.
