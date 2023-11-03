@@ -1,8 +1,8 @@
 # Notes for Next.js
 
-Before you start, we suggest reading through our [Getting started with React](https://infinum.com/handbook/frontend/react/getting-started-with-react/ecosystem) guide. During development, we recommend referencing our more in-depth [React guidelines and practices](https://infinum.com/handbook/books/frontend/react/react-guidelines-and-best-practices) handbook.
+Before you start, we suggest reading through our [Getting started with React](https://infinum.com/handbook/frontend/react/getting-started-with-react/ecosystem) guide. During development, we recommend referencing our more in-depth [React guidelines and practices](https://infinum.com/handbook/books/frontend/react/react-guidelines-and-best-practices) handbook.\*\*\*\*
 
-You will build this app with Next.js framework so we also suggest you go through the official [Learn Next.js](https://nextjs.org/learn/basics/create-nextjs-app)](https://nextjs.org/learn/basics/create-nextjs-app) tutorial.
+You will build this app with Next.js framework so we also suggest you go through the official [Learn Next.js](https://nextjs.org/learn/basics/create-nextjs-app) tutorial.
 
 If you need information about React core API be sure to check [React Docs](https://reactjs.org/) and for more hooks-oriented docs check [React Beta Docs](https://beta.reactjs.org/).
 
@@ -195,7 +195,6 @@ Things to investigate:
 
 ![Create new Todo filled state](./.assets/app/nextjs/todo-form-create-new-filled.png)
 
-
 ##### Validation error example #1
 
 ![Create new Todo error example #1](./.assets/app/nextjs/todo-form-error.png)
@@ -218,7 +217,7 @@ Common pitfalls & tricks:
 
 ### 1.3.2. Todo list
 
-Implement server side rendering for Todo list page that we implemented in the previous chapter. You should use [getServerSideProps](https://nextjs.org/docs/pages/building-your-application/data-fetching/get-server-side-props) function to fetch the data on the server. 
+Implement server side rendering for Todo list page that we implemented in the previous chapter. You should use [getServerSideProps](https://nextjs.org/docs/pages/building-your-application/data-fetching/get-server-side-props) function to fetch the data on the server.
 
 Use `fetcher` function form `src/lib/fetcher.ts` directly because you can't use SWR on the server. Make sure to pass cookie headers to the second parameter of the `fetcher` function.
 
@@ -234,7 +233,7 @@ const Home = ({ fallback }) => {
     <SWRConfig value={{ fallback }}>
       <Todos />
     </SWRConfig>
-  )
+  );
 };
 
 export const getServerSideProps = async ({ req }) => {
@@ -253,7 +252,7 @@ export const getServerSideProps = async ({ req }) => {
       },
     },
   };
-}
+};
 
 export default Home;
 ```
@@ -261,7 +260,6 @@ export default Home;
 Redirect to the login page if the user is not authenticated.
 
 ```tsx
-
 export const getServerSideProps = async ({ req }) => {
   const cookies = req.headers.cookie;
   const userKey = userQuery();
@@ -283,7 +281,7 @@ export const getServerSideProps = async ({ req }) => {
   }
 
   //...
-}
+};
 ```
 
 ### 1.3.3. Todo details
@@ -294,7 +292,7 @@ Do the same as above, but for the Todo details page. Read the `id` from the cont
 // src/pages/[id].tsx
 
 export const getServerSideProps = async ({ req }) => {
- //...
+  //...
 
   const id = req.query.id;
   const todoKey = todoQuery(id);
@@ -320,6 +318,7 @@ To get on board with testing best practices and to get familiar with the testing
 Write some tests, for example:
 
 - TodoFormFields
+
   - `should show title`
   - `should update title`
   - `should mark as done`
