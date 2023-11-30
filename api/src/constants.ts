@@ -33,5 +33,3 @@ export const EXTEND_TOKEN_FREQUENCY_S = parseInt(process.env.EXTEND_TOKEN_FREQUE
 export const EXTEND_TOKEN_REVOCATION_DELAY_S = parseInt(process.env.EXTEND_TOKEN_REVOCATION_DELAY_S, 10) || 60; // 1min
 export const MAILGUN_API_KEY = process.env.MAILGUN_API_KEY || '';
 export const MAILGUN_DOMAIN = process.env.MAILGUN_DOMAIN || 'sandbox3a13f42e20c640b8aaf2f1b595b182a8.mailgun.org';
-export const MAILGUN_LOGIN = process.env.MAILGUN_LOGIN || 'postmaster@sandbox3a13f42e20c640b8aaf2f1b595b182a8.mailgun.org';
-export const MAILGUN_SMTP = process.env.MAILGUN_SMTP || 'smtp.mailgun.org';

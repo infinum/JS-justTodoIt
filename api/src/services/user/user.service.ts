@@ -64,7 +64,7 @@ export class UserService {
 
     return this.emailService.sendEmail({
       to: email,
-      subject: 'Learn Angular: Account activation link',
+      subject: 'Just Todo It: Account activation link',
       content: {
         plain: activationLink,
         html: `<a href="${activationLink}">${activationLink}</a>`,
