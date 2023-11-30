@@ -113,7 +113,7 @@ export class AuthController {
     }
 
     const activationToken = await this.userService.createActivationToken(user);
-    this.userService.sendActivationEmail(user.email, activationToken);
+    await this.userService.sendActivationEmail(user.email, activationToken);
 
     await user.save();
 

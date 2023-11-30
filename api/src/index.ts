@@ -1,3 +1,5 @@
+import * as dotenv from 'dotenv';
+dotenv.config();
 import {$log} from "@tsed/common";
 import {PlatformExpress} from "@tsed/platform-express";
 import {Server} from "./server";
