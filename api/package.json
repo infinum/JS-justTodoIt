@@ -2,6 +2,10 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "",
+  "engines": {
+    "node": ">=20.11.1",
+    "npm": ">=10.2.4"
+  },
   "scripts": {
     "build": "rm -rf dist && npm run tsc && npm run copy-package",
     "tsc": "tsc --project tsconfig.compile.json",
