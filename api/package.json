@@ -53,6 +53,7 @@
     "@types/jsonwebtoken": "^8.5.8",
     "@types/method-override": "^0.0.32",
     "@types/node": "^16.0.0",
+    "@types/react": "^18.2.74",
     "@typescript-eslint/eslint-plugin": "^5.27.0",
     "@typescript-eslint/parser": "^5.27.0",
     "concurrently": "^7.2.1",

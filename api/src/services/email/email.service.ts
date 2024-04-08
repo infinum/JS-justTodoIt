@@ -7,7 +7,7 @@ import { IEmail } from "../../interfaces/email.interface";
 export class EmailService {
   private readonly resend = RESEND_API_KEY ? new Resend(RESEND_API_KEY) : null;
 
-  sendEmail(email: IEmail) {
+  sendEmail(email: IEmail): Promise<unknown> {
     if (!this.resend) {
       console.table(email);
       return;
