@@ -61,9 +61,9 @@ export class UserService {
   async sendActivationEmail(email: string, activationToken: string): Promise<void> {
     const activationLink = `${FRONTEND_URL}/activate-account?token=${activationToken}`;
 
-    return this.emailService.sendEmail({
+    await this.emailService.sendEmail({
       to: email,
-      subject: 'Learn Angular: Account activation link',
+      subject: 'JustTodoIt: Account activation link',
       content: {
         plain: activationLink,
         html: `<a href="${activationLink}">${activationLink}</a>`,
@@ -101,9 +101,9 @@ export class UserService {
 
     const passwordResetLink = `${FRONTEND_URL}/reset-password?token=${passwordResetToken}`;
 
-    this.emailService.sendEmail({
+    await this.emailService.sendEmail({
       to: user.email,
-      subject: 'Learn Angular: Password reset link',
+      subject: 'JustTodoIt: Password reset link',
       content: {
         plain: passwordResetLink,
         html: `<a href="${passwordResetLink}">${passwordResetLink}</a>`,

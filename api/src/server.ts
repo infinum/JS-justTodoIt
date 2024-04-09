@@ -11,7 +11,7 @@ import helmet from 'helmet';
 import { Configuration, Inject } from '@tsed/di';
 import { PlatformApplication, BeforeRoutesInit, AfterRoutesInit, PlatformAcceptMimesMiddleware } from '@tsed/common';
 import { ormConfig } from './orm.config';
-import { SRC_DIR, HTTP_PORT, HTTPS_PORT, CORS_ALLOWED_ORIGINS, ROOT_DIR } from './constants';
+import { SRC_DIR, HTTP_PORT, CORS_ALLOWED_ORIGINS, ROOT_DIR } from './constants';
 import { join } from 'path';
 import { ErrorHandlingMiddleware } from './middlewares/error-handling.middleware';
 import { CustomHeader } from './enums/custom-headers.enum';
@@ -21,7 +21,6 @@ import { Request, Response, NextFunction } from 'express';
   rootDir: SRC_DIR,
   acceptMimes: ['application/json'],
   httpPort: HTTP_PORT,
-  httpsPort: HTTPS_PORT,
   mount: {
     '/': [
       `${SRC_DIR}/controllers/**/*.controller.ts`
@@ -43,7 +42,6 @@ export class Server implements BeforeRoutesInit, AfterRoutesInit {
   app: PlatformApplication;
 
   @Configuration({
-    httpsPort: HTTPS_PORT,
     httpPort: HTTP_PORT
   })
   settings: Configuration;
