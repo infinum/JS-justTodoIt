@@ -11,20 +11,17 @@ If you need information about the React core API be sure to check the [React Doc
 Please follow these requirements:
 
 - Use React hooks
-- Get familiar with [Chakra UI](https://chakra-ui.com) component library
-- Use [SWR](https://swr.vercel.app/) hook for fetching data
-  - Use `fetcher` function abstraction located in `src/lib/fetcher.ts` and provide it globally with [Global Configuration](https://swr.vercel.app/docs/global-configuration)
-- Use [useSWRMutation](https://swr.vercel.app/docs/mutation#useswrmutation) hook for mutating data.
-  - Use `mutator` function abstraction located in `src/lib/mutator.ts` to perform `POST`, `PUT`, `PATCH`, `DELETE` actions.
+- Get familiar with [Tailwind](http://tailwindcss.com/) and [ShadCN](https://ui.shadcn.com/) component library
 - Use [React Hook Form](https://react-hook-form.com/) for handling forms
 - Use [React Hook Form - Error Message](https://github.com/react-hook-form/error-message)
 - Use [React Hook Form - useFieldArray](https://react-hook-form.com/api/usefieldarray) for adding and removing todos
-- Use [jwt-decode](https://github.com/auth0/jwt-decode) to parse data from tokens
+- Use Next Auth to handle authentication:
+  - [NextAuth.js](https://next-auth.js.org/)
+  - [NextAuth handbook chapter](https://infinum.com/handbook/frontend/react/recipes/next-auth)
 - Get familiar with Next.js data fetching concepts:
-  - Server Side Rendering (SSR): [getStaticProps](https://nextjs.org/docs/pages/building-your-application/data-fetching/get-server-side-props)
-  - Static Site Generation (SSG): [getStaticProps](https://nextjs.org/docs/pages/building-your-application/data-fetching/get-static-props), [getStaticPaths](https://nextjs.org/docs/pages/building-your-application/data-fetching/get-static-paths)
+  - [Data Fetching and Caching](https://nextjs.org/docs/app/building-your-application/data-fetching/fetching)
+  - [Server Actions and Mutations](https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations)
   - Incremental Static Regeneration (ISR): [revalidate](https://nextjs.org/docs/pages/building-your-application/data-fetching/incremental-static-regeneration)
-  - Client Side Rendering (CSR): [useSWR](https://swr.vercel.app/docs/with-nextjs)
 - Get familiar with Bugsnag [React integration](https://docs.bugsnag.com/platforms/javascript/react/)
   - Check next.js setup example [here](https://github.com/bugsnag/bugsnag-js/tree/next/examples/js/nextjs)
   - Check [webpack-bugsnag-plugins](https://github.com/bugsnag/webpack-bugsnag-plugins) for more info about sending source maps to bugsnag.
@@ -38,9 +35,9 @@ Application UI structure:
     - User menu shows the user's email and `Log out` button if the user is logged in
 - `TodoLists` component for rendering, sorting, filtering and creation of paginated `TodoList` collection
 - `TodoListDetails` component for preview and update `TodoList` details
-- `TodoListForm` component which uses `useFieldArray` and `useForm` for handling form inputs, and `useSWRMutation` to handle mutations
+- `TodoListForm` component which uses `useFieldArray` and `useForm` for handling form inputs
 
-> Check the [Project structure](https://infinum.com/handbook/frontend/react/project-structure) Handbook for better understanding
+> Check the [Project structure](https://infinum.com/handbook/frontend/react/project-structure#app-router) Handbook for better understanding
 
 API Development proxy setup:
 
@@ -76,12 +73,9 @@ Additional notes:
 - User should be able to log out
 - Application should load user data upon full page reload
   - Utilize `GET` `/auth/user` API call and think about what is the best way to load user data during app initialization
-  - Implement `useUser` hook that uses `useSWR` under the hood to leverage `caching` and API calls `dedupe`
-  - In this step you should use already mentioned `fetcher` function and provide it globally with `SWRConfig` [Global Configuration](https://swr.vercel.app/docs/global-configuration)
+  - Make use of [NextAuth hooks](https://next-auth.js.org/getting-started/client) to get access to user object
 - If user enters `/login` route while already logged in, he should be redirected to `/`
-  - implement `AuthRedirect` component based on the handbook tutorial [Session Handling](https://infinum.com/handbook/frontend/react/recipes/session-handling)
 - If user enters any secure route (e.g. `/`, `/:uuid`) while not logged in, he should be redirected to `/login`
-  - use the same `AuthRedirect` utility component
 
 _Note_: Backend server that is running locally does not sent an actual email. Activation link can be seen in terminal log of the server.
 
@@ -204,108 +198,6 @@ Things to investigate:
 When the user clicks "Details" action in the table, they are navigated to a particular Todo page where they can edit the Todo. The form is identical, but the API call is different. Find a way to re-use the form from the Create Todo modal.
 
 ![Edit existing Todo](./.assets/app/nextjs/todo-form-edit-existing.png)
-
-## 1.3. Server side rendering
-
-Server side rendering is a technique that allows us to render the initial HTML on the server and send it to the client. This is useful for SEO purposes and for improving the performance of the initial page load.
-
-Common pitfalls & tricks:
-
-- Cookies are not sent to the server by default. You need to explicitly send them with the request. You can read the existing cookie from the [context](https://nextjs.org/docs/pages/api-reference/functions/get-server-side-props#context-parameter) `req` object and send it with the request.
-- You need to send the request to the API server, not the Next.js server.
-- You need to handle [notFound](https://nextjs.org/docs/pages/api-reference/functions/get-server-side-props#notfound) and [redirects](https://nextjs.org/docs/pages/api-reference/functions/get-server-side-props#redirect) on the server.
-
-### 1.3.2. Todo list
-
-Implement server side rendering for Todo list page that we implemented in the previous chapter. You should use [getServerSideProps](https://nextjs.org/docs/pages/building-your-application/data-fetching/get-server-side-props) function to fetch the data on the server.
-
-Use the `fetcher` function from `src/lib/fetcher.ts` directly because you can't use SWR on the server. Make sure to pass cookie headers to the second parameter of the `fetcher` function.
-
-Construct the `fallback` object with the key-value pairs, where `key` is the URL and `value` is the raw response, and pass it to the `SWRConfig` component.
-
-```tsx
-// src/pages/index.tsx
-import { SWRConfig } from 'swr';
-import { fetcher } from '../lib/fetcher';
-
-const Home = ({ fallback }) => {
-  return (
-    <SWRConfig value={{ fallback }}>
-      <Todos />
-    </SWRConfig>
-  );
-};
-
-export const getServerSideProps = async ({ req }) => {
-  const cookies = req.headers.cookie;
-  const todosKey = todosQuery();
-  const todos = await fetcher(todosKey, {
-    headers: {
-      cookie: cookies,
-    },
-  });
-
-  return {
-    props: {
-      fallback: {
-        [todosKey]: todos,
-      },
-    },
-  };
-};
-
-export default Home;
-```
-
-Redirect to the login page if the user is not authenticated.
-
-```tsx
-export const getServerSideProps = async ({ req }) => {
-  const cookies = req.headers.cookie;
-  const userKey = userQuery();
-
-  let user;
-  try {
-    user = await fetcher(userKey, {
-      headers: {
-        cookie: cookies,
-      },
-    });
-  } catch (error) {
-    return {
-      redirect: {
-        destination: '/login',
-        permanent: false,
-      },
-    };
-  }
-
-  //...
-};
-```
-
-### 1.3.3. Todo details
-
-Do the same as above, but for the Todo details page. Read the `id` from the context `req` and fetch the Todo details from the API server.
-
-```tsx
-// src/pages/[id].tsx
-
-export const getServerSideProps = async ({ req }) => {
-  //...
-
-  const id = req.query.id;
-  const todoKey = todoQuery(id);
-
-  const todo = await fetcher(todoKey, {
-    headers: {
-      cookie: cookies,
-    },
-  });
-
-  //...
-};
-```
 
 ## 1.4. Testing
 

@@ -20,14 +20,14 @@ Please note that the video is a recording of Angular application implementation.
 
 This repository contains some README files and `api/` directory. The frontend app you will be developing should be placed in a sibling directory, next to `/api` directory. To get started:
 
-  - React
-    ```bash
-    npx create-next-app@latest just-todo-it -e https://github.com/infinum/JS-React-Example/tree/onboarding-starter --use-npm
-    ```
-  - Angular
-    ```bash
-    ng new just-todo-it
-    ```
+- React
+  ```bash
+  pnpm create next-app just-todo-it -e https://github.com/infinum/JS-React-Example/tree/onboarding-starter-v2
+  ```
+- Angular
+  ```bash
+  ng new just-todo-it
+  ```
 
 Your final structure might look something like this:
 
@@ -44,12 +44,13 @@ Your final structure might look something like this:
 
 As for the frontend application file and folder organization, please refer to:
 
-  - React - [Project structure](https://infinum.com/handbook/frontend/react/project-structure) Handbook chapter
-  - Angular - [File and module organization and naming](https://infinum.com/handbook/books/frontend/angular/angular-guidelines-and-best-practices/file-and-module-organization-and-naming) Handbook chapter
+- React - [Project structure](https://infinum.com/handbook/frontend/react/project-structure) Handbook chapter
+- Angular - [File and module organization and naming](https://infinum.com/handbook/books/frontend/angular/angular-guidelines-and-best-practices/file-and-module-organization-and-naming) Handbook chapter
 
 ## 3. Application requirements & notes
 
 Please check out framework-specific requirements & notes:
+
 - [Next.js](./Nextjs.md)
 - [Angular](./Angular.md)
 
@@ -59,8 +60,8 @@ To start the API server:
 
 ```bash
 cd api
-npm install
-npm start
+pnpm install
+pnpm start
 ```
 
 The server will be started on `localhost:8080`.
