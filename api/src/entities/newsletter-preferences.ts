@@ -3,15 +3,15 @@ import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class NewsletterPreferences extends BaseEntity {
-  @PrimaryGeneratedColumn('uuid')
-  @Property()
-  uuid: string;
+	@PrimaryGeneratedColumn('uuid')
+	@Property()
+	uuid: string;
 
-  @Column()
-  @Property()
-  weeklyNewsletter: boolean;
+	@Column()
+	@Property()
+	weeklyNewsletter: boolean;
 
-  @Column()
-  @Property()
-  specialOffers: boolean;
+	@Column()
+	@Property()
+	specialOffers: boolean;
 }

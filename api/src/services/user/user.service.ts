@@ -13,192 +13,192 @@ import { DemographicProfile } from '../../entities/demographic-profile';
 import { NewsletterPreferences } from '../../entities/newsletter-preferences';
 
 interface IUserFetchingOptions {
-  email?: string;
-  uuid?: string;
-  getPasswordHash?: boolean;
-  getActivationToken?: boolean;
-  getPasswordResetToken?: boolean;
-  relations?: Array<string>;
+	email?: string;
+	uuid?: string;
+	getPasswordHash?: boolean;
+	getActivationToken?: boolean;
+	getPasswordResetToken?: boolean;
+	relations?: Array<string>;
 }
 
 @Service()
 export class UserService {
-  private readonly SALT_ROUNDS = 10;
-  private readonly userRepository = User.getRepository();
+	private readonly SALT_ROUNDS = 10;
+	private readonly userRepository = User.getRepository();
 
-  constructor(
-    private readonly authService: AuthService,
-    private readonly emailService: EmailService,
-  ) { }
+	constructor(
+		private readonly authService: AuthService,
+		private readonly emailService: EmailService
+	) {}
 
-  async create(registrationData: IRegistrationData): Promise<User> {
-    let user = new User();
-    user.email = registrationData.email;
+	async create(registrationData: IRegistrationData): Promise<User> {
+		let user = new User();
+		user.email = registrationData.email;
 
-    if (registrationData.password) {
-      user.passwordHash = await this.generateHash(registrationData.password);
-    } else {
-      user = await user.save();
+		if (registrationData.password) {
+			user.passwordHash = await this.generateHash(registrationData.password);
+		} else {
+			user = await user.save();
 
-      const activationToken = await this.createActivationToken(user);
-      await this.sendActivationEmail(user.email, activationToken);
-    }
+			const activationToken = await this.createActivationToken(user);
+			await this.sendActivationEmail(user.email, activationToken);
+		}
 
-    return user.save();
-  }
+		return user.save();
+	}
 
-  async createActivationToken(user: User): Promise<string> {
-    const activationToken = await this.authService.createActivationToken({
-      email: user.email,
-      uuid: user.uuid,
-    });
+	async createActivationToken(user: User): Promise<string> {
+		const activationToken = await this.authService.createActivationToken({
+			email: user.email,
+			uuid: user.uuid,
+		});
 
-    user.activationToken = activationToken;
+		user.activationToken = activationToken;
 
-    return activationToken;
-  }
+		return activationToken;
+	}
 
-  async sendActivationEmail(email: string, activationToken: string): Promise<void> {
-    const activationLink = `${FRONTEND_URL}/activate-account?token=${activationToken}`;
+	async sendActivationEmail(email: string, activationToken: string): Promise<void> {
+		const activationLink = `${FRONTEND_URL}/activate-account?token=${activationToken}`;
 
-    await this.emailService.sendEmail({
-      to: email,
-      subject: 'JustTodoIt: Account activation link',
-      content: {
-        plain: activationLink,
-        html: `<a href="${activationLink}">${activationLink}</a>`,
-      },
-    });
-  }
+		await this.emailService.sendEmail({
+			to: email,
+			subject: 'JustTodoIt: Account activation link',
+			content: {
+				plain: activationLink,
+				html: `<a href="${activationLink}">${activationLink}</a>`,
+			},
+		});
+	}
 
-  async activate(activationData: IPasswordSettingData): Promise<false | User> {
-    const tokenData = await this.authService.verifyToken(activationData.token);
+	async activate(activationData: IPasswordSettingData): Promise<false | User> {
+		const tokenData = await this.authService.verifyToken(activationData.token);
 
-    if (!tokenData) {
-      return false;
-    }
+		if (!tokenData) {
+			return false;
+		}
 
-    const email = tokenData.email;
+		const email = tokenData.email;
 
-    const user = await this.fetch({ email, getActivationToken: true });
+		const user = await this.fetch({ email, getActivationToken: true });
 
-    if (user.activationToken !== activationData.token) {
-      return false;
-    }
+		if (user.activationToken !== activationData.token) {
+			return false;
+		}
 
-    user.passwordHash = await this.generateHash(activationData.password);
-    user.activationToken = null;
+		user.passwordHash = await this.generateHash(activationData.password);
+		user.activationToken = null;
 
-    return user.save();
-  }
+		return user.save();
+	}
 
-  async requestPasswordReset(user: User): Promise<void> {
-    const passwordResetToken = await this.authService.createPasswordResetToken({
-      email: user.email,
-      uuid: user.uuid,
-    });
-    user.passwordResetToken = passwordResetToken;
+	async requestPasswordReset(user: User): Promise<void> {
+		const passwordResetToken = await this.authService.createPasswordResetToken({
+			email: user.email,
+			uuid: user.uuid,
+		});
+		user.passwordResetToken = passwordResetToken;
 
-    const passwordResetLink = `${FRONTEND_URL}/reset-password?token=${passwordResetToken}`;
+		const passwordResetLink = `${FRONTEND_URL}/reset-password?token=${passwordResetToken}`;
 
-    await this.emailService.sendEmail({
-      to: user.email,
-      subject: 'JustTodoIt: Password reset link',
-      content: {
-        plain: passwordResetLink,
-        html: `<a href="${passwordResetLink}">${passwordResetLink}</a>`,
-      },
-    });
+		await this.emailService.sendEmail({
+			to: user.email,
+			subject: 'JustTodoIt: Password reset link',
+			content: {
+				plain: passwordResetLink,
+				html: `<a href="${passwordResetLink}">${passwordResetLink}</a>`,
+			},
+		});
 
-    await user.save().catch(() => {
-      throw new InternalServerError(ResponseErrorCode.PASSWORD_RESET_REQUEST_ERROR, { email: user.email });
-    });
-  }
+		await user.save().catch(() => {
+			throw new InternalServerError(ResponseErrorCode.PASSWORD_RESET_REQUEST_ERROR, { email: user.email });
+		});
+	}
 
-  async resetPassword(passwordResetData: IPasswordSettingData): Promise<false | User> {
-    const tokenData = await this.authService.verifyToken(passwordResetData.token);
+	async resetPassword(passwordResetData: IPasswordSettingData): Promise<false | User> {
+		const tokenData = await this.authService.verifyToken(passwordResetData.token);
 
-    if (!tokenData) {
-      return false;
-    }
+		if (!tokenData) {
+			return false;
+		}
 
-    const email = tokenData.email;
+		const email = tokenData.email;
 
-    const user = await this.fetch({ email, getPasswordResetToken: true });
+		const user = await this.fetch({ email, getPasswordResetToken: true });
 
-    if (user.passwordResetToken !== passwordResetData.token) {
-      return false;
-    }
+		if (user.passwordResetToken !== passwordResetData.token) {
+			return false;
+		}
 
-    user.passwordHash = await this.generateHash(passwordResetData.password);
-    user.passwordResetToken = null;
+		user.passwordHash = await this.generateHash(passwordResetData.password);
+		user.passwordResetToken = null;
 
-    return user.save();
-  }
+		return user.save();
+	}
 
-  async fetchDemographicProfile(userUuid: string): Promise<DemographicProfile> {
-    const user = await this.fetch({
-      uuid: userUuid,
-      relations: ['demographicProfile'],
-    })
+	async fetchDemographicProfile(userUuid: string): Promise<DemographicProfile> {
+		const user = await this.fetch({
+			uuid: userUuid,
+			relations: ['demographicProfile'],
+		});
 
-    return user.demographicProfile;
-  }
+		return user.demographicProfile;
+	}
 
-  async fetchNewsletterPreferences(userUuid: string): Promise<NewsletterPreferences> {
-    const user = await this.fetch({
-      uuid: userUuid,
-      relations: ['newsletterPreferences'],
-    })
+	async fetchNewsletterPreferences(userUuid: string): Promise<NewsletterPreferences> {
+		const user = await this.fetch({
+			uuid: userUuid,
+			relations: ['newsletterPreferences'],
+		});
 
-    return user.newsletterPreferences;
-  }
+		return user.newsletterPreferences;
+	}
 
-  fetch({
-    email,
-    uuid,
-    getPasswordHash = false,
-    getActivationToken = false,
-    getPasswordResetToken = false,
-    relations = [],
-  }: IUserFetchingOptions = {}): Promise<User> {
-    if (!uuid && !email) {
-      throw new BadRequest('please provide one or more of: uuid, email');
-    }
+	fetch({
+		email,
+		uuid,
+		getPasswordHash = false,
+		getActivationToken = false,
+		getPasswordResetToken = false,
+		relations = [],
+	}: IUserFetchingOptions = {}): Promise<User> {
+		if (!uuid && !email) {
+			throw new BadRequest('please provide one or more of: uuid, email');
+		}
 
-    const topLevelAlias = 'user';
-    let query = this.userRepository.createQueryBuilder(`${topLevelAlias}`);
+		const topLevelAlias = 'user';
+		let query = this.userRepository.createQueryBuilder(`${topLevelAlias}`);
 
-    if (getPasswordHash) {
-      query = query.addSelect(`${topLevelAlias}.passwordHash`);
-    }
-    if (getActivationToken) {
-      query = query.addSelect(`${topLevelAlias}.activationToken`);
-    }
-    if (getPasswordResetToken) {
-      query = query.addSelect(`${topLevelAlias}.passwordResetToken`);
-    }
+		if (getPasswordHash) {
+			query = query.addSelect(`${topLevelAlias}.passwordHash`);
+		}
+		if (getActivationToken) {
+			query = query.addSelect(`${topLevelAlias}.activationToken`);
+		}
+		if (getPasswordResetToken) {
+			query = query.addSelect(`${topLevelAlias}.passwordResetToken`);
+		}
 
-    if (email) {
-      query = query.where(`${topLevelAlias}.email = :email`, { email });
-    }
-    if (uuid) {
-      query = query.where(`${topLevelAlias}.uuid = :uuid`, { uuid });
-    }
+		if (email) {
+			query = query.where(`${topLevelAlias}.email = :email`, { email });
+		}
+		if (uuid) {
+			query = query.where(`${topLevelAlias}.uuid = :uuid`, { uuid });
+		}
 
-    for (const relation of relations) {
-      const { property, alias } = loadDeepRelation(topLevelAlias, relation);
-      query = query.leftJoinAndSelect(property, alias);
-    }
+		for (const relation of relations) {
+			const { property, alias } = loadDeepRelation(topLevelAlias, relation);
+			query = query.leftJoinAndSelect(property, alias);
+		}
 
-    return query.getOne();
-  }
+		return query.getOne();
+	}
 
-  compareHash(password: string | undefined, passwordHash: string | undefined): Promise<boolean> {
-    return compare(password, passwordHash);
-  }
+	compareHash(password: string | undefined, passwordHash: string | undefined): Promise<boolean> {
+		return compare(password, passwordHash);
+	}
 
-  generateHash(password: string | undefined): Promise<string> {
-    return hash(password, this.SALT_ROUNDS);
-  }
+	generateHash(password: string | undefined): Promise<string> {
+		return hash(password, this.SALT_ROUNDS);
+	}
 }

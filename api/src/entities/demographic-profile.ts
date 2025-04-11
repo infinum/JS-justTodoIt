@@ -4,14 +4,14 @@ import { Gender } from '../enums/gender.enum';
 
 @Entity()
 export class DemographicProfile extends BaseEntity {
-  @PrimaryGeneratedColumn('uuid')
-  uuid: string;
+	@PrimaryGeneratedColumn('uuid')
+	uuid: string;
 
-  @Column()
-  @Property()
-  gender: Gender;
+	@Column()
+	@Property()
+	gender: Gender;
 
-  @Column()
-  @Property()
-  age: number;
+	@Column()
+	@Property()
+	age: number;
 }

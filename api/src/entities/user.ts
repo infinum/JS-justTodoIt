@@ -6,43 +6,43 @@ import { NewsletterPreferences } from './newsletter-preferences';
 
 @Entity()
 export class User extends BaseEntity {
-  @PrimaryGeneratedColumn('uuid')
-  @Property()
-  uuid: string;
+	@PrimaryGeneratedColumn('uuid')
+	@Property()
+	uuid: string;
 
-  @Column({
-    unique: true,
-    nullable: false,
-  })
-  @Property()
-  email: string;
+	@Column({
+		unique: true,
+		nullable: false,
+	})
+	@Property()
+	email: string;
 
-  @OneToMany(() => TodoList, todoList => todoList.user, {
-    cascade: true,
-  })
-  @Property({ use: TodoList })
-  todoLists: Array<TodoList>;
+	@OneToMany(() => TodoList, (todoList) => todoList.user, {
+		cascade: true,
+	})
+	@Property({ use: TodoList })
+	todoLists: Array<TodoList>;
 
-  @Property()
-  @OneToOne(() => DemographicProfile)
-  @JoinColumn()
-  demographicProfile: DemographicProfile;
+	@Property()
+	@OneToOne(() => DemographicProfile)
+	@JoinColumn()
+	demographicProfile: DemographicProfile;
 
-  @Property()
-  @OneToOne(() => NewsletterPreferences)
-  @JoinColumn()
-  newsletterPreferences: NewsletterPreferences;
+	@Property()
+	@OneToOne(() => NewsletterPreferences)
+	@JoinColumn()
+	newsletterPreferences: NewsletterPreferences;
 
-  @Column({ length: 60, select: false, nullable: true })
-  passwordHash: string;
+	@Column({ length: 60, select: false, nullable: true })
+	passwordHash: string;
 
-  @Column({ select: false, nullable: true })
-  activationToken: string;
+	@Column({ select: false, nullable: true })
+	activationToken: string;
 
-  @Column({ select: false, nullable: true })
-  passwordResetToken: string;
+	@Column({ select: false, nullable: true })
+	passwordResetToken: string;
 
-  get isActivated(): boolean {
-    return Boolean(!this.activationToken && this.passwordHash);
-  }
+	get isActivated(): boolean {
+		return Boolean(!this.activationToken && this.passwordHash);
+	}
 }

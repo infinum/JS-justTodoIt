@@ -1,4 +1,4 @@
 export interface IPasswordSettingData {
-  token: string;
-  password: string;
+	token: string;
+	password: string;
 }

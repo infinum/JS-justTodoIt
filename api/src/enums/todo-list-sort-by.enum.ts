@@ -1,4 +1,4 @@
 export enum TodoListSortBy {
-  TITLE = 'title',
-  CREATED = 'created',
+	TITLE = 'title',
+	CREATED = 'created',
 }

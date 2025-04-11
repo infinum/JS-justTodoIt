@@ -5,22 +5,22 @@ import { TodoList } from './todo-list';
 @Entity()
 @Unique('TODO_TITLE', ['title', 'todo.uuid'])
 export class Todo extends BaseEntity {
-  @PrimaryGeneratedColumn('uuid')
-  @Property()
-  uuid: string;
+	@PrimaryGeneratedColumn('uuid')
+	@Property()
+	uuid: string;
 
-  @Column({
-    nullable: false,
-  })
-  @Property()
-  title: string;
+	@Column({
+		nullable: false,
+	})
+	@Property()
+	title: string;
 
-  @Column()
-  @Property()
-  done: boolean;
+	@Column()
+	@Property()
+	done: boolean;
 
-  @ManyToOne(() => TodoList, todoList => todoList.todos, {
-    onDelete: 'CASCADE',
-  })
-  todo: TodoList;
+	@ManyToOne(() => TodoList, (todoList) => todoList.todos, {
+		onDelete: 'CASCADE',
+	})
+	todo: TodoList;
 }

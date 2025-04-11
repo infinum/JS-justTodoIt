@@ -4,28 +4,24 @@ import { Response } from 'express';
 
 const relationErrorRegEx = /(Relation.*was not found)|(".*" alias was not found)/i;
 const uniqueConstraintRegEx = /UNIQUE constraint failed: (.*)/i;
-const columnNotFoundRegEx = /(.*) column was not found in the (.*) entity/i
+const columnNotFoundRegEx = /(.*) column was not found in the (.*) entity/i;
 
 @Middleware()
 export class ErrorHandlingMiddleware implements MiddlewareMethods {
-  use(
-    @Err() error: Exception,
-    @Req() req: Req,
-    @Res() res: Res,
-  ): Response {
-    let status = error.status || 500;
+	use(@Err() error: Exception, @Req() req: Req, @Res() res: Res): Response {
+		let status = error.status || 500;
 
-    if (
-      relationErrorRegEx.test(error.message) ||
-      uniqueConstraintRegEx.test(error.message) ||
-      columnNotFoundRegEx.test(error.message)
-    ) {
-      status = 400;
-    }
+		if (
+			relationErrorRegEx.test(error.message) ||
+			uniqueConstraintRegEx.test(error.message) ||
+			columnNotFoundRegEx.test(error.message)
+		) {
+			status = 400;
+		}
 
-    return res.status(status).json({
-      requestId: req.id,
-      message: error.message,
-    });
-  }
+		return res.status(status).json({
+			requestId: req.id,
+			message: error.message,
+		});
+	}
 }
