@@ -2,8 +2,8 @@
   "compilerOptions": {
     "module": "commonjs",
     "target": "es2016",
+    "composite": true,
     "sourceMap": true,
-    "declaration": false,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "moduleResolution": "node",

@@ -4,6 +4,7 @@
     "baseUrl": ".",
     "outDir": "./dist",
     "moduleResolution": "node",
+    "composite": true,
     "declaration": true,
     "noResolve": false,
     "preserveConstEnums": true,
