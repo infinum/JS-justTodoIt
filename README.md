@@ -129,7 +129,7 @@ The [MIT License](LICENSE)
 
 # Credits
 
-learnAngular is maintained and sponsored by
+Just Todo It is maintained and sponsored by
 [Infinum](https://www.infinum.com).
 
 <p align="center">
