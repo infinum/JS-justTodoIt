@@ -1,108 +1,112 @@
-import { Service } from '@tsed/di';
-import { TodoList } from '../../entities/todo-list';
-import { User } from '../../entities/user';
-import { DeleteResult, Like, FindConditions } from 'typeorm';
-import { TodoListSortBy } from '../../enums/todo-list-sort-by.enum';
-import { SortDirection } from '../../enums/sort-direction.enum';
-import { DEFAULT_PAGE_SIZE, DEFAULT_PAGE } from '../../constants';
-import { IPagedResult } from '../../interfaces/paged-result.interface';
+import { Service } from "@tsed/di";
+import { DeleteResult, FindOptionsWhere, Like } from "typeorm";
+import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from "../../constants";
+import { TodoList } from "../../entities/todo-list";
+import { User } from "../../entities/user";
+import { SortDirection } from "../../enums/sort-direction.enum";
+import { TodoListSortBy } from "../../enums/todo-list-sort-by.enum";
+import { IPagedResult } from "../../interfaces/paged-result.interface";
 
 interface IBaseTodoFetchingOptions {
-	relations?: Array<string>;
-	user?: User;
+  relations?: Array<string>;
+  user?: User;
 }
 
 interface ITodoFetchingOptions extends IBaseTodoFetchingOptions {
-	page?: {
-		number: number;
-		size: number;
-	};
-	sortBy?: TodoListSortBy;
-	sortDirection?: SortDirection;
-	title?: string;
+  page?: {
+    number: number;
+    size: number;
+  };
+  sortBy?: TodoListSortBy;
+  sortDirection?: SortDirection;
+  title?: string;
 }
 
 interface ITodoFetchOneOptions extends IBaseTodoFetchingOptions {
-	uuid: string;
+  uuid: string;
 }
 
 interface IDeleteTodoOptions {
-	uuid: string;
-	user?: User;
+  uuid: string;
+  user?: User;
 }
 
 @Service()
 export class TodosService {
-	private readonly repositry = TodoList.getRepository();
+  private readonly repository = TodoList.getRepository();
 
-	public async fetchAll({
-		relations,
-		user,
-		page,
-		sortBy,
-		sortDirection,
-		title,
-	}: ITodoFetchingOptions): Promise<IPagedResult<TodoList>> {
-		// Pagination
-		page = {
-			size: page?.size ?? DEFAULT_PAGE_SIZE,
-			number: page?.number ?? DEFAULT_PAGE,
-		};
-		const skip = Math.max((page.number - 1) * page.size, 0);
-		const take = page?.size ?? DEFAULT_PAGE_SIZE;
+  public async fetchAll({
+    relations,
+    user,
+    page,
+    sortBy,
+    sortDirection,
+    title,
+  }: ITodoFetchingOptions): Promise<IPagedResult<TodoList>> {
+    // Pagination
+    page = {
+      size: page?.size ?? DEFAULT_PAGE_SIZE,
+      number: page?.number ?? DEFAULT_PAGE,
+    };
+    const skip = Math.max((page.number - 1) * page.size, 0);
+    const take = page?.size ?? DEFAULT_PAGE_SIZE;
 
-		// Sorting
-		let order: Record<string, SortDirection>;
-		if (sortBy) {
-			order = {
-				[sortBy]: sortDirection ?? SortDirection.ASC,
-			};
-		}
+    // Sorting
+    let order: Record<string, SortDirection>;
+    if (sortBy) {
+      order = {
+        [sortBy]: sortDirection ?? SortDirection.ASC,
+      };
+    }
 
-		const where: FindConditions<TodoList> = {
-			user,
-		};
+    const where: FindOptionsWhere<TodoList> = {
+      user,
+    };
 
-		if (title) {
-			where.title = Like(`%${title}%`);
-		}
+    if (title) {
+      where.title = Like(`%${title}%`);
+    }
 
-		const results = await this.repositry.find({
-			where,
-			skip,
-			take,
-			relations,
-			order,
-		});
+    const results = await this.repository.find({
+      where,
+      skip,
+      take,
+      relations,
+      order,
+    });
 
-		const count = await this.repositry.count({
-			where,
-		});
+    const count = await this.repository.count({
+      where,
+    });
 
-		return {
-			count,
-			results,
-		};
-	}
+    return {
+      count,
+      results,
+    };
+  }
 
-	public fetchOne({ uuid, relations, user }: ITodoFetchOneOptions): Promise<TodoList> {
-		return this.repositry.findOne({
-			where: {
-				uuid,
-				user,
-			},
-			relations,
-		});
-	}
+  public fetchOne({
+    uuid,
+    relations,
+    user,
+  }: ITodoFetchOneOptions): Promise<TodoList> {
+    return this.repository.findOne({
+      where: {
+        uuid,
+        user,
+      },
+      relations,
+    });
+  }
 
-	public delete({ uuid, user }: IDeleteTodoOptions): Promise<DeleteResult> {
-		return this.repositry.delete({
-			uuid,
-			user,
-		});
-	}
+  public delete({ uuid, user }: IDeleteTodoOptions): Promise<DeleteResult> {
+    return this.repository.delete({
+      uuid,
+      user,
+    });
+  }
 
-	public save(todo: TodoList): Promise<TodoList> {
-		return this.repositry.save(todo);
-	}
+  public save(todo: TodoList): Promise<TodoList> {
+    return this.repository.save(todo);
+  }
 }
