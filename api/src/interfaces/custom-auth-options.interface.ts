@@ -1,4 +1,4 @@
 export interface ICustomAuthOptions {
-  passToken?: boolean;
-  passUser?: boolean;
+	passToken?: boolean;
+	passUser?: boolean;
 }
