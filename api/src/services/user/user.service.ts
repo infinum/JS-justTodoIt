@@ -1,6 +1,9 @@
 import { Service } from '@tsed/di';
+import { BadRequest, InternalServerError } from '@tsed/exceptions';
 import { compare, hash } from 'bcrypt';
 import { FRONTEND_URL } from '../../constants';
+import { DemographicProfile } from '../../entities/demographic-profile';
+import { NewsletterPreferences } from '../../entities/newsletter-preferences';
 import { User } from '../../entities/user';
 import { ResponseErrorCode } from '../../enums/response-error-code.enum';
 import { loadDeepRelation } from '../../helpers';
@@ -8,9 +11,6 @@ import { IPasswordSettingData } from '../../interfaces/password-setting-data.int
 import { IRegistrationData } from '../../interfaces/registration-data.interface';
 import { AuthService } from '../auth/auth.service';
 import { EmailService } from '../email/email.service';
-import { InternalServerError, BadRequest } from '@tsed/exceptions';
-import { DemographicProfile } from '../../entities/demographic-profile';
-import { NewsletterPreferences } from '../../entities/newsletter-preferences';
 
 interface IUserFetchingOptions {
 	email?: string;

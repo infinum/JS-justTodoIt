@@ -1,30 +1,32 @@
-import '@tsed/platform-express'; // /!\ keep this import
 import '@tsed/ajv';
-import '@tsed/typeorm';
+import { AfterRoutesInit, BeforeRoutesInit, PlatformAcceptMimesMiddleware, PlatformApplication } from '@tsed/common';
+import { Configuration, Inject } from '@tsed/di';
+import '@tsed/platform-express'; // /!\ keep this import
 import '@tsed/swagger'; // import swagger Ts.ED module
 import * as bodyParser from 'body-parser';
 import * as compress from 'compression';
 import * as cookieParser from 'cookie-parser';
-import * as methodOverride from 'method-override';
 import * as cors from 'cors';
+import { NextFunction, Request, Response } from 'express';
 import helmet from 'helmet';
-import { Configuration, Inject } from '@tsed/di';
-import { PlatformApplication, BeforeRoutesInit, AfterRoutesInit, PlatformAcceptMimesMiddleware } from '@tsed/common';
-import { ormConfig } from './orm.config';
-import { SRC_DIR, HTTP_PORT, CORS_ALLOWED_ORIGINS, ROOT_DIR } from './constants';
+import * as methodOverride from 'method-override';
 import { join } from 'path';
-import { ErrorHandlingMiddleware } from './middlewares/error-handling.middleware';
+import { CORS_ALLOWED_ORIGINS, HTTP_PORT, ROOT_DIR } from './constants';
 import { CustomHeader } from './enums/custom-headers.enum';
-import { Request, Response, NextFunction } from 'express';
+import { ErrorHandlingMiddleware } from './middlewares/error-handling.middleware';
+import { AuthController } from './controllers/auth/auth.controller';
+import { TodosController } from './controllers/todos/todos.controller';
+import './services/connections/DefaultConnection'; // Import database connection
+
+const rootDir = __dirname;
 
 @Configuration({
-	rootDir: SRC_DIR,
+	rootDir: rootDir,
 	acceptMimes: ['application/json'],
 	httpPort: HTTP_PORT,
 	mount: {
-		'/': [`${SRC_DIR}/controllers/**/*.controller.ts`],
+		'/': [AuthController, TodosController],
 	},
-	typeorm: ormConfig,
 	exclude: ['**/*.spec.ts'],
 	swagger: [
 		{
@@ -36,11 +38,6 @@ import { Request, Response, NextFunction } from 'express';
 export class Server implements BeforeRoutesInit, AfterRoutesInit {
 	@Inject()
 	app: PlatformApplication;
-
-	@Configuration({
-		httpPort: HTTP_PORT,
-	})
-	settings: Configuration;
 
 	$beforeRoutesInit(): void {
 		this.app

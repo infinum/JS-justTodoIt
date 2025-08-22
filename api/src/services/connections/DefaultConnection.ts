@@ -1,17 +1,25 @@
-import { Configuration, registerProvider } from '@tsed/di';
-import { createConnection } from '@tsed/typeorm';
-import { Connection, ConnectionOptions } from 'typeorm';
+import { registerProvider, ProviderScope } from '@tsed/di';
+import { DataSource } from 'typeorm';
+import { dataSourceOptions } from '../../data-source';
+import { Logger } from '@tsed/common';
 
 export const DEFAULT_CONNECTION = Symbol.for('DEFAULT_CONNECTION');
-export type DEFAULT_CONNECTION = Connection;
+export type DEFAULT_CONNECTION = DataSource;
 
-registerProvider({
+registerProvider<DataSource>({
 	provide: DEFAULT_CONNECTION,
-	deps: [Configuration],
-	async useAsyncFactory(configuration: Configuration) {
-		const settings = configuration.get<ConnectionOptions[]>('typeorm')!;
-		const connectionOptions = settings.find((o) => o.name === 'default');
-
-		return createConnection(connectionOptions!);
+	type: 'typeorm:datasource',
+	scope: ProviderScope.SINGLETON,
+	deps: [Logger],
+	async useAsyncFactory(logger: Logger) {
+		const ds = new DataSource(dataSourceOptions);
+		await ds.initialize();
+		logger.info('🗄  SQLite initialized via TypeORM DataSource');
+		return ds;
+	},
+	hooks: {
+		$onDestroy(ds) {
+			return ds.isInitialized ? ds.destroy() : undefined;
+		},
 	},
 });

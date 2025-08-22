@@ -1,10 +1,10 @@
 import { Service } from '@tsed/di';
+import { DeleteResult, FindOptionsWhere, Like } from 'typeorm';
+import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from '../../constants';
 import { TodoList } from '../../entities/todo-list';
 import { User } from '../../entities/user';
-import { DeleteResult, Like, FindConditions } from 'typeorm';
-import { TodoListSortBy } from '../../enums/todo-list-sort-by.enum';
 import { SortDirection } from '../../enums/sort-direction.enum';
-import { DEFAULT_PAGE_SIZE, DEFAULT_PAGE } from '../../constants';
+import { TodoListSortBy } from '../../enums/todo-list-sort-by.enum';
 import { IPagedResult } from '../../interfaces/paged-result.interface';
 
 interface IBaseTodoFetchingOptions {
@@ -33,7 +33,7 @@ interface IDeleteTodoOptions {
 
 @Service()
 export class TodosService {
-	private readonly repositry = TodoList.getRepository();
+	private readonly repository = TodoList.getRepository();
 
 	public async fetchAll({
 		relations,
@@ -59,7 +59,7 @@ export class TodosService {
 			};
 		}
 
-		const where: FindConditions<TodoList> = {
+		const where: FindOptionsWhere<TodoList> = {
 			user,
 		};
 
@@ -67,7 +67,7 @@ export class TodosService {
 			where.title = Like(`%${title}%`);
 		}
 
-		const results = await this.repositry.find({
+		const results = await this.repository.find({
 			where,
 			skip,
 			take,
@@ -75,7 +75,7 @@ export class TodosService {
 			order,
 		});
 
-		const count = await this.repositry.count({
+		const count = await this.repository.count({
 			where,
 		});
 
@@ -86,7 +86,7 @@ export class TodosService {
 	}
 
 	public fetchOne({ uuid, relations, user }: ITodoFetchOneOptions): Promise<TodoList> {
-		return this.repositry.findOne({
+		return this.repository.findOne({
 			where: {
 				uuid,
 				user,
@@ -96,13 +96,13 @@ export class TodosService {
 	}
 
 	public delete({ uuid, user }: IDeleteTodoOptions): Promise<DeleteResult> {
-		return this.repositry.delete({
+		return this.repository.delete({
 			uuid,
 			user,
 		});
 	}
 
 	public save(todo: TodoList): Promise<TodoList> {
-		return this.repositry.save(todo);
+		return this.repository.save(todo);
 	}
 }

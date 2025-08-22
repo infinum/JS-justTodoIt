@@ -98,29 +98,35 @@ This page shows a paginated table of all of the user's Todo lists:
 - User can delete a particular Todo (with confirmation dialog prompt)
 
 ##### Empty state:
+
 ![Empty state](./.assets/app/angular/todo-list-empty.png)
 
 ##### Table with some items:
+
 ![Empty state](./.assets/app/angular/todo-list.png)
 
 ##### Sorted by name:
+
 ![Sort by name](./.assets/app/angular/todo-list-sort.png)
 
 ##### Name filter:
+
 ![Name filter](./.assets/app/angular/todo-list-filters.png)
 
 ##### Delete action prompt:
-![Delete action prompt](./.assets/app/angular/todo-list-delete-confirmation.png)
 
+![Delete action prompt](./.assets/app/angular/todo-list-delete-confirmation.png)
 
 #### 1.2.2. Create a new Todo list
 
 Todo form consists of:
+
 - Todo list name
 - Array of Todo items
   - Each Todo item has a name and done state
 
 Please ensure that all the form validations are implemented:
+
 - Todo list name is required
 - At least one Todo item is required
 - Todo item name is required
@@ -128,15 +134,19 @@ Please ensure that all the form validations are implemented:
 User should not be able to trigger an API call if the form is invalid.
 
 ##### Empty state
+
 ![Create new Todo empty state](./.assets/app/angular/todo-form-create-new-empty.png)
 
 ##### Filled out
+
 ![Create new Todo empty state](./.assets/app/angular/todo-form-create-new-filled.png)
 
 ##### Validation error example #1
+
 ![Create new Todo error example #1](./.assets/app/angular/todo-form-error-1.png)
 
 ##### Validation error example #2
+
 ![Create new Todo error example #2](./.assets/app/angular/todo-form-error-2.png)
 
 #### 1.2.3. Edit existing Todo list

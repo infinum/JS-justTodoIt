@@ -1,4 +1,4 @@
-import { EndpointInfo, IMiddleware, Middleware, Req, Res } from '@tsed/common';
+import { Middleware, Req, Res, Context } from '@tsed/common';
 import { EXTEND_TOKEN_DURATION_AUTOMATICALLY, EXTEND_TOKEN_FREQUENCY_S, JWT_EXPIRATION_TIME_S } from '../constants';
 import { ResponseErrorCode } from '../enums/response-error-code.enum';
 import { ICustomAuthOptions } from '../interfaces/custom-auth-options.interface';
@@ -7,14 +7,17 @@ import { UserService } from '../services/user/user.service';
 import { Unauthorized, Forbidden } from '@tsed/exceptions';
 
 @Middleware()
-export class AuthMiddleware implements IMiddleware {
+export class AuthMiddleware {
 	constructor(
 		private readonly authService: AuthService,
 		private readonly userService: UserService
 	) {}
 
-	async use(@Req() req: Req, @Res() res: Res, @EndpointInfo() endpoint: EndpointInfo): Promise<void> {
-		const options: ICustomAuthOptions = endpoint.get(AuthMiddleware);
+	async use(@Req() req: Req, @Res() res: Res, @Context() ctx: Context): Promise<void> {
+		const options: ICustomAuthOptions = ctx.endpoint.get(AuthMiddleware) || {
+			passToken: true,
+			passUser: true,
+		};
 
 		const token = req.cookies.token;
 
@@ -39,12 +42,13 @@ export class AuthMiddleware implements IMiddleware {
 			req.tokenData = tokenData;
 		}
 
-		const user = await this.userService.fetch({ uuid: tokenData.uuid });
-		if (!user) {
-			throw new Forbidden(ResponseErrorCode.TOKEN_INVALID, { email: tokenData.email });
-		}
-
 		if (options.passUser) {
+			const user = await this.userService.fetch({ uuid: tokenData.uuid });
+			if (!user) {
+				throw new Forbidden(ResponseErrorCode.TOKEN_INVALID, {
+					email: tokenData.email,
+				});
+			}
 			req.user = user;
 		}
 	}

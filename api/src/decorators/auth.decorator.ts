@@ -9,9 +9,8 @@ export function Auth(
 		passToken: true,
 	}
 ): Function {
-	// eslint-disable-line @typescript-eslint/ban-types
 	return useDecorators(
-		UseAuth(AuthMiddleware, options),
+		UseAuth(AuthMiddleware, options as Record<string, unknown>),
 		Security('cookieAuth'),
 		Returns(401).Description('Unauthorized'),
 		Returns(403).Description('Forbidden')

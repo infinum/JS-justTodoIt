@@ -77,15 +77,14 @@ export class AuthController {
 	@Post('/register')
 	@Summary('Registration')
 	@Returns(200, User)
-	async register(@BodyParams() { email, password }: RegisterData, @Res() res: Res): Promise<User> {
-		let user = await this.userService.fetch({ email });
+	async register(@BodyParams() { email, password }: RegisterData): Promise<User> {
+		const existing = await this.userService.fetch({ email });
 
-		if (user) {
-			throw new BadRequest(ResponseErrorCode.USER_EXISTS, { email });
+		if (existing) {
+			throw new BadRequest('USER_EXISTS', { email });
 		}
 
-		user = await this.userService.create({ email, password });
-		res.user = user;
+		const user = await this.userService.create({ email, password });
 
 		return user;
 	}
@@ -96,14 +95,20 @@ export class AuthController {
 	@(Returns(BadRequest.STATUS).Description('User with given email does not exist'))
 	@(Returns(UnprocessableEntity.STATUS).Description('User with given email has already been activated'))
 	async resendActivationEmail(@BodyParams() { email }: ResendActivationEmailData, @Res() res: Res): Promise<void> {
-		const user = await this.userService.fetch({ email, getActivationToken: true, getPasswordHash: true });
+		const user = await this.userService.fetch({
+			email,
+			getActivationToken: true,
+			getPasswordHash: true,
+		});
 
 		if (!user) {
 			throw new BadRequest(ResponseErrorCode.USER_DOES_NOT_EXISTS, { email });
 		}
 
 		if (user.isActivated) {
-			throw new UnprocessableEntity(ResponseErrorCode.USER_ALREADY_ACTIVATED, { email });
+			throw new UnprocessableEntity(ResponseErrorCode.USER_ALREADY_ACTIVATED, {
+				email,
+			});
 		}
 
 		const activationToken = await this.userService.createActivationToken(user);
@@ -161,7 +166,10 @@ export class AuthController {
 	@Summary('Activation')
 	@Returns(200, User)
 	async activate(@BodyParams() { token, password }: PasswordSettingData, @Res() res: Res): Promise<User> {
-		const activationResult = await this.userService.activate({ token, password });
+		const activationResult = await this.userService.activate({
+			token,
+			password,
+		});
 
 		if (!activationResult) {
 			throw new Forbidden(ResponseErrorCode.ACTIVATION_TOKEN_EXPIRED_OR_INVALID);
@@ -191,7 +199,10 @@ export class AuthController {
 	@Post('/reset-password')
 	@Summary('Reset password')
 	async resetPassword(@BodyParams() { token, password }: PasswordSettingData, @Res() res: Res): Promise<User> {
-		const resetResult = await this.userService.resetPassword({ token, password });
+		const resetResult = await this.userService.resetPassword({
+			token,
+			password,
+		});
 
 		if (!resetResult) {
 			throw new BadRequest(ResponseErrorCode.PASSWORD_RESET_TOKEN_EXPIRED_OR_INVALID);
@@ -275,7 +286,8 @@ export class AuthController {
 	@Auth({ passUser: true })
 	async setNewsletterPreferences(
 		@Req() req: Req,
-		@BodyParams() { weeklyNewsletter, specialOffers }: NewsletterPreferencesSettingData
+		@BodyParams()
+		{ weeklyNewsletter, specialOffers }: NewsletterPreferencesSettingData
 	): Promise<NewsletterPreferences> {
 		const newsletterPreferences =
 			(await this.userService.fetchNewsletterPreferences(req.user.uuid)) ?? new NewsletterPreferences();

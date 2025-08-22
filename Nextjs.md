@@ -210,7 +210,6 @@ To get on board with testing best practices and to get familiar with the testing
 Write some tests, for example:
 
 - TodoFormFields
-
   - `should show title`
   - `should update title`
   - `should mark as done`

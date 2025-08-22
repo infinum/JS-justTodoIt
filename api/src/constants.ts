@@ -1,5 +1,4 @@
 // APP
-export const SRC_DIR = __dirname;
 export const ROOT_DIR = process.cwd();
 
 // API

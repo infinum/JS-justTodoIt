@@ -3,8 +3,8 @@ name: Build
 on:
   pull_request:
     paths-ignore:
-      - ".assets/**"
-      - "**.md"
+      - '.assets/**'
+      - '**.md'
   workflow_dispatch:
 
 concurrency:
