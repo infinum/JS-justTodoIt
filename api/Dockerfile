@@ -1,33 +1,34 @@
-###############################################################################
-###############################################################################
-##                      _______ _____ ______ _____                           ##
-##                     |__   __/ ____|  ____|  __ \                          ##
-##                        | | | (___ | |__  | |  | |                         ##
-##                        | |  \___ \|  __| | |  | |                         ##
-##                        | |  ____) | |____| |__| |                         ##
-##                        |_| |_____/|______|_____/                          ##
-##                                                                           ##
-## description     : Dockerfile for TsED Application                         ##
-## author          : TsED team                                               ##
-## date            : 20190820                                                ##
-## version         : 1.0                                                     ##
-###############################################################################
-###############################################################################
-FROM node:12.13.0-alpine
+FROM node:22-alpine AS base
 
-RUN apk update && apk add build-base git python
+WORKDIR /app
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+RUN corepack enable
 
-COPY package.json .
-COPY package-lock.json .
-COPY ./src ./src
-COPY ./dist ./dist
-COPY ./resources ./resources
-COPY ./spec ./spec
+FROM base AS deps
 
-RUN npm ci
+RUN apk add --no-cache python3 make g++ sqlite-dev
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+RUN pnpm install --frozen-lockfile
 
-EXPOSE 8081
-ENV PORT 8081
-ENV NODE_ENV production
+FROM deps AS build
 
-CMD ["npm", "run", "start:prod"]
+COPY tsconfig.json tsconfig.compile.json tsup.config.ts ./
+COPY src ./src
+RUN pnpm run build
+
+FROM build AS prod-deps
+
+RUN pnpm prune --prod
+
+FROM base AS runner
+
+ENV NODE_ENV=production
+RUN apk add --no-cache sqlite-libs
+
+COPY --from=prod-deps /app/node_modules ./node_modules
+COPY --from=build /app/dist ./dist
+COPY package.json pnpm-lock.yaml ./
+
+EXPOSE 8080
+CMD ["node", "dist/index.js"]

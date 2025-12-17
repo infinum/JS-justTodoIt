@@ -1,15 +1,22 @@
-version: '3.3'
 services:
-  server:
+  api:
     build:
       context: .
       dockerfile: ./Dockerfile
-      args:
-        - http_proxy
-        - https_proxy
-        - no_proxy
-    image: 'backend/server:latest'
+    image: js-just-todo-it/api:latest
+    environment:
+      NODE_ENV: production
+      HTTP_PORT: 8080
+      FRONTEND_URL: http://localhost:5173
+      CORS_ALLOWED_ORIGINS: http://localhost:5173
+      JWT_SECRET: change-me
+      COOKIE_HTTP_ONLY: 'true'
+      COOKIE_SECURE: 'false'
     ports:
-      - '8081:8081'
-    stdin_open: true
-    tty: true
+      - '8080:8080'
+    volumes:
+      - api_data:/app
+    restart: unless-stopped
+
+volumes:
+  api_data:
