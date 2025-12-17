@@ -49,6 +49,7 @@
 		"typeorm": "^0.3.25"
 	},
 	"devDependencies": {
+		"@eslint/js": "9.39.1",
 		"@tsed/cli-plugin-eslint": "^6.6.0",
 		"@tsed/cli-plugin-typeorm": "^6.6.0",
 		"@types/bcrypt": "^6.0.0",
@@ -61,16 +62,14 @@
 		"@types/method-override": "^3.0.0",
 		"@types/node": "^24.1.0",
 		"@types/react": "^19.1.9",
-		"@typescript-eslint/eslint-plugin": "^8.38.0",
-		"@typescript-eslint/parser": "^8.38.0",
 		"concurrently": "^9.2.0",
 		"dotenv": "^17.2.1",
-		"eslint": "^9.32.0",
-		"eslint-config-prettier": "^10.1.8",
-		"eslint-plugin-prettier": "^5.5.3",
+		"eslint": "^9.39.1",
+		"globals": "16.5.0",
 		"nodemon": "^3.1.10",
 		"ts-node": "^10.9.2",
-		"typescript": "^5.8.3"
+		"typescript": "^5.8.3",
+		"typescript-eslint": "8.49.0"
 	},
 	"packageManager": "pnpm@10.26.0+sha512.3b3f6c725ebe712506c0ab1ad4133cf86b1f4b687effce62a9b38b4d72e3954242e643190fc51fa1642949c735f403debd44f5cb0edd657abe63a8b6a7e1e402"
 }

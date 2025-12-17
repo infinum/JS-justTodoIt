@@ -12,7 +12,7 @@ import { User } from '../../entities/user';
 import { ITokenData } from '../../interfaces/token-data.interface';
 
 const signAsync: (
-	payload: string | Buffer | object, // eslint-disable-line @typescript-eslint/ban-types
+	payload: string | Buffer | object,
 	secretOrPrivateKey: Secret,
 	options?: SignOptions
 ) => Promise<string> = promisify(sign);
