@@ -7,7 +7,7 @@ export class DemographicProfile extends BaseEntity {
 	@PrimaryGeneratedColumn('uuid')
 	uuid: string;
 
-	@Column()
+	@Column({ type: 'text' })
 	@Property()
 	gender: Gender;
 

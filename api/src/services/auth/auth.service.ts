@@ -1,5 +1,5 @@
 import { Service } from '@tsed/di';
-import { Secret, sign, SignOptions, verify } from 'jsonwebtoken';
+import jwt, { type Secret, type SignOptions } from 'jsonwebtoken';
 import { promisify } from 'util';
 import {
 	EXTEND_TOKEN_REVOCATION_DELAY_S,
@@ -11,11 +11,13 @@ import {
 import { User } from '../../entities/user';
 import { ITokenData } from '../../interfaces/token-data.interface';
 
+const { sign, verify } = jwt;
+
 const signAsync: (
 	payload: string | Buffer | object,
 	secretOrPrivateKey: Secret,
 	options?: SignOptions
-) => Promise<string> = promisify(sign);
+) => Promise<string> = promisify(jwt.sign);
 
 interface ITokenExpirationInfo {
 	issuedAt: number;
@@ -63,7 +65,7 @@ export class AuthService {
 		}
 
 		return new Promise((resolve) => {
-			verify(token, JWT_SECRET, (err, decoded: ITokenData) => {
+			verify(token, JWT_SECRET, (err: Error | null, decoded?: ITokenData) => {
 				if (err || !decoded) {
 					resolve(false);
 				}
@@ -100,12 +102,9 @@ export class AuthService {
 	}
 
 	private startExpiredRevokedTokensCleanup() {
-		setInterval(
-			() => {
-				this.cleanExpiredRevokedTokens();
-			},
-			(JWT_EXPIRATION_TIME_S / 2) * 1000
-		);
+		setInterval(() => {
+			this.cleanExpiredRevokedTokens();
+		}, (JWT_EXPIRATION_TIME_S / 2) * 1000);
 	}
 
 	private cleanExpiredRevokedTokens() {
