@@ -139,7 +139,9 @@ export class TodosController {
 		if ('todos' in todoData) {
 			const oldTodos = todoList.todos;
 			todoList.todos = todoData.todos;
-			const newUuids = todoList.todos.map(({ uuid }) => uuid).filter(Boolean);
+			const newUuids = todoList.todos
+				.map(({ uuid }: { uuid?: string | null }) => uuid)
+				.filter(Boolean) as string[];
 
 			for (const oldItem of oldTodos) {
 				if (!newUuids.includes(oldItem.uuid)) {

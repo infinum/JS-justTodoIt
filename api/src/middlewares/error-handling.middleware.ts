@@ -1,6 +1,6 @@
 import { Err, Middleware, MiddlewareMethods, Req, Res } from '@tsed/common';
 import { Exception } from '@tsed/exceptions';
-import { Response } from 'express';
+import type { Response } from 'express';
 
 const relationErrorRegEx = /(Relation.*was not found)|(".*" alias was not found)/i;
 const uniqueConstraintRegEx = /UNIQUE constraint failed: (.*)/i;

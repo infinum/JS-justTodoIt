@@ -1,13 +1,14 @@
 {
 	"compilerOptions": {
-		"module": "commonjs",
+		"module": "ESNext",
 		"target": "es2016",
 		"composite": true,
 		"sourceMap": true,
 		"experimentalDecorators": true,
 		"emitDecoratorMetadata": true,
-		"moduleResolution": "node",
+		"moduleResolution": "bundler",
 		"isolatedModules": false,
+		"esModuleInterop": true,
 		"suppressImplicitAnyIndexErrors": false,
 		"noImplicitAny": true,
 		"strictNullChecks": false,
@@ -21,7 +22,7 @@
 		"lib": ["es7", "dom", "esnext.asynciterable"],
 		"typeRoots": ["./src/typings", "./node_modules/@types"]
 	},
-	"include": ["./src/**/*.ts"],
+	"include": ["./src/**/*.ts", "./tsup.config.ts"],
 	"exclude": ["node_modules", "./public", "dist", "test"],
 	"linterOptions": {
 		"exclude": []

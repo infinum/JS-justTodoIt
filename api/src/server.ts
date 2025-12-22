@@ -3,14 +3,15 @@ import { AfterRoutesInit, BeforeRoutesInit, PlatformAcceptMimesMiddleware, Platf
 import { Configuration, Inject } from '@tsed/di';
 import '@tsed/platform-express'; // /!\ keep this import
 import '@tsed/swagger'; // import swagger Ts.ED module
-import * as bodyParser from 'body-parser';
-import * as compress from 'compression';
-import * as cookieParser from 'cookie-parser';
-import * as cors from 'cors';
-import { NextFunction, Request, Response } from 'express';
+import bodyParser from 'body-parser';
+import compress from 'compression';
+import cookieParser from 'cookie-parser';
+import cors from 'cors';
+import type { NextFunction, Request, Response } from 'express';
 import helmet from 'helmet';
-import * as methodOverride from 'method-override';
-import { join } from 'path';
+import methodOverride from 'method-override';
+import { dirname, join } from 'path';
+import { fileURLToPath } from 'url';
 import { CORS_ALLOWED_ORIGINS, HTTP_PORT, ROOT_DIR } from './constants';
 import { CustomHeader } from './enums/custom-headers.enum';
 import { ErrorHandlingMiddleware } from './middlewares/error-handling.middleware';
@@ -18,7 +19,7 @@ import { AuthController } from './controllers/auth/auth.controller';
 import { TodosController } from './controllers/todos/todos.controller';
 import './services/connections/DefaultConnection'; // Import database connection
 
-const rootDir = __dirname;
+const rootDir = dirname(fileURLToPath(import.meta.url));
 
 @Configuration({
 	rootDir: rootDir,
@@ -36,8 +37,7 @@ const rootDir = __dirname;
 	],
 })
 export class Server implements BeforeRoutesInit, AfterRoutesInit {
-	@Inject()
-	app: PlatformApplication;
+	constructor(@Inject() private app: PlatformApplication) {}
 
 	$beforeRoutesInit(): void {
 		this.app

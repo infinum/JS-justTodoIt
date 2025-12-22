@@ -22,13 +22,13 @@ export class TodoList extends BaseEntity {
 	@Property()
 	created: Date;
 
-	@OneToMany(() => Todo, (todoItem) => todoItem.todo, {
+	@OneToMany(() => Todo, (todoItem: Todo) => todoItem.todo, {
 		cascade: true,
 	})
 	@Property({ use: Todo })
 	todos: Array<Todo>;
 
-	@ManyToOne(() => User, (user) => user.todoLists, {
+	@ManyToOne(() => User, (user: User) => user.todoLists, {
 		onDelete: 'CASCADE',
 	})
 	user: User;

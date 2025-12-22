@@ -17,7 +17,7 @@ export class User extends BaseEntity {
 	@Property()
 	email: string;
 
-	@OneToMany(() => TodoList, (todoList) => todoList.user, {
+	@OneToMany(() => TodoList, (todoList: TodoList) => todoList.user, {
 		cascade: true,
 	})
 	@Property({ use: TodoList })
