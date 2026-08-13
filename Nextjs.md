@@ -1,8 +1,8 @@
 # Notes for Next.js
 
-Before you start, we suggest reading through our [Getting started with React](https://infinum.com/handbook/frontend/react/getting-started-with-react/ecosystem) guide. During development, we recommend referencing our more in-depth [React guidelines and practices](https://infinum.com/handbook/books/frontend/react/react-guidelines-and-best-practices) handbook.\*\*\*\*
+Before you start, we suggest reading through our [Getting started with React](https://infinum.com/handbook/frontend/react/getting-started/ecosystem) guide. During development, we recommend referencing our more in-depth [React guidelines and practices](https://infinum.com/handbook/books/frontend/react/react-guidelines-and-best-practices) handbook.\*\*\*\*
 
-You will build this app with Next.js framework so we also suggest you go through the official [Learn Next.js](https://nextjs.org/learn/basics/create-nextjs-app) tutorial.
+You will build this app with Next.js framework so we also suggest you go through the official [Learn Next.js](https://nextjs.org/docs/app/getting-started) tutorial.
 
 If you need information about the React core API be sure to check the [React Docs](https://react.dev/).
 
@@ -14,18 +14,14 @@ Please follow these requirements:
 - Get familiar with [Tailwind](http://tailwindcss.com/) and [ShadCN](https://ui.shadcn.com/) component library
 - Use [React Hook Form](https://react-hook-form.com/) for handling forms
 - Use [React Hook Form - Error Message](https://github.com/react-hook-form/error-message)
-- Use [React Hook Form - useFieldArray](https://react-hook-form.com/api/usefieldarray) for adding and removing todos
+- Use [React Hook Form - useFieldArray](https://react-hook-form.com/docs/usefieldarrayy) for adding and removing todos
 - Use Next Auth to handle authentication:
   - [NextAuth.js](https://next-auth.js.org/)
   - [NextAuth handbook chapter](https://infinum.com/handbook/frontend/react/recipes/next-auth)
 - Get familiar with Next.js data fetching concepts:
   - [Data Fetching and Caching](https://nextjs.org/docs/app/building-your-application/data-fetching/fetching)
   - [Server Actions and Mutations](https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations)
-  - Incremental Static Regeneration (ISR): [revalidate](https://nextjs.org/docs/pages/building-your-application/data-fetching/incremental-static-regeneration)
-- Get familiar with Bugsnag [React integration](https://docs.bugsnag.com/platforms/javascript/react/)
-  - Check next.js setup example [here](https://github.com/bugsnag/bugsnag-js/tree/next/examples/js/nextjs)
-  - Check [webpack-bugsnag-plugins](https://github.com/bugsnag/webpack-bugsnag-plugins) for more info about sending source maps to bugsnag.
-  - Initial project will have Bugsnag integration already set up, but you will need to add `NEXT_PUBLIC_BUGSNAG_API_KEY` to `.env` file, check the "Bugsnag setup" section for more info.
+  - Incremental Static Regeneration (ISR): [revalidate](https://nextjs.org/docs/app/guides/incremental-static-regeneration)
 
 Application UI structure:
 
@@ -38,15 +34,6 @@ Application UI structure:
 - `TodoListForm` component which uses `useFieldArray` and `useForm` for handling form inputs
 
 > Check the [Project structure](https://infinum.com/handbook/frontend/react/project-structure#app-router) Handbook for better understanding
-
-API Development proxy setup:
-
-To make it work you just need to duplicate `.env.example` file, and rename it to `.env.local`.
-If you need more info about the setup you can find it [here](https://infinum.com/handbook/frontend/react/next/development-proxy).
-
-Bugsnag setup:
-
-To get `NEXT_PUBLIC_BUGSNAG_API_KEY` you need to log in to the [Bugsnag dashboard](https://app.bugsnag.com/user/sign_in) using the credentials from the Infinum's 1Password app using this email `accounts.bugsnag.js@infinum.com`. After the successful login, you should see the `js-react-example` project in the dashboard. After that, open the project settings by clicking on the gear icon in the top right and selecting `Project settings`. There you will find `Notifier API key`, copy it and paste it into your `.env` file.
 
 ### 1.1. Authorization flow
 

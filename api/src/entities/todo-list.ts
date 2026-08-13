@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, ManyToOne, Column, BaseEntity, OneToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, ManyToOne, Column, BaseEntity, OneToMany, type Relation } from 'typeorm';
 import { Property } from '@tsed/schema';
 import { User } from './user';
 import { Todo } from './todo';
@@ -31,5 +31,5 @@ export class TodoList extends BaseEntity {
 	@ManyToOne(() => User, (user: User) => user.todoLists, {
 		onDelete: 'CASCADE',
 	})
-	user: User;
+	user: Relation<User>;
 }
