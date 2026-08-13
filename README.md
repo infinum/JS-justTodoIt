@@ -10,12 +10,6 @@ You will be developing a simple to-do list application. Requirements are simple 
 
 Just Todo It is a practical application of knowledge, without too much hand-holding. There is a big focus on authentication handling because that is a part of almost every application but is rarely covered in various framework tutorial/courses, so it is good to learn some best practices early-on.
 
-Take a look at this short video demonstrating what the final application might look like:
-
-https://user-images.githubusercontent.com/3170728/131492134-b85e0e60-8981-4a6a-a9ac-d8d49db62b79.mp4
-
-Please note that the video is a recording of Angular application implementation. Next.js app might look quite a bit different, but this is the general gist of the flows.
-
 ## 2. Project structure
 
 This repository contains some README files and `api/` directory. The frontend app you will be developing should be placed in a sibling directory, next to `/api` directory. To get started:
