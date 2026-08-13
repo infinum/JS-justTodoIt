@@ -1,3 +1,202 @@
+---
+lockfileVersion: '9.0'
+
+importers:
+
+  .:
+    configDependencies: {}
+    packageManagerDependencies:
+      '@pnpm/exe':
+        specifier: 11.18.0
+        version: 11.18.0
+      pnpm:
+        specifier: 11.18.0
+        version: 11.18.0
+
+packages:
+
+  '@pnpm/exe@11.18.0':
+    resolution: {integrity: sha512-9aPgeTanPblPLGE0V+SSTFAEmN1aF0y3OE+iNUO/RW5oXoZfyPS34hSDDwDmVy8yokA/+EuwQZENMDxaaICysA==}
+    hasBin: true
+
+  '@pnpm/linux-arm64@11.18.0':
+    resolution: {integrity: sha512-cWOEr5xbmURZpj2XZo/3pqsrtDTzqms8g27Z4ciB1+cdj3SF8APtzyC/zJkJ6+gTnRwS0rIValnulSwDDKiasA==}
+    cpu: [arm64]
+    os: [linux]
+
+  '@pnpm/linux-x64@11.18.0':
+    resolution: {integrity: sha512-9wgEko4X/jxDOpM+zcu5CcJtam2+nEvkuE1YRRALdEk4hwzJdjbCgl9xXKIVED19ZCYpAuF1zAtxiXcukxk3xA==}
+    cpu: [x64]
+    os: [linux]
+
+  '@pnpm/linuxstatic-arm64@11.18.0':
+    resolution: {integrity: sha512-4FJPL48jwvh+GvK13hMeqqsI+1tIIrm3iNMx2URM5UaFHJDvhj2SrBMgn2th9Lmgo7gH4RykxGiYyGJJRl+rjw==}
+    cpu: [arm64]
+    os: [linux]
+    libc: [musl]
+
+  '@pnpm/linuxstatic-x64@11.18.0':
+    resolution: {integrity: sha512-nrP+OrT7BAyEno2xcaKZdOuY5kgkLQOiH7irBft2Q3/bLpEsidUscmWgtdGF2xahmfNx5FTzxwurX9zMLOId3g==}
+    cpu: [x64]
+    os: [linux]
+    libc: [musl]
+
+  '@pnpm/macos-arm64@11.18.0':
+    resolution: {integrity: sha512-KTDxK6c21u78EeH55TjPKPvOUhh1qW5zSYLJasxnIBWVK8bxzGFBwuccvdbPlwgu7c6iGrXR4dAeVn3RRty/IA==}
+    cpu: [arm64]
+    os: [darwin]
+
+  '@pnpm/win-arm64@11.18.0':
+    resolution: {integrity: sha512-4EMrx19KBBDx0ufwlTUypDQMPIyQtaf85j7Y8HeHs2KeyF6pFnIhP2PbZH8YuO/JJ9Obb2AcK3T3wqyX6nQrhg==}
+    cpu: [arm64]
+    os: [win32]
+
+  '@pnpm/win-x64@11.18.0':
+    resolution: {integrity: sha512-uBeq9G2ArsVV6es+cAqP4DwiZaykNjC5nRBOOPLn28Tr5ZplqqSpoFi6kvgM7P/fz1/VCyKj2fsBMZOR8B5lpQ==}
+    cpu: [x64]
+    os: [win32]
+
+  '@reflink/reflink-darwin-arm64@0.1.19':
+    resolution: {integrity: sha512-ruy44Lpepdk1FqDz38vExBY/PVUsjxZA+chd9wozjUH9JjuDT/HEaQYA6wYN9mf041l0yLVar6BCZuWABJvHSA==}
+    engines: {node: '>= 10'}
+    cpu: [arm64]
+    os: [darwin]
+
+  '@reflink/reflink-darwin-x64@0.1.19':
+    resolution: {integrity: sha512-By85MSWrMZa+c26TcnAy8SDk0sTUkYlNnwknSchkhHpGXOtjNDUOxJE9oByBnGbeuIE1PiQsxDG3Ud+IVV9yuA==}
+    engines: {node: '>= 10'}
+    cpu: [x64]
+    os: [darwin]
+
+  '@reflink/reflink-linux-arm64-gnu@0.1.19':
+    resolution: {integrity: sha512-7P+er8+rP9iNeN+bfmccM4hTAaLP6PQJPKWSA4iSk2bNvo6KU6RyPgYeHxXmzNKzPVRcypZQTpFgstHam6maVg==}
+    engines: {node: '>= 10'}
+    cpu: [arm64]
+    os: [linux]
+    libc: [glibc]
+
+  '@reflink/reflink-linux-arm64-musl@0.1.19':
+    resolution: {integrity: sha512-37iO/Dp6m5DDaC2sf3zPtx/hl9FV3Xze4xoYidrxxS9bgP3S8ALroxRK6xBG/1TtfXKTvolvp+IjrUU6ujIGmA==}
+    engines: {node: '>= 10'}
+    cpu: [arm64]
+    os: [linux]
+    libc: [musl]
+
+  '@reflink/reflink-linux-x64-gnu@0.1.19':
+    resolution: {integrity: sha512-jbI8jvuYCaA3MVUdu8vLoLAFqC+iNMpiSuLbxlAgg7x3K5bsS8nOpTRnkLF7vISJ+rVR8W+7ThXlXlUQ93ulkw==}
+    engines: {node: '>= 10'}
+    cpu: [x64]
+    os: [linux]
+    libc: [glibc]
+
+  '@reflink/reflink-linux-x64-musl@0.1.19':
+    resolution: {integrity: sha512-e9FBWDe+lv7QKAwtKOt6A2W/fyy/aEEfr0g6j/hWzvQcrzHCsz07BNQYlNOjTfeytrtLU7k449H1PI95jA4OjQ==}
+    engines: {node: '>= 10'}
+    cpu: [x64]
+    os: [linux]
+    libc: [musl]
+
+  '@reflink/reflink-win32-arm64-msvc@0.1.19':
+    resolution: {integrity: sha512-09PxnVIQcd+UOn4WAW73WU6PXL7DwGS6wPlkMhMg2zlHHG65F3vHepOw06HFCq+N42qkaNAc8AKIabWvtk6cIQ==}
+    engines: {node: '>= 10'}
+    cpu: [arm64]
+    os: [win32]
+
+  '@reflink/reflink-win32-x64-msvc@0.1.19':
+    resolution: {integrity: sha512-E//yT4ni2SyhwP8JRjVGWr3cbnhWDiPLgnQ66qqaanjjnMiu3O/2tjCPQXlcGc/DEYofpDc9fvhv6tALQsMV9w==}
+    engines: {node: '>= 10'}
+    cpu: [x64]
+    os: [win32]
+
+  '@reflink/reflink@0.1.19':
+    resolution: {integrity: sha512-DmCG8GzysnCZ15bres3N5AHCmwBwYgp0As6xjhQ47rAUTUXxJiK+lLUxaGsX3hd/30qUpVElh05PbGuxRPgJwA==}
+    engines: {node: '>= 10'}
+
+  detect-libc@2.1.2:
+    resolution: {integrity: sha512-Btj2BOOO83o3WyH59e8MgXsxEQVcarkUOpEYrubB0urwnN10yQ364rsiByU11nZlqWYZm05i/of7io4mzihBtQ==}
+    engines: {node: '>=8'}
+
+  pnpm@11.18.0:
+    resolution: {integrity: sha512-M9g8d9qC9J+6g2klxvG4QRgewxMrZwY5vQEvcHX1x89jTF+HAUfBmq50ePrAHfCdiJLogEVIlu3SPumzN1dWPA==}
+    engines: {node: '>=22.13'}
+    hasBin: true
+
+snapshots:
+
+  '@pnpm/exe@11.18.0':
+    dependencies:
+      '@reflink/reflink': 0.1.19
+      detect-libc: 2.1.2
+    optionalDependencies:
+      '@pnpm/linux-arm64': 11.18.0
+      '@pnpm/linux-x64': 11.18.0
+      '@pnpm/linuxstatic-arm64': 11.18.0
+      '@pnpm/linuxstatic-x64': 11.18.0
+      '@pnpm/macos-arm64': 11.18.0
+      '@pnpm/win-arm64': 11.18.0
+      '@pnpm/win-x64': 11.18.0
+
+  '@pnpm/linux-arm64@11.18.0':
+    optional: true
+
+  '@pnpm/linux-x64@11.18.0':
+    optional: true
+
+  '@pnpm/linuxstatic-arm64@11.18.0':
+    optional: true
+
+  '@pnpm/linuxstatic-x64@11.18.0':
+    optional: true
+
+  '@pnpm/macos-arm64@11.18.0':
+    optional: true
+
+  '@pnpm/win-arm64@11.18.0':
+    optional: true
+
+  '@pnpm/win-x64@11.18.0':
+    optional: true
+
+  '@reflink/reflink-darwin-arm64@0.1.19':
+    optional: true
+
+  '@reflink/reflink-darwin-x64@0.1.19':
+    optional: true
+
+  '@reflink/reflink-linux-arm64-gnu@0.1.19':
+    optional: true
+
+  '@reflink/reflink-linux-arm64-musl@0.1.19':
+    optional: true
+
+  '@reflink/reflink-linux-x64-gnu@0.1.19':
+    optional: true
+
+  '@reflink/reflink-linux-x64-musl@0.1.19':
+    optional: true
+
+  '@reflink/reflink-win32-arm64-msvc@0.1.19':
+    optional: true
+
+  '@reflink/reflink-win32-x64-msvc@0.1.19':
+    optional: true
+
+  '@reflink/reflink@0.1.19':
+    optionalDependencies:
+      '@reflink/reflink-darwin-arm64': 0.1.19
+      '@reflink/reflink-darwin-x64': 0.1.19
+      '@reflink/reflink-linux-arm64-gnu': 0.1.19
+      '@reflink/reflink-linux-arm64-musl': 0.1.19
+      '@reflink/reflink-linux-x64-gnu': 0.1.19
+      '@reflink/reflink-linux-x64-musl': 0.1.19
+      '@reflink/reflink-win32-arm64-msvc': 0.1.19
+      '@reflink/reflink-win32-x64-msvc': 0.1.19
+
+  detect-libc@2.1.2: {}
+
+  pnpm@11.18.0: {}
+
+---
 lockfileVersion: '9.0'
 
 settings:
@@ -10,31 +209,31 @@ importers:
     dependencies:
       '@tsed/ajv':
         specifier: ^8.14.1
-        version: 8.14.1(@tsed/core@8.14.1)(@tsed/di@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/logger@6.7.8))(@tsed/exceptions@8.14.1(@tsed/core@8.14.1))(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1))(ajv-errors@3.0.0(ajv@8.17.1))(ajv@8.17.1)
+        version: 8.14.1(@tsed/core@8.14.1)(@tsed/di@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/logger@8.0.5))(@tsed/exceptions@8.14.1(@tsed/core@8.14.1))(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1))(ajv-errors@3.0.0(ajv@8.17.1))(ajv@8.17.1)
       '@tsed/common':
         specifier: ^8.14.1
-        version: 8.14.1(@tsed/engines@8.14.1)(@tsed/logger-file@6.7.8(@tsed/logger@6.7.8))(@tsed/logger@6.7.8)(@tsed/openspec@8.14.1)(@types/multer@1.4.12)(cross-env@10.0.0)
+        version: 8.14.1(@tsed/engines@8.14.1)(@tsed/logger-file@8.0.5(@tsed/logger@8.0.5)(supports-color@5.5.0))(@tsed/logger@8.0.5)(@tsed/openspec@8.14.1)(@types/multer@2.2.0)(cross-env@7.0.3)
       '@tsed/core':
         specifier: ^8.14.1
         version: 8.14.1
       '@tsed/di':
         specifier: ^8.14.1
-        version: 8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/logger@6.7.8)
+        version: 8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/logger@8.0.5)
       '@tsed/exceptions':
         specifier: ^8.14.1
         version: 8.14.1(@tsed/core@8.14.1)
       '@tsed/platform-express':
         specifier: ^8.14.1
-        version: 8.14.1(@tsed/core@8.14.1)(@tsed/di@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/logger@6.7.8))(@tsed/json-mapper@8.14.1(@tsed/core@8.14.1)(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1)))(@tsed/logger@6.7.8)(@tsed/openspec@8.14.1)(@tsed/platform-http@8.14.1(@tsed/engines@8.14.1)(@tsed/logger@6.7.8)(@tsed/openspec@8.14.1)(@types/multer@1.4.12)(cross-env@10.0.0))(@tsed/platform-views@8.14.1(@tsed/core@8.14.1)(@tsed/di@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/logger@6.7.8))(@tsed/engines@8.14.1)(@tsed/exceptions@8.14.1(@tsed/core@8.14.1))(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1)))(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1))(body-parser@2.2.1)(express@5.1.0)(multer@2.0.2)
+        version: 8.14.1(@tsed/core@8.14.1)(@tsed/di@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/logger@8.0.5))(@tsed/json-mapper@8.14.1(@tsed/core@8.14.1)(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1)))(@tsed/logger@8.0.5)(@tsed/openspec@8.14.1)(@tsed/platform-http@8.14.1(@tsed/engines@8.14.1)(@tsed/logger@8.0.5)(@tsed/openspec@8.14.1)(@types/multer@2.2.0)(cross-env@7.0.3))(@tsed/platform-views@8.14.1(@tsed/core@8.14.1)(@tsed/di@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/logger@8.0.5))(@tsed/engines@8.14.1)(@tsed/exceptions@8.14.1(@tsed/core@8.14.1))(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1)))(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1))(body-parser@2.2.1(supports-color@5.5.0))(express@5.1.0(supports-color@5.5.0))(multer@2.0.2)
       '@tsed/schema':
         specifier: ^8.14.1
         version: 8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1)
       '@tsed/swagger':
         specifier: ^8.14.1
-        version: 8.14.1(@tsed/platform-http@8.14.1(@tsed/engines@8.14.1)(@tsed/logger@6.7.8)(@tsed/openspec@8.14.1)(@types/multer@1.4.12)(cross-env@10.0.0))
+        version: 8.14.1(@tsed/platform-http@8.14.1(@tsed/engines@8.14.1)(@tsed/logger@8.0.5)(@tsed/openspec@8.14.1)(@types/multer@2.2.0)(cross-env@7.0.3))
       '@tsed/typeorm':
         specifier: ^7.85.1
-        version: 7.85.1(@tsed/core@8.14.1)(@tsed/di@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/logger@6.7.8))(@tsed/json-mapper@8.14.1(@tsed/core@8.14.1)(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1)))(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1))(typeorm@0.3.28(sqlite3@5.1.7)(ts-node@10.9.2(@swc/core@1.15.3(@swc/helpers@0.5.17))(@types/node@24.1.0)(typescript@5.8.3)))
+        version: 7.85.1(@tsed/core@8.14.1)(@tsed/di@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/logger@8.0.5))(@tsed/json-mapper@8.14.1(@tsed/core@8.14.1)(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1)))(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1))(typeorm@0.3.28(sqlite3@5.1.7(supports-color@5.5.0))(supports-color@5.5.0)(ts-node@10.9.2(@swc/core@1.15.3(@swc/helpers@0.5.17))(@types/node@24.1.0)(typescript@5.8.3)))
       '@types/swagger-schema-official':
         specifier: ^2.0.25
         version: 2.0.25
@@ -46,10 +245,10 @@ importers:
         version: 6.0.0
       body-parser:
         specifier: ^2.2.1
-        version: 2.2.1
+        version: 2.2.1(supports-color@5.5.0)
       compression:
         specifier: ^1.8.1
-        version: 1.8.1
+        version: 1.8.1(supports-color@5.5.0)
       cookie-parser:
         specifier: ^1.4.7
         version: 1.4.7
@@ -58,7 +257,7 @@ importers:
         version: 2.8.5
       express:
         specifier: ^5.1.0
-        version: 5.1.0
+        version: 5.1.0(supports-color@5.5.0)
       helmet:
         specifier: ^8.1.0
         version: 8.1.0
@@ -67,7 +266,7 @@ importers:
         version: 9.0.3
       method-override:
         specifier: ^3.0.0
-        version: 3.0.0
+        version: 3.0.0(supports-color@5.5.0)
       react:
         specifier: ^19.1.1
         version: 19.1.1
@@ -82,17 +281,20 @@ importers:
         version: 4.7.0(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
       sqlite3:
         specifier: ^5.1.7
-        version: 5.1.7
+        version: 5.1.7(supports-color@5.5.0)
       tslib:
         specifier: ^2.8.1
         version: 2.8.1
       typeorm:
         specifier: ^0.3.28
-        version: 0.3.28(sqlite3@5.1.7)(ts-node@10.9.2(@swc/core@1.15.3(@swc/helpers@0.5.17))(@types/node@24.1.0)(typescript@5.8.3))
+        version: 0.3.28(sqlite3@5.1.7(supports-color@5.5.0))(supports-color@5.5.0)(ts-node@10.9.2(@swc/core@1.15.3(@swc/helpers@0.5.17))(@types/node@24.1.0)(typescript@5.8.3))
     devDependencies:
       '@eslint/js':
         specifier: 9.39.1
         version: 9.39.1
+      '@swc-node/register':
+        specifier: ^1.12.1
+        version: 1.12.1(@swc/core@1.15.3(@swc/helpers@0.5.17))(@swc/types@0.1.25)(supports-color@5.5.0)(typescript@5.8.3)
       '@swc/core':
         specifier: 1.15.3
         version: 1.15.3(@swc/helpers@0.5.17)
@@ -143,7 +345,7 @@ importers:
         version: 17.2.1
       eslint:
         specifier: ^9.39.1
-        version: 9.39.1
+        version: 9.39.1(supports-color@5.5.0)
       globals:
         specifier: 16.5.0
         version: 16.5.0
@@ -155,16 +357,13 @@ importers:
         version: 10.9.2(@swc/core@1.15.3(@swc/helpers@0.5.17))(@types/node@24.1.0)(typescript@5.8.3)
       tsup:
         specifier: ^8.3.5
-        version: 8.5.1(@swc/core@1.15.3(@swc/helpers@0.5.17))(tsx@4.21.0)(typescript@5.8.3)
-      tsx:
-        specifier: ^4.7.1
-        version: 4.21.0
+        version: 8.5.1(@swc/core@1.15.3(@swc/helpers@0.5.17))(supports-color@5.5.0)(tsx@4.21.0)(typescript@5.8.3)
       typescript:
         specifier: ^5.8.3
         version: 5.8.3
       typescript-eslint:
         specifier: 8.49.0
-        version: 8.49.0(eslint@9.39.1)(typescript@5.8.3)
+        version: 8.49.0(eslint@9.39.1(supports-color@5.5.0))(supports-color@5.5.0)(typescript@5.8.3)
 
 packages:
 
@@ -172,8 +371,23 @@ packages:
     resolution: {integrity: sha512-IchNf6dN4tHoMFIn/7OE8LWZ19Y6q/67Bmf6vnGREv8RSbBVb9LPJxEcnwrcwX6ixSvaiGoomAUvu4YSxXrVgw==}
     engines: {node: '>=12'}
 
-  '@epic-web/invariant@1.0.0':
-    resolution: {integrity: sha512-lrTPqgvfFQtR/eY/qkIzp98OGdNJu0m5ji3q/nJI8v3SXkRKEnWiOxMmbvcSoAIzv/cGiuvRy57k4suKQSAdwA==}
+  '@emnapi/core@1.11.2':
+    resolution: {integrity: sha512-TC8MkTuZUtcTSiFeuC0ksCh9QIJ5+F21MvZ4Wn4ORfYaFJ/0dsiudv5tVkejgwZlwQ39jL9WWDe2lz8x0WglOA==}
+
+  '@emnapi/core@1.11.3':
+    resolution: {integrity: sha512-zLpS5asjEb7lq8jYLq37N6XKaE41DIexlY1rF/z4/tIl3wo13Sqm28fRyfIsKZD+NZ8mM5RoKkpW/rBcuoSZSg==}
+
+  '@emnapi/runtime@1.11.2':
+    resolution: {integrity: sha512-kyOl3X0DuTiT1h2ft8r2fYO8JYtU9a9Xis/zBSiGArNaagCOWx90N1k2wxp18czFDH+OgcWGb5ZP/XMt3dcyPA==}
+
+  '@emnapi/runtime@1.11.3':
+    resolution: {integrity: sha512-Xz4Tpyki7XyrpbUK1jR1AhdAdaXyhhY4lZ3neLodmhpuWfy2PAQN5B46sAiU4liOXGLkHypn/qU+jvfWSCYYLA==}
+
+  '@emnapi/wasi-threads@1.2.2':
+    resolution: {integrity: sha512-c95qOXkHdydNKhscBTebqEC1CVAZpyqOfVfBzQ1qgzyl3gfeldUjIggDbIZgDKsHLgnsM+igH7TJ/eAasaVuMA==}
+
+  '@emnapi/wasi-threads@1.2.3':
+    resolution: {integrity: sha512-ELEBe8PsLvvJ6QMr0zLt8ffvOHW/dc1m3CEzNMg7aJUv3bMaoDtw2TXyDAwkYBuroxxuHEwhRTLJSe5sya547g==}
 
   '@esbuild/aix-ppc64@0.27.1':
     resolution: {integrity: sha512-HHB50pdsBX6k47S4u5g/CaLjqS3qwaOVE5ILsq64jyzgMhLuCuZ8rGzM9yhsAjfjkbgUPMzZEPa7DAp7yz6vuA==}
@@ -415,6 +629,107 @@ packages:
   '@jridgewell/trace-mapping@0.3.9':
     resolution: {integrity: sha512-3Belt6tdc8bPgAtbcmdtNJlirVoTmEb5e2gC94PnkwEW9jI6CAHUeoG85tjWP5WquqfavoMtMwiG4P926ZKKuQ==}
 
+  '@napi-rs/wasm-runtime@0.2.12':
+    resolution: {integrity: sha512-ZVWUcfwY4E/yPitQJl481FjFo3K22D6qF0DuFH6Y/nbnE11GY5uguDxZMGXPQ8WQ0128MXQD7TnfHyK4oWoIJQ==}
+
+  '@napi-rs/wasm-runtime@1.2.2':
+    resolution: {integrity: sha512-JfB4kuJQjaoHuCTseIINHtHWeJnvgEcxjwA5t/Y00ZgaOO1Crz3fjT/p8kT28zA/Caz7oiUMn3d6H2yOVCVwuw==}
+    engines: {node: ^20.19.0 || ^22.13.0 || >=23.5.0}
+    peerDependencies:
+      '@emnapi/core': ^1.7.1 || ^2.0.0-alpha.3
+      '@emnapi/runtime': ^1.7.1 || ^2.0.0-alpha.3
+
+  '@node-rs/xxhash-android-arm-eabi@1.7.6':
+    resolution: {integrity: sha512-ptmfpFZ8SgTef58Us+0HsZ9BKhyX/gZYbhLkuzPt7qUoMqMSJK85NC7LEgzDgjUiG+S5GahEEQ9/tfh9BVvKhw==}
+    engines: {node: '>= 12'}
+    cpu: [arm]
+    os: [android]
+
+  '@node-rs/xxhash-android-arm64@1.7.6':
+    resolution: {integrity: sha512-n4MyZvqifuoARfBvrZ2IBqmsGzwlVI3kb2mB0gVvoHtMsPbl/q94zoDBZ7WgeP3t4Wtli+QS3zgeTCOWUbqqUQ==}
+    engines: {node: '>= 12'}
+    cpu: [arm64]
+    os: [android]
+
+  '@node-rs/xxhash-darwin-arm64@1.7.6':
+    resolution: {integrity: sha512-6xGuE07CiCIry/KT3IiwQd/kykTOmjKzO/ZnHlE5ibGMx64NFE0qDuwJbxQ4rGyUzgJ0KuN9ZdOhUDJmepnpcw==}
+    engines: {node: '>= 12'}
+    cpu: [arm64]
+    os: [darwin]
+
+  '@node-rs/xxhash-darwin-x64@1.7.6':
+    resolution: {integrity: sha512-Z4oNnhyznDvHhxv+s0ka+5KG8mdfLVucZMZMejj9BL+CPmamClygPiHIRiifRcPAoX9uPZykaCsULngIfLeF3Q==}
+    engines: {node: '>= 12'}
+    cpu: [x64]
+    os: [darwin]
+
+  '@node-rs/xxhash-freebsd-x64@1.7.6':
+    resolution: {integrity: sha512-arCDOf3xZ5NfBL5fk5J52sNPjXL2cVWN6nXNB3nrtRFFdPBLsr6YXtshAc6wMVxnIW4VGaEv/5K6IpTA8AFyWw==}
+    engines: {node: '>= 12'}
+    cpu: [x64]
+    os: [freebsd]
+
+  '@node-rs/xxhash-linux-arm-gnueabihf@1.7.6':
+    resolution: {integrity: sha512-ndLLEW+MwLH3lFS0ahlHCcmkf2ykOv/pbP8OBBeAOlz/Xc3jKztg5IJ9HpkjKOkHk470yYxgHVaw1QMoMzU00A==}
+    engines: {node: '>= 12'}
+    cpu: [arm]
+    os: [linux]
+
+  '@node-rs/xxhash-linux-arm64-gnu@1.7.6':
+    resolution: {integrity: sha512-VX7VkTG87mAdrF2vw4aroiRpFIIN8Lj6NgtGHF+IUVbzQxPudl4kG+FPEjsNH8y04yQxRbPE7naQNgHcTKMrNw==}
+    engines: {node: '>= 12'}
+    cpu: [arm64]
+    os: [linux]
+    libc: [glibc]
+
+  '@node-rs/xxhash-linux-arm64-musl@1.7.6':
+    resolution: {integrity: sha512-AB5m6crGYSllM9F/xZNOQSPImotR5lOa9e4arW99Bv82S+gcpphI8fGMDOVTTCXY/RLRhvvhwzLDxmLB2O8VDg==}
+    engines: {node: '>= 12'}
+    cpu: [arm64]
+    os: [linux]
+    libc: [musl]
+
+  '@node-rs/xxhash-linux-x64-gnu@1.7.6':
+    resolution: {integrity: sha512-a2A6M+5tc0PVlJlE/nl0XsLEzMpKkwg7Y1lR5urFUbW9uVQnKjJYQDrUojhlXk0Uv3VnYQPa6ThmwlacZA5mvQ==}
+    engines: {node: '>= 12'}
+    cpu: [x64]
+    os: [linux]
+    libc: [glibc]
+
+  '@node-rs/xxhash-linux-x64-musl@1.7.6':
+    resolution: {integrity: sha512-WioGJSC1GoxQpmdQrG5l/uddSBAS4XCWczHNwXe895J5xadGQzyvmr0r17BNfihvbBUDH1H9jwouNYzDDeA6+A==}
+    engines: {node: '>= 12'}
+    cpu: [x64]
+    os: [linux]
+    libc: [musl]
+
+  '@node-rs/xxhash-wasm32-wasi@1.7.6':
+    resolution: {integrity: sha512-WDXXKMMFMrez+esm2DzMPHFNPFYf+wQUtaXrXwtxXeQMFEzleOLwEaqV0+bbXGJTwhPouL3zY1Qo2xmIH4kkTg==}
+    engines: {node: '>=14.0.0'}
+    cpu: [wasm32]
+
+  '@node-rs/xxhash-win32-arm64-msvc@1.7.6':
+    resolution: {integrity: sha512-qjDFUZJT/Zq0yFS+0TApkD86p0NBdPXlOoHur9yNeO9YX2/9/b1sC2P7N27PgOu13h61TUOvTUC00e/82jAZRQ==}
+    engines: {node: '>= 12'}
+    cpu: [arm64]
+    os: [win32]
+
+  '@node-rs/xxhash-win32-ia32-msvc@1.7.6':
+    resolution: {integrity: sha512-s7a+mQWOTnU4NiiypRq/vbNGot/il0HheXuy9oxJ0SW2q/e4BJ8j0pnP6UBlAjsk+005A76vOwsEj01qbQw8+A==}
+    engines: {node: '>= 12'}
+    cpu: [ia32]
+    os: [win32]
+
+  '@node-rs/xxhash-win32-x64-msvc@1.7.6':
+    resolution: {integrity: sha512-zHOHm2UaIahRhgRPJll+4Xy4Z18aAT/7KNeQW+QJupGvFz+GzOFXMGs3R/3B1Ktob/F5ui3i1MrW9GEob3CWTg==}
+    engines: {node: '>= 12'}
+    cpu: [x64]
+    os: [win32]
+
+  '@node-rs/xxhash@1.7.6':
+    resolution: {integrity: sha512-XMisO+aQHsVpxRp/85EszTtOQTOlhPbd149P/Xa9F55wafA6UM3h2UhOgOs7aAzItnHU/Aw1WQ1FVTEg7WB43Q==}
+    engines: {node: '>= 12'}
+
   '@npmcli/fs@1.1.1':
     resolution: {integrity: sha512-8KG5RD0GVP4ydEzRn/I4BNDuxDtqVbOdm8675T49OIG/NGhaK0pjPX7ZcDlvKYbA+ulvVK3ztfcF4uBdOxuJbQ==}
 
@@ -422,6 +737,109 @@ packages:
     resolution: {integrity: sha512-1SUf/Cg2GzGDyaf15aR9St9TWlb+XvbZXWpDx8YKs7MLzMH/BCeopv+y9vzrzgkfykCGuWOlSu3mZhj2+FQcrg==}
     engines: {node: '>=10'}
     deprecated: This functionality has been moved to @npmcli/fs
+
+  '@oxc-resolver/binding-android-arm-eabi@11.24.2':
+    resolution: {integrity: sha512-y09e0L0SRI2OA2tUIrjBgoV3eH5hvUKXNkJqXmNo5V2WxIjyC7I7aJfRLMEVpA8yi95f90gFDvO0VMgrDw+vwA==}
+    cpu: [arm]
+    os: [android]
+
+  '@oxc-resolver/binding-android-arm64@11.24.2':
+    resolution: {integrity: sha512-cl4icWaZFnLdg8m6qtnh5rBMuGbxc/ptStFHLeCNwr+2cZjkjNwQu/jYRS0CHlnPecOJMpuS5M6/BH+0J/YkEg==}
+    cpu: [arm64]
+    os: [android]
+
+  '@oxc-resolver/binding-darwin-arm64@11.24.2':
+    resolution: {integrity: sha512-At29QEMF6HajbQvgY8K6OXnHD1x9rad74xBEfmCB6ZqCGsdq75aK7tOYcTbOanMy8qdIBrfL3SMr3p/lfSlb9w==}
+    cpu: [arm64]
+    os: [darwin]
+
+  '@oxc-resolver/binding-darwin-x64@11.24.2':
+    resolution: {integrity: sha512-A5Kqr1EUj4oIL5CF4WRssq/o5P0Y11cwoFouMRmQ7YnC/A8V93nv1nb7aSU8HwcgmXropjLNkVTl4MN87cu28Q==}
+    cpu: [x64]
+    os: [darwin]
+
+  '@oxc-resolver/binding-freebsd-x64@11.24.2':
+    resolution: {integrity: sha512-R5xkRBRRz7ceH/P5Jrc6G7FmdUdgpLYyESFAUDVTNQ9K0sGPxcp4ljiwEwEqsvNcQ4sYbMRrWcHHBCu7ksAJVw==}
+    cpu: [x64]
+    os: [freebsd]
+
+  '@oxc-resolver/binding-linux-arm-gnueabihf@11.24.2':
+    resolution: {integrity: sha512-k/RuYL4L/R58IBn3wT5ma3Wh4k62bp1eYCFRWCmMsasUOqL+H6sW0VGFadEzKWXFFlz+2uIMoeMk9ySSZJHgbg==}
+    cpu: [arm]
+    os: [linux]
+
+  '@oxc-resolver/binding-linux-arm-musleabihf@11.24.2':
+    resolution: {integrity: sha512-bnHAak3ujYfH5pKk4NieFNbvYvernfoQDgwLddbZ3OtMYrem87/qjlA+u+aKG0oZcqSLGCful/6/CEA+aeAgaA==}
+    cpu: [arm]
+    os: [linux]
+
+  '@oxc-resolver/binding-linux-arm64-gnu@11.24.2':
+    resolution: {integrity: sha512-vDT3KHgzYp47gmtNOqL2VNhCyl5Zv643eyxm//A68J8DeUGXrvD1pZFiaT4jSfe+RInfnn1R2yVHye4enx6RnA==}
+    cpu: [arm64]
+    os: [linux]
+    libc: [glibc]
+
+  '@oxc-resolver/binding-linux-arm64-musl@11.24.2':
+    resolution: {integrity: sha512-+kMlQvbzfyEYtu5FcjE4p+ttBLpKW4d/AsAsuE69BxV6V4twZJeIQZFfD8gh/wqglY0MkPSezWXQH0jBV13MUw==}
+    cpu: [arm64]
+    os: [linux]
+    libc: [musl]
+
+  '@oxc-resolver/binding-linux-ppc64-gnu@11.24.2':
+    resolution: {integrity: sha512-shjfMhmZ3gq9fv/w7bi3PnZlgOPG+2QAOFf0BJF0EgBSIGZ6PMLN2zbGEblTUYB/NKVDRyYhE2ff3dJ1QqNPkA==}
+    cpu: [ppc64]
+    os: [linux]
+    libc: [glibc]
+
+  '@oxc-resolver/binding-linux-riscv64-gnu@11.24.2':
+    resolution: {integrity: sha512-zGelwFR5oRo+b69k8Lrzun86DyUHzfKN6cnjbR9l7Z7NIRznOE/2ZvPa1IUKqAL2PzAXOdwkfVqNvO1H2RlpAw==}
+    cpu: [riscv64]
+    os: [linux]
+    libc: [glibc]
+
+  '@oxc-resolver/binding-linux-riscv64-musl@11.24.2':
+    resolution: {integrity: sha512-qxZ1SWCXJY0eyhAlP6Lmo9F2Nrtx7EkYj9oCgL8apDPCwXwCEDA2U697bbT81JIc2IrVjxO4KX6WU2N+oN9Z4w==}
+    cpu: [riscv64]
+    os: [linux]
+    libc: [musl]
+
+  '@oxc-resolver/binding-linux-s390x-gnu@11.24.2':
+    resolution: {integrity: sha512-sGCecF3cx2DFlH4t/z7ApnOnXqN48p5p5mlHDEnHTAukQa2P+qMVE4CwyWE9W+q/m3QJ7kKfGrIjax31f44oFQ==}
+    cpu: [s390x]
+    os: [linux]
+    libc: [glibc]
+
+  '@oxc-resolver/binding-linux-x64-gnu@11.24.2':
+    resolution: {integrity: sha512-k/VlMMcSzMlahb3/fENM4rTlsJ0s3fFROA0KXPBmKggqmTSaE383sl8F3KCOXPLmVsYfW6hCitMhXCEtNeZxxg==}
+    cpu: [x64]
+    os: [linux]
+    libc: [glibc]
+
+  '@oxc-resolver/binding-linux-x64-musl@11.24.2':
+    resolution: {integrity: sha512-8hbnZyNi97b/8wapYaIF9+t9GmZKBW2vunaOc3h9HGJptH7b7XpvZqOTBSm/MpTjr7H497BlgOaSfLUdhmy2bw==}
+    cpu: [x64]
+    os: [linux]
+    libc: [musl]
+
+  '@oxc-resolver/binding-openharmony-arm64@11.24.2':
+    resolution: {integrity: sha512-MvyGik3a6pVgZ0t/kWlbmFxFLmXQJwgLsY2eYFHLpy0wGwRbfzeIGgDwQ3kXqE30z+kSXennRkCrT7TUvkptNg==}
+    cpu: [arm64]
+    os: [openharmony]
+
+  '@oxc-resolver/binding-wasm32-wasi@11.24.2':
+    resolution: {integrity: sha512-vHcssMPwO08RTvj/c0iOBz90attxyG3wQJ0dTcyEQK43LRpcdLWZlV5feBhv6Isn6ahbQIzHbCgfa81+RiML0Q==}
+    engines: {node: '>=14.0.0'}
+    cpu: [wasm32]
+
+  '@oxc-resolver/binding-win32-arm64-msvc@11.24.2':
+    resolution: {integrity: sha512-uokJqro2iBqkFvJdKQLP7d8/BUmFwESQFVmIJUQKj1Xn1a/LysJoe1vmeECLF5b3jsV8CAL5sEMJXX6SdK9Nhg==}
+    cpu: [arm64]
+    os: [win32]
+
+  '@oxc-resolver/binding-win32-x64-msvc@11.24.2':
+    resolution: {integrity: sha512-UqGPmo56KDfLlfXFAFIrNflHT8tFxWGEivWg3Zeyp4Uy2NlKN1FGPr6/BxcLGG3+kZ6Wp14g5Uj+n71boqZfiw==}
+    cpu: [x64]
+    os: [win32]
 
   '@pkgjs/parseargs@0.11.0':
     resolution: {integrity: sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==}
@@ -563,6 +981,22 @@ packages:
 
   '@sqltools/formatter@1.2.5':
     resolution: {integrity: sha512-Uy0+khmZqUrUGm5dmMqVlnvufZRSK0FbYzVgp0UMstm+F5+W2/jnEEQyc9vo1ZR/E5ZI/B1WjjoTqBqwJL6Krw==}
+
+  '@swc-node/core@1.15.0':
+    resolution: {integrity: sha512-WAerrrl087WgenB92XG4Th2t0NQFfMNLYSe0sW2cEMMqM/LQmP4rozsDJl0vuzTrbewjpKQryxFXI+aYig/dBg==}
+    engines: {node: '>= 10'}
+    peerDependencies:
+      '@swc/core': '>= 1.13.3'
+      '@swc/types': '>= 0.1'
+
+  '@swc-node/register@1.12.1':
+    resolution: {integrity: sha512-t6t+0bDos+bj0+jcSqKl7+ys/i1an5cEViC0LuIskJFSHONX871nXN8j+gxdKVOgCCpjs0buXUPNnp/0DaV4EQ==}
+    peerDependencies:
+      '@swc/core': '>= 1.4.13'
+      typescript: '>= 4.3 < 7'
+
+  '@swc-node/sourcemap-support@0.6.1':
+    resolution: {integrity: sha512-ovltDVH5QpdHXZkW138vG4+dgcNsxfwxHVoV6BtmTbz2KKl1A8ZSlbdtxzzfNjCjbpayda8Us9eMtcHobm38dA==}
 
   '@swc/core-darwin-arm64@1.15.3':
     resolution: {integrity: sha512-AXfeQn0CvcQ4cndlIshETx6jrAM45oeUrK8YeEY6oUZU/qzz0Id0CyvlEywxkWVC81Ajpd8TQQ1fW5yx6zQWkQ==}
@@ -711,13 +1145,13 @@ packages:
       '@tsed/core': '>=8.0.0'
       '@tsed/schema': '>=8.0.0'
 
-  '@tsed/logger-file@6.7.8':
-    resolution: {integrity: sha512-xOZtTia2ipZRSdaRcOeCSajfYHV+FvTxvtmtiu1gP9l7tvtsAS7TZ3e6XY0LsFZdv/3Eor7n1jVdaEKZYznMwA==}
+  '@tsed/logger-file@8.0.5':
+    resolution: {integrity: sha512-cIQWJLZs7jZixnH3yM5IAX2h9rYFtZu+B7P2E55BOlUb1MelHGyCqHS2h22uVpdSwoJEUOtEuCf4cUoCN3Kv4g==}
     peerDependencies:
-      '@tsed/logger': 6.7.8
+      '@tsed/logger': '>=8.0.0'
 
-  '@tsed/logger@6.7.8':
-    resolution: {integrity: sha512-4VB4+nt7Ljihp7IEv7RmosxsRyXZGhnesqlcNEyE8r1WZCVdXvUn2YmyF+4zMkaX1pR5Vaf80i4IDp7WSW9gwg==}
+  '@tsed/logger@8.0.5':
+    resolution: {integrity: sha512-C5ZNQ5iglOKXiK8C+yQeCcupFi429f2u53gLmX27tnIwoTpyHeX76tTvQx+AxXIvv712LSxmsNR8wka7fBDkVw==}
 
   '@tsed/normalize-path@8.14.1':
     resolution: {integrity: sha512-23xryoAz/Hv6mu29cqGzvu+vAF8SG6l3yuewQh6urfBhqj9ygh9JxrkSiengaiwKl/W19AwvKWSjWddkoOjh/w==}
@@ -846,6 +1280,9 @@ packages:
       '@tsed/schema': 7.85.1
       typeorm: ^0.2.26
 
+  '@tybys/wasm-util@0.10.3':
+    resolution: {integrity: sha512-F3fo1MYrRJYL3zER0OUOmkutjr1Vp23m7OsSgp7nq4SP6OqX6C/56XFIPAl5bt3zaBRjmW7SGz3u/6LwFpYcOg==}
+
   '@types/bcrypt@6.0.0':
     resolution: {integrity: sha512-/oJGukuH3D2+D+3H4JWLaAsJ/ji86dhRidzZ/Od7H/i8g+aCmvkeCc6Ni/f9uxGLSQVCRZkX2/lqEFG2BvWtlQ==}
 
@@ -901,8 +1338,8 @@ packages:
   '@types/ms@2.1.0':
     resolution: {integrity: sha512-GsCCIZDE/p3i96vtEqx+7dBUGXrc7zeSK3wwPHIaRThS+9OhWIXRqzs4d6k1SVU8g91DrNRWxWUGhp5KXQb2VA==}
 
-  '@types/multer@1.4.12':
-    resolution: {integrity: sha512-pQ2hoqvXiJt2FP9WQVLPRO+AmiIm/ZYkavPlIQnx282u4ZrVdztx0pkh3jjpQt0Kz+YI0YhSG264y08UJKoUQg==}
+  '@types/multer@2.2.0':
+    resolution: {integrity: sha512-3U1troeqGV8Ntp7Q3klwf4zr23VEoqYVocYXaswm9+8z3O9UHDYAqLxjJ/h550iRADTjKdOdhhasXw6gD6kYtg==}
 
   '@types/node@24.1.0':
     resolution: {integrity: sha512-ut5FthK5moxFKH2T1CUOC6ctR67rQRvvHdFLCD2Ql6KXmMuCrjsSsRI9UsLCm9M18BMwClv4pn327UvB7eeO1w==}
@@ -1229,6 +1666,9 @@ packages:
     resolution: {integrity: sha512-qiBjkpbMLO/HL68y+lh4q0/O1MZFj2RX6X/KmMa3+gJD3z+WwI1ZzDHysvqHGS3mP6mznPckpXmw1nI9cJjyRg==}
     hasBin: true
 
+  colorette@2.0.20:
+    resolution: {integrity: sha512-IfEDxwoWIjkeXL1eXcDiow4UbKjhLdq6/EuSVR9GMN7KVH3r9gQ83e73hsz1Nd1T3ijd5xv1wcWRYO+D6kCI2w==}
+
   colors@1.4.0:
     resolution: {integrity: sha512-a+UqTh4kgZg/SlGvfbzDHpgRu7AAQOmmqRHJnxhRZICKFUT91brVhNNt58CMWU9PsBbv3PDCZUHbVxuDiH2mtA==}
     engines: {node: '>=0.1.90'}
@@ -1297,9 +1737,9 @@ packages:
   create-require@1.1.1:
     resolution: {integrity: sha512-dcKFX3jn0MpIaXjisoRvexIJVEKzaq7z2rZKxf+MSr9TkdmHmsU4m2lcLojrj/FHl8mk5VxMmYA+ftRkP/3oKQ==}
 
-  cross-env@10.0.0:
-    resolution: {integrity: sha512-aU8qlEK/nHYtVuN4p7UQgAwVljzMg8hB4YK5ThRqD2l/ziSnryncPNn7bMLt5cFYsKVKBh8HqLqyCoTupEUu7Q==}
-    engines: {node: '>=20'}
+  cross-env@7.0.3:
+    resolution: {integrity: sha512-+/HKd6EgcQCJGh2PSjZuUitQBQynKor4wrFbRg4DtAgS1aWO+gU52xpH7M9ScGgXSYmAVS9bIJ8EzuaGw0oNAw==}
+    engines: {node: '>=10.14', npm: '>=6', yarn: '>=1'}
     hasBin: true
 
   cross-spawn@7.0.6:
@@ -1667,11 +2107,12 @@ packages:
 
   glob@10.5.0:
     resolution: {integrity: sha512-DfXN8DfhJ7NH3Oe7cFmu3NCu1wKbkReJ8TorzSAFbSKrlNaQSKfIzqYqVY8zlbs2NLBbWpRiU52GX2PbaBVNkg==}
+    deprecated: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
     hasBin: true
 
   glob@7.2.3:
     resolution: {integrity: sha512-nFR0zLpU2YCaRxwoCJvL6UvCH2JFyFVIvwTLsIf21AuHlMskA1hhTdk+LlYJtOlYt9v6dvszD2BGRqBL+iQK9Q==}
-    deprecated: Glob versions prior to v9 are no longer supported
+    deprecated: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
 
   globals@14.0.0:
     resolution: {integrity: sha512-oahGvuMGQlPw/ivIYBjVSrWAfWLBeku5tpPE2fOPLi+WHffIWbuh2tCjhyQhTBPMf5E9jDEH4FOmTYgYwbKwtQ==}
@@ -2164,6 +2605,9 @@ packages:
     resolution: {integrity: sha512-6IpQ7mKUxRcZNLIObR0hz7lxsapSSIYNZJwXPGeF0mTVqGKFIXj1DQcMoT22S3ROcLyY/rz0PWaWZ9ayWmad9g==}
     engines: {node: '>= 0.8.0'}
 
+  oxc-resolver@11.24.2:
+    resolution: {integrity: sha512-FY91FiDBj7ls5MsFS9jN3tjz2o0/zsdSsymlakySaBwVJZorHhkWyICLZMKxlu1R9vYo+sd3z1jwb4J8x7bNDw==}
+
   p-limit@3.1.0:
     resolution: {integrity: sha512-TYOanM3wGwNGsZN2cVTYPArw454xnXj5qmWF1bEoAc4+cU/ol7GVh7odevjp1FNHduHc3KZMcFduxU5Xc6uJRQ==}
     engines: {node: '>=10'}
@@ -2263,6 +2707,7 @@ packages:
   prebuild-install@7.1.3:
     resolution: {integrity: sha512-8Mf2cbV7x1cXPUILADGI3wuhfqWvtiLA1iclTDbFRZkgRQS0NqsPZphna9V+HyTEadheuPmjaJMsbzKQFOzLug==}
     engines: {node: '>=10'}
+    deprecated: No longer maintained. Please contact the author of the relevant native addon; alternatives are available.
     hasBin: true
 
   prelude-ls@1.2.1:
@@ -2489,6 +2934,13 @@ packages:
     resolution: {integrity: sha512-pe4Y2yzru68lXCb38aAqRf5gvN8YdjP1lok5o0J7BOHljkyCGKVz7H3vpVIXKD27rj2giOJ7DwVyk/GWrPHDWA==}
     engines: {node: '>= 10.0.0', npm: '>= 3.0.0'}
 
+  source-map-support@0.5.21:
+    resolution: {integrity: sha512-uBHU3L3czsIyYXKX88fdrGovxdSCoTGDRZ6SYXtSRxLZUzHg5P/66Ht6uoUlHu9EZod+inXhKo3qQgwXUT/y1w==}
+
+  source-map@0.6.1:
+    resolution: {integrity: sha512-UjgapumWlbMhkBgzT7Ykc5YXUT46F0iKu8SGXq0bcwP5dz/h0Plj6enJqjz1Zbq2l5WaqYnrVbwWOWMyF3F47g==}
+    engines: {node: '>=0.10.0'}
+
   source-map@0.7.6:
     resolution: {integrity: sha512-i5uvt8C3ikiWeNZSVZNWcfZPItFQOsYTUAOkcUPGd8DqDy1uOUikjt5dG+uRlwyvR108Fb9DOd4GvXfT0N2/uQ==}
     engines: {node: '>= 12'}
@@ -2580,6 +3032,7 @@ packages:
   tar@6.2.1:
     resolution: {integrity: sha512-DZ4yORTwrbTj/7MZYq2w+/ZFdI6OZ/f9SFHR+71gIVUZhOQPHzVCLpvRnPgyaMpfWxxk/4ONva3GQSyNIKRv6A==}
     engines: {node: '>=10'}
+    deprecated: Old versions of tar are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
 
   thenify-all@1.6.0:
     resolution: {integrity: sha512-RNxQH/qI8/t3thXJDwcstUO4zeqo64+Uy/+sNVRBx4Xn2OX+OZ9oP+iJnNFqplFra2ZUVeKCSa2oVWi3T4uVmA==}
@@ -2640,9 +3093,6 @@ packages:
 
   tslib@2.6.1:
     resolution: {integrity: sha512-t0hLfiEKfMUoqhG+U1oid7Pva4bbDPHYfJNiB7BiIjRkj1pyC++4N3huJfqY6aRH6VTB0rvtzQwjM4K6qpfOig==}
-
-  tslib@2.6.2:
-    resolution: {integrity: sha512-AEYxH93jGFPn/a2iVAwW87VuUIkR1FVUKB77NwMF7nBTDkDrrT/Hpt/IrCJ0QXhW27jTBDcf5ZY7w6RiqTMw2Q==}
 
   tslib@2.7.0:
     resolution: {integrity: sha512-gLXCKdN1/j47AiHiOkJN69hJmcbGTHI0ImLmbYLHykhgeN0jVGola9yVjFgzCUklsZQMW55o+dW7IXv3RCXDzA==}
@@ -2797,6 +3247,7 @@ packages:
 
   uuid@10.0.0:
     resolution: {integrity: sha512-8XkAphELsDnEGrDxUOHB3RGvXz6TeuYSGEZBOjtTtPm2lwhGBjLgOzLHB63IUWfBpNucQjND6d3AOudO+H3RWQ==}
+    deprecated: uuid@10 and below is no longer supported.  For ESM codebases, update to uuid@latest.  For CommonJS codebases, use uuid@11 (but be aware this version will likely be deprecated in 2028).
     hasBin: true
 
   uuid@11.1.0:
@@ -2870,7 +3321,37 @@ snapshots:
     dependencies:
       '@jridgewell/trace-mapping': 0.3.9
 
-  '@epic-web/invariant@1.0.0': {}
+  '@emnapi/core@1.11.2':
+    dependencies:
+      '@emnapi/wasi-threads': 1.2.2
+      tslib: 2.8.1
+    optional: true
+
+  '@emnapi/core@1.11.3':
+    dependencies:
+      '@emnapi/wasi-threads': 1.2.3
+      tslib: 2.8.1
+    optional: true
+
+  '@emnapi/runtime@1.11.2':
+    dependencies:
+      tslib: 2.8.1
+    optional: true
+
+  '@emnapi/runtime@1.11.3':
+    dependencies:
+      tslib: 2.8.1
+    optional: true
+
+  '@emnapi/wasi-threads@1.2.2':
+    dependencies:
+      tslib: 2.8.1
+    optional: true
+
+  '@emnapi/wasi-threads@1.2.3':
+    dependencies:
+      tslib: 2.8.1
+    optional: true
 
   '@esbuild/aix-ppc64@0.27.1':
     optional: true
@@ -2950,14 +3431,14 @@ snapshots:
   '@esbuild/win32-x64@0.27.1':
     optional: true
 
-  '@eslint-community/eslint-utils@4.9.0(eslint@9.39.1)':
+  '@eslint-community/eslint-utils@4.9.0(eslint@9.39.1(supports-color@5.5.0))':
     dependencies:
-      eslint: 9.39.1
+      eslint: 9.39.1(supports-color@5.5.0)
       eslint-visitor-keys: 3.4.3
 
   '@eslint-community/regexpp@4.12.1': {}
 
-  '@eslint/config-array@0.21.1':
+  '@eslint/config-array@0.21.1(supports-color@5.5.0)':
     dependencies:
       '@eslint/object-schema': 2.1.7
       debug: 4.4.1(supports-color@5.5.0)
@@ -2973,7 +3454,7 @@ snapshots:
     dependencies:
       '@types/json-schema': 7.0.15
 
-  '@eslint/eslintrc@3.3.1':
+  '@eslint/eslintrc@3.3.1(supports-color@5.5.0)':
     dependencies:
       ajv: 6.12.6
       debug: 4.4.1(supports-color@5.5.0)
@@ -3042,6 +3523,81 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.4
 
+  '@napi-rs/wasm-runtime@0.2.12':
+    dependencies:
+      '@emnapi/core': 1.11.3
+      '@emnapi/runtime': 1.11.3
+      '@tybys/wasm-util': 0.10.3
+    optional: true
+
+  '@napi-rs/wasm-runtime@1.2.2(@emnapi/core@1.11.2)(@emnapi/runtime@1.11.2)':
+    dependencies:
+      '@emnapi/core': 1.11.2
+      '@emnapi/runtime': 1.11.2
+      '@tybys/wasm-util': 0.10.3
+    optional: true
+
+  '@node-rs/xxhash-android-arm-eabi@1.7.6':
+    optional: true
+
+  '@node-rs/xxhash-android-arm64@1.7.6':
+    optional: true
+
+  '@node-rs/xxhash-darwin-arm64@1.7.6':
+    optional: true
+
+  '@node-rs/xxhash-darwin-x64@1.7.6':
+    optional: true
+
+  '@node-rs/xxhash-freebsd-x64@1.7.6':
+    optional: true
+
+  '@node-rs/xxhash-linux-arm-gnueabihf@1.7.6':
+    optional: true
+
+  '@node-rs/xxhash-linux-arm64-gnu@1.7.6':
+    optional: true
+
+  '@node-rs/xxhash-linux-arm64-musl@1.7.6':
+    optional: true
+
+  '@node-rs/xxhash-linux-x64-gnu@1.7.6':
+    optional: true
+
+  '@node-rs/xxhash-linux-x64-musl@1.7.6':
+    optional: true
+
+  '@node-rs/xxhash-wasm32-wasi@1.7.6':
+    dependencies:
+      '@napi-rs/wasm-runtime': 0.2.12
+    optional: true
+
+  '@node-rs/xxhash-win32-arm64-msvc@1.7.6':
+    optional: true
+
+  '@node-rs/xxhash-win32-ia32-msvc@1.7.6':
+    optional: true
+
+  '@node-rs/xxhash-win32-x64-msvc@1.7.6':
+    optional: true
+
+  '@node-rs/xxhash@1.7.6':
+    optionalDependencies:
+      '@node-rs/xxhash-android-arm-eabi': 1.7.6
+      '@node-rs/xxhash-android-arm64': 1.7.6
+      '@node-rs/xxhash-darwin-arm64': 1.7.6
+      '@node-rs/xxhash-darwin-x64': 1.7.6
+      '@node-rs/xxhash-freebsd-x64': 1.7.6
+      '@node-rs/xxhash-linux-arm-gnueabihf': 1.7.6
+      '@node-rs/xxhash-linux-arm64-gnu': 1.7.6
+      '@node-rs/xxhash-linux-arm64-musl': 1.7.6
+      '@node-rs/xxhash-linux-x64-gnu': 1.7.6
+      '@node-rs/xxhash-linux-x64-musl': 1.7.6
+      '@node-rs/xxhash-wasm32-wasi': 1.7.6
+      '@node-rs/xxhash-win32-arm64-msvc': 1.7.6
+      '@node-rs/xxhash-win32-ia32-msvc': 1.7.6
+      '@node-rs/xxhash-win32-x64-msvc': 1.7.6
+
   '@npmcli/fs@1.1.1':
     dependencies:
       '@gar/promisify': 1.1.3
@@ -3052,6 +3608,67 @@ snapshots:
     dependencies:
       mkdirp: 1.0.4
       rimraf: 3.0.2
+    optional: true
+
+  '@oxc-resolver/binding-android-arm-eabi@11.24.2':
+    optional: true
+
+  '@oxc-resolver/binding-android-arm64@11.24.2':
+    optional: true
+
+  '@oxc-resolver/binding-darwin-arm64@11.24.2':
+    optional: true
+
+  '@oxc-resolver/binding-darwin-x64@11.24.2':
+    optional: true
+
+  '@oxc-resolver/binding-freebsd-x64@11.24.2':
+    optional: true
+
+  '@oxc-resolver/binding-linux-arm-gnueabihf@11.24.2':
+    optional: true
+
+  '@oxc-resolver/binding-linux-arm-musleabihf@11.24.2':
+    optional: true
+
+  '@oxc-resolver/binding-linux-arm64-gnu@11.24.2':
+    optional: true
+
+  '@oxc-resolver/binding-linux-arm64-musl@11.24.2':
+    optional: true
+
+  '@oxc-resolver/binding-linux-ppc64-gnu@11.24.2':
+    optional: true
+
+  '@oxc-resolver/binding-linux-riscv64-gnu@11.24.2':
+    optional: true
+
+  '@oxc-resolver/binding-linux-riscv64-musl@11.24.2':
+    optional: true
+
+  '@oxc-resolver/binding-linux-s390x-gnu@11.24.2':
+    optional: true
+
+  '@oxc-resolver/binding-linux-x64-gnu@11.24.2':
+    optional: true
+
+  '@oxc-resolver/binding-linux-x64-musl@11.24.2':
+    optional: true
+
+  '@oxc-resolver/binding-openharmony-arm64@11.24.2':
+    optional: true
+
+  '@oxc-resolver/binding-wasm32-wasi@11.24.2':
+    dependencies:
+      '@emnapi/core': 1.11.2
+      '@emnapi/runtime': 1.11.2
+      '@napi-rs/wasm-runtime': 1.2.2(@emnapi/core@1.11.2)(@emnapi/runtime@1.11.2)
+    optional: true
+
+  '@oxc-resolver/binding-win32-arm64-msvc@11.24.2':
+    optional: true
+
+  '@oxc-resolver/binding-win32-x64-msvc@11.24.2':
     optional: true
 
   '@pkgjs/parseargs@0.11.0':
@@ -3140,6 +3757,33 @@ snapshots:
 
   '@sqltools/formatter@1.2.5': {}
 
+  '@swc-node/core@1.15.0(@swc/core@1.15.3(@swc/helpers@0.5.17))(@swc/types@0.1.25)':
+    dependencies:
+      '@swc/core': 1.15.3(@swc/helpers@0.5.17)
+      '@swc/types': 0.1.25
+
+  '@swc-node/register@1.12.1(@swc/core@1.15.3(@swc/helpers@0.5.17))(@swc/types@0.1.25)(supports-color@5.5.0)(typescript@5.8.3)':
+    dependencies:
+      '@node-rs/xxhash': 1.7.6
+      '@swc-node/core': 1.15.0(@swc/core@1.15.3(@swc/helpers@0.5.17))(@swc/types@0.1.25)
+      '@swc-node/sourcemap-support': 0.6.1
+      '@swc/core': 1.15.3(@swc/helpers@0.5.17)
+      colorette: 2.0.20
+      debug: 4.4.3(supports-color@5.5.0)
+      fast-json-stable-stringify: 2.1.0
+      oxc-resolver: 11.24.2
+      pirates: 4.0.7
+      tslib: 2.8.1
+      typescript: 5.8.3
+    transitivePeerDependencies:
+      - '@swc/types'
+      - supports-color
+
+  '@swc-node/sourcemap-support@0.6.1':
+    dependencies:
+      source-map-support: 0.5.21
+      tslib: 2.8.1
+
   '@swc/core-darwin-arm64@1.15.3':
     optional: true
 
@@ -3208,10 +3852,10 @@ snapshots:
 
   '@tsconfig/node16@1.0.4': {}
 
-  '@tsed/ajv@8.14.1(@tsed/core@8.14.1)(@tsed/di@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/logger@6.7.8))(@tsed/exceptions@8.14.1(@tsed/core@8.14.1))(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1))(ajv-errors@3.0.0(ajv@8.17.1))(ajv@8.17.1)':
+  '@tsed/ajv@8.14.1(@tsed/core@8.14.1)(@tsed/di@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/logger@8.0.5))(@tsed/exceptions@8.14.1(@tsed/core@8.14.1))(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1))(ajv-errors@3.0.0(ajv@8.17.1))(ajv@8.17.1)':
     dependencies:
       '@tsed/core': 8.14.1
-      '@tsed/di': 8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/logger@6.7.8)
+      '@tsed/di': 8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/logger@8.0.5)
       '@tsed/exceptions': 8.14.1(@tsed/core@8.14.1)
       '@tsed/schema': 8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1)
       ajv: 8.17.1
@@ -3228,11 +3872,11 @@ snapshots:
       change-case: 5.4.4
       tslib: 2.7.0
 
-  '@tsed/common@8.14.1(@tsed/engines@8.14.1)(@tsed/logger-file@6.7.8(@tsed/logger@6.7.8))(@tsed/logger@6.7.8)(@tsed/openspec@8.14.1)(@types/multer@1.4.12)(cross-env@10.0.0)':
+  '@tsed/common@8.14.1(@tsed/engines@8.14.1)(@tsed/logger-file@8.0.5(@tsed/logger@8.0.5)(supports-color@5.5.0))(@tsed/logger@8.0.5)(@tsed/openspec@8.14.1)(@types/multer@2.2.0)(cross-env@7.0.3)':
     dependencies:
-      '@tsed/logger': 6.7.8
-      '@tsed/logger-file': 6.7.8(@tsed/logger@6.7.8)
-      '@tsed/platform-http': 8.14.1(@tsed/engines@8.14.1)(@tsed/logger@6.7.8)(@tsed/openspec@8.14.1)(@types/multer@1.4.12)(cross-env@10.0.0)
+      '@tsed/logger': 8.0.5
+      '@tsed/logger-file': 8.0.5(@tsed/logger@8.0.5)(supports-color@5.5.0)
+      '@tsed/platform-http': 8.14.1(@tsed/engines@8.14.1)(@tsed/logger@8.0.5)(@tsed/openspec@8.14.1)(@types/multer@2.2.0)(cross-env@7.0.3)
       tslib: 2.7.0
     transitivePeerDependencies:
       - '@tsed/engines'
@@ -3245,11 +3889,11 @@ snapshots:
       reflect-metadata: 0.2.2
       tslib: 2.7.0
 
-  '@tsed/di@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/logger@6.7.8)':
+  '@tsed/di@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/logger@8.0.5)':
     dependencies:
       '@tsed/core': 8.14.1
       '@tsed/hooks': 8.14.1
-      '@tsed/logger': 6.7.8
+      '@tsed/logger': 8.0.5
       tslib: 2.7.0
       uuid: 10.0.0
 
@@ -3275,74 +3919,73 @@ snapshots:
       '@tsed/schema': 8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1)
       tslib: 2.7.0
 
-  '@tsed/logger-file@6.7.8(@tsed/logger@6.7.8)':
+  '@tsed/logger-file@8.0.5(@tsed/logger@8.0.5)(supports-color@5.5.0)':
     dependencies:
-      '@tsed/logger': 6.7.8
-      streamroller: 3.1.5
-      tslib: 2.6.2
+      '@tsed/logger': 8.0.5
+      streamroller: 3.1.5(supports-color@5.5.0)
+      tslib: 2.8.1
     transitivePeerDependencies:
       - supports-color
 
-  '@tsed/logger@6.7.8':
+  '@tsed/logger@8.0.5':
     dependencies:
       colors: 1.4.0
-      date-format: 4.0.14
       semver: 7.7.3
-      tslib: 2.6.2
+      tslib: 2.8.1
 
   '@tsed/normalize-path@8.14.1':
     dependencies:
       normalize-path: 3.0.0
       tslib: 2.7.0
 
-  '@tsed/openapi-utils@8.14.1(@tsed/platform-http@8.14.1(@tsed/engines@8.14.1)(@tsed/logger@6.7.8)(@tsed/openspec@8.14.1)(@types/multer@1.4.12)(cross-env@10.0.0))':
+  '@tsed/openapi-utils@8.14.1(@tsed/platform-http@8.14.1(@tsed/engines@8.14.1)(@tsed/logger@8.0.5)(@tsed/openspec@8.14.1)(@types/multer@2.2.0)(cross-env@7.0.3))':
     dependencies:
       '@tsed/openspec': 8.14.1
-      '@tsed/platform-http': 8.14.1(@tsed/engines@8.14.1)(@tsed/logger@6.7.8)(@tsed/openspec@8.14.1)(@types/multer@1.4.12)(cross-env@10.0.0)
+      '@tsed/platform-http': 8.14.1(@tsed/engines@8.14.1)(@tsed/logger@8.0.5)(@tsed/openspec@8.14.1)(@types/multer@2.2.0)(cross-env@7.0.3)
       micromatch: 4.0.8
       tslib: 2.7.0
 
   '@tsed/openspec@8.14.1': {}
 
-  '@tsed/platform-exceptions@8.14.1(@tsed/core@8.14.1)(@tsed/di@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/logger@6.7.8))(@tsed/exceptions@8.14.1(@tsed/core@8.14.1))(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1))':
+  '@tsed/platform-exceptions@8.14.1(@tsed/core@8.14.1)(@tsed/di@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/logger@8.0.5))(@tsed/exceptions@8.14.1(@tsed/core@8.14.1))(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1))':
     dependencies:
       '@tsed/core': 8.14.1
-      '@tsed/di': 8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/logger@6.7.8)
+      '@tsed/di': 8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/logger@8.0.5)
       '@tsed/exceptions': 8.14.1(@tsed/core@8.14.1)
       '@tsed/schema': 8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1)
       tslib: 2.7.0
 
-  '@tsed/platform-express@8.14.1(@tsed/core@8.14.1)(@tsed/di@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/logger@6.7.8))(@tsed/json-mapper@8.14.1(@tsed/core@8.14.1)(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1)))(@tsed/logger@6.7.8)(@tsed/openspec@8.14.1)(@tsed/platform-http@8.14.1(@tsed/engines@8.14.1)(@tsed/logger@6.7.8)(@tsed/openspec@8.14.1)(@types/multer@1.4.12)(cross-env@10.0.0))(@tsed/platform-views@8.14.1(@tsed/core@8.14.1)(@tsed/di@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/logger@6.7.8))(@tsed/engines@8.14.1)(@tsed/exceptions@8.14.1(@tsed/core@8.14.1))(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1)))(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1))(body-parser@2.2.1)(express@5.1.0)(multer@2.0.2)':
+  '@tsed/platform-express@8.14.1(@tsed/core@8.14.1)(@tsed/di@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/logger@8.0.5))(@tsed/json-mapper@8.14.1(@tsed/core@8.14.1)(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1)))(@tsed/logger@8.0.5)(@tsed/openspec@8.14.1)(@tsed/platform-http@8.14.1(@tsed/engines@8.14.1)(@tsed/logger@8.0.5)(@tsed/openspec@8.14.1)(@types/multer@2.2.0)(cross-env@7.0.3))(@tsed/platform-views@8.14.1(@tsed/core@8.14.1)(@tsed/di@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/logger@8.0.5))(@tsed/engines@8.14.1)(@tsed/exceptions@8.14.1(@tsed/core@8.14.1))(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1)))(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1))(body-parser@2.2.1(supports-color@5.5.0))(express@5.1.0(supports-color@5.5.0))(multer@2.0.2)':
     dependencies:
       '@tsed/core': 8.14.1
-      '@tsed/di': 8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/logger@6.7.8)
+      '@tsed/di': 8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/logger@8.0.5)
       '@tsed/json-mapper': 8.14.1(@tsed/core@8.14.1)(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1))
-      '@tsed/logger': 6.7.8
+      '@tsed/logger': 8.0.5
       '@tsed/openspec': 8.14.1
-      '@tsed/platform-http': 8.14.1(@tsed/engines@8.14.1)(@tsed/logger@6.7.8)(@tsed/openspec@8.14.1)(@types/multer@1.4.12)(cross-env@10.0.0)
+      '@tsed/platform-http': 8.14.1(@tsed/engines@8.14.1)(@tsed/logger@8.0.5)(@tsed/openspec@8.14.1)(@types/multer@2.2.0)(cross-env@7.0.3)
       '@tsed/schema': 8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1)
-      body-parser: 2.2.1
-      express: 5.1.0
+      body-parser: 2.2.1(supports-color@5.5.0)
+      express: 5.1.0(supports-color@5.5.0)
       multer: 2.0.2
       tslib: 2.7.0
     optionalDependencies:
-      '@tsed/platform-views': 8.14.1(@tsed/core@8.14.1)(@tsed/di@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/logger@6.7.8))(@tsed/engines@8.14.1)(@tsed/exceptions@8.14.1(@tsed/core@8.14.1))(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1))
+      '@tsed/platform-views': 8.14.1(@tsed/core@8.14.1)(@tsed/di@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/logger@8.0.5))(@tsed/engines@8.14.1)(@tsed/exceptions@8.14.1(@tsed/core@8.14.1))(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1))
 
-  '@tsed/platform-http@8.14.1(@tsed/engines@8.14.1)(@tsed/logger@6.7.8)(@tsed/openspec@8.14.1)(@types/multer@1.4.12)(cross-env@10.0.0)':
+  '@tsed/platform-http@8.14.1(@tsed/engines@8.14.1)(@tsed/logger@8.0.5)(@tsed/openspec@8.14.1)(@types/multer@2.2.0)(cross-env@7.0.3)':
     dependencies:
       '@tsed/core': 8.14.1
-      '@tsed/di': 8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/logger@6.7.8)
+      '@tsed/di': 8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/logger@8.0.5)
       '@tsed/exceptions': 8.14.1(@tsed/core@8.14.1)
       '@tsed/hooks': 8.14.1
       '@tsed/json-mapper': 8.14.1(@tsed/core@8.14.1)(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1))
-      '@tsed/logger': 6.7.8
-      '@tsed/platform-exceptions': 8.14.1(@tsed/core@8.14.1)(@tsed/di@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/logger@6.7.8))(@tsed/exceptions@8.14.1(@tsed/core@8.14.1))(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1))
-      '@tsed/platform-middlewares': 8.14.1(@tsed/core@8.14.1)(@tsed/di@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/logger@6.7.8))(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1))
-      '@tsed/platform-multer': 8.14.1(@tsed/core@8.14.1)(@tsed/di@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/logger@6.7.8))(@tsed/json-mapper@8.14.1(@tsed/core@8.14.1)(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1)))(@tsed/logger@6.7.8)(@tsed/openspec@8.14.1)(@tsed/platform-middlewares@8.14.1(@tsed/core@8.14.1)(@tsed/di@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/logger@6.7.8))(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1)))(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1))(@types/multer@1.4.12)(cross-env@10.0.0)
-      '@tsed/platform-params': 8.14.1(@tsed/core@8.14.1)(@tsed/di@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/logger@6.7.8))(@tsed/exceptions@8.14.1(@tsed/core@8.14.1))(@tsed/json-mapper@8.14.1(@tsed/core@8.14.1)(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1)))(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1))
-      '@tsed/platform-response-filter': 8.14.1(@tsed/core@8.14.1)(@tsed/di@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/logger@6.7.8))(@tsed/exceptions@8.14.1(@tsed/core@8.14.1))(@tsed/json-mapper@8.14.1(@tsed/core@8.14.1)(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1)))(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1))
-      '@tsed/platform-router': 8.14.1(@tsed/core@8.14.1)(@tsed/di@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/logger@6.7.8))(@tsed/exceptions@8.14.1(@tsed/core@8.14.1))(@tsed/json-mapper@8.14.1(@tsed/core@8.14.1)(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1)))(@tsed/platform-params@8.14.1(@tsed/core@8.14.1)(@tsed/di@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/logger@6.7.8))(@tsed/exceptions@8.14.1(@tsed/core@8.14.1))(@tsed/json-mapper@8.14.1(@tsed/core@8.14.1)(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1)))(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1)))(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1))
-      '@tsed/platform-views': 8.14.1(@tsed/core@8.14.1)(@tsed/di@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/logger@6.7.8))(@tsed/engines@8.14.1)(@tsed/exceptions@8.14.1(@tsed/core@8.14.1))(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1))
+      '@tsed/logger': 8.0.5
+      '@tsed/platform-exceptions': 8.14.1(@tsed/core@8.14.1)(@tsed/di@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/logger@8.0.5))(@tsed/exceptions@8.14.1(@tsed/core@8.14.1))(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1))
+      '@tsed/platform-middlewares': 8.14.1(@tsed/core@8.14.1)(@tsed/di@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/logger@8.0.5))(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1))
+      '@tsed/platform-multer': 8.14.1(@tsed/core@8.14.1)(@tsed/di@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/logger@8.0.5))(@tsed/json-mapper@8.14.1(@tsed/core@8.14.1)(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1)))(@tsed/logger@8.0.5)(@tsed/openspec@8.14.1)(@tsed/platform-middlewares@8.14.1(@tsed/core@8.14.1)(@tsed/di@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/logger@8.0.5))(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1)))(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1))(@types/multer@2.2.0)(cross-env@7.0.3)
+      '@tsed/platform-params': 8.14.1(@tsed/core@8.14.1)(@tsed/di@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/logger@8.0.5))(@tsed/exceptions@8.14.1(@tsed/core@8.14.1))(@tsed/json-mapper@8.14.1(@tsed/core@8.14.1)(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1)))(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1))
+      '@tsed/platform-response-filter': 8.14.1(@tsed/core@8.14.1)(@tsed/di@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/logger@8.0.5))(@tsed/exceptions@8.14.1(@tsed/core@8.14.1))(@tsed/json-mapper@8.14.1(@tsed/core@8.14.1)(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1)))(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1))
+      '@tsed/platform-router': 8.14.1(@tsed/core@8.14.1)(@tsed/di@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/logger@8.0.5))(@tsed/exceptions@8.14.1(@tsed/core@8.14.1))(@tsed/json-mapper@8.14.1(@tsed/core@8.14.1)(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1)))(@tsed/platform-params@8.14.1(@tsed/core@8.14.1)(@tsed/di@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/logger@8.0.5))(@tsed/exceptions@8.14.1(@tsed/core@8.14.1))(@tsed/json-mapper@8.14.1(@tsed/core@8.14.1)(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1)))(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1)))(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1))
+      '@tsed/platform-views': 8.14.1(@tsed/core@8.14.1)(@tsed/di@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/logger@8.0.5))(@tsed/engines@8.14.1)(@tsed/exceptions@8.14.1(@tsed/core@8.14.1))(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1))
       '@tsed/schema': 8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1)
       '@types/json-schema': 7.0.15
       accepts: 1.3.8
@@ -3354,60 +3997,60 @@ snapshots:
       - '@types/multer'
       - cross-env
 
-  '@tsed/platform-middlewares@8.14.1(@tsed/core@8.14.1)(@tsed/di@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/logger@6.7.8))(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1))':
+  '@tsed/platform-middlewares@8.14.1(@tsed/core@8.14.1)(@tsed/di@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/logger@8.0.5))(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1))':
     dependencies:
       tslib: 2.7.0
     optionalDependencies:
       '@tsed/core': 8.14.1
-      '@tsed/di': 8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/logger@6.7.8)
+      '@tsed/di': 8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/logger@8.0.5)
       '@tsed/schema': 8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1)
 
-  '@tsed/platform-multer@8.14.1(@tsed/core@8.14.1)(@tsed/di@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/logger@6.7.8))(@tsed/json-mapper@8.14.1(@tsed/core@8.14.1)(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1)))(@tsed/logger@6.7.8)(@tsed/openspec@8.14.1)(@tsed/platform-middlewares@8.14.1(@tsed/core@8.14.1)(@tsed/di@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/logger@6.7.8))(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1)))(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1))(@types/multer@1.4.12)(cross-env@10.0.0)':
+  '@tsed/platform-multer@8.14.1(@tsed/core@8.14.1)(@tsed/di@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/logger@8.0.5))(@tsed/json-mapper@8.14.1(@tsed/core@8.14.1)(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1)))(@tsed/logger@8.0.5)(@tsed/openspec@8.14.1)(@tsed/platform-middlewares@8.14.1(@tsed/core@8.14.1)(@tsed/di@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/logger@8.0.5))(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1)))(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1))(@types/multer@2.2.0)(cross-env@7.0.3)':
     dependencies:
       '@tsed/core': 8.14.1
-      '@tsed/di': 8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/logger@6.7.8)
+      '@tsed/di': 8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/logger@8.0.5)
       '@tsed/json-mapper': 8.14.1(@tsed/core@8.14.1)(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1))
-      '@tsed/logger': 6.7.8
+      '@tsed/logger': 8.0.5
       '@tsed/openspec': 8.14.1
-      '@tsed/platform-middlewares': 8.14.1(@tsed/core@8.14.1)(@tsed/di@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/logger@6.7.8))(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1))
+      '@tsed/platform-middlewares': 8.14.1(@tsed/core@8.14.1)(@tsed/di@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/logger@8.0.5))(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1))
       '@tsed/schema': 8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1)
-      '@types/multer': 1.4.12
-      cross-env: 10.0.0
+      '@types/multer': 2.2.0
+      cross-env: 7.0.3
       multer: 2.0.2
       tslib: 2.7.0
 
-  '@tsed/platform-params@8.14.1(@tsed/core@8.14.1)(@tsed/di@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/logger@6.7.8))(@tsed/exceptions@8.14.1(@tsed/core@8.14.1))(@tsed/json-mapper@8.14.1(@tsed/core@8.14.1)(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1)))(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1))':
+  '@tsed/platform-params@8.14.1(@tsed/core@8.14.1)(@tsed/di@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/logger@8.0.5))(@tsed/exceptions@8.14.1(@tsed/core@8.14.1))(@tsed/json-mapper@8.14.1(@tsed/core@8.14.1)(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1)))(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1))':
     dependencies:
       '@tsed/core': 8.14.1
-      '@tsed/di': 8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/logger@6.7.8)
+      '@tsed/di': 8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/logger@8.0.5)
       '@tsed/exceptions': 8.14.1(@tsed/core@8.14.1)
       '@tsed/json-mapper': 8.14.1(@tsed/core@8.14.1)(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1))
       '@tsed/schema': 8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1)
       tslib: 2.7.0
 
-  '@tsed/platform-response-filter@8.14.1(@tsed/core@8.14.1)(@tsed/di@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/logger@6.7.8))(@tsed/exceptions@8.14.1(@tsed/core@8.14.1))(@tsed/json-mapper@8.14.1(@tsed/core@8.14.1)(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1)))(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1))':
+  '@tsed/platform-response-filter@8.14.1(@tsed/core@8.14.1)(@tsed/di@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/logger@8.0.5))(@tsed/exceptions@8.14.1(@tsed/core@8.14.1))(@tsed/json-mapper@8.14.1(@tsed/core@8.14.1)(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1)))(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1))':
     dependencies:
       '@tsed/core': 8.14.1
-      '@tsed/di': 8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/logger@6.7.8)
+      '@tsed/di': 8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/logger@8.0.5)
       '@tsed/exceptions': 8.14.1(@tsed/core@8.14.1)
       '@tsed/json-mapper': 8.14.1(@tsed/core@8.14.1)(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1))
       '@tsed/schema': 8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1)
       tslib: 2.7.0
 
-  '@tsed/platform-router@8.14.1(@tsed/core@8.14.1)(@tsed/di@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/logger@6.7.8))(@tsed/exceptions@8.14.1(@tsed/core@8.14.1))(@tsed/json-mapper@8.14.1(@tsed/core@8.14.1)(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1)))(@tsed/platform-params@8.14.1(@tsed/core@8.14.1)(@tsed/di@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/logger@6.7.8))(@tsed/exceptions@8.14.1(@tsed/core@8.14.1))(@tsed/json-mapper@8.14.1(@tsed/core@8.14.1)(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1)))(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1)))(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1))':
+  '@tsed/platform-router@8.14.1(@tsed/core@8.14.1)(@tsed/di@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/logger@8.0.5))(@tsed/exceptions@8.14.1(@tsed/core@8.14.1))(@tsed/json-mapper@8.14.1(@tsed/core@8.14.1)(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1)))(@tsed/platform-params@8.14.1(@tsed/core@8.14.1)(@tsed/di@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/logger@8.0.5))(@tsed/exceptions@8.14.1(@tsed/core@8.14.1))(@tsed/json-mapper@8.14.1(@tsed/core@8.14.1)(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1)))(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1)))(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1))':
     dependencies:
       '@tsed/core': 8.14.1
-      '@tsed/di': 8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/logger@6.7.8)
+      '@tsed/di': 8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/logger@8.0.5)
       '@tsed/exceptions': 8.14.1(@tsed/core@8.14.1)
       '@tsed/json-mapper': 8.14.1(@tsed/core@8.14.1)(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1))
-      '@tsed/platform-params': 8.14.1(@tsed/core@8.14.1)(@tsed/di@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/logger@6.7.8))(@tsed/exceptions@8.14.1(@tsed/core@8.14.1))(@tsed/json-mapper@8.14.1(@tsed/core@8.14.1)(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1)))(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1))
+      '@tsed/platform-params': 8.14.1(@tsed/core@8.14.1)(@tsed/di@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/logger@8.0.5))(@tsed/exceptions@8.14.1(@tsed/core@8.14.1))(@tsed/json-mapper@8.14.1(@tsed/core@8.14.1)(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1)))(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1))
       '@tsed/schema': 8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1)
       tslib: 2.7.0
 
-  '@tsed/platform-views@8.14.1(@tsed/core@8.14.1)(@tsed/di@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/logger@6.7.8))(@tsed/engines@8.14.1)(@tsed/exceptions@8.14.1(@tsed/core@8.14.1))(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1))':
+  '@tsed/platform-views@8.14.1(@tsed/core@8.14.1)(@tsed/di@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/logger@8.0.5))(@tsed/engines@8.14.1)(@tsed/exceptions@8.14.1(@tsed/core@8.14.1))(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1))':
     dependencies:
       '@tsed/core': 8.14.1
-      '@tsed/di': 8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/logger@6.7.8)
+      '@tsed/di': 8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/logger@8.0.5)
       '@tsed/engines': 8.14.1
       '@tsed/exceptions': 8.14.1(@tsed/core@8.14.1)
       '@tsed/schema': 8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1)
@@ -3425,23 +4068,28 @@ snapshots:
       statuses: 2.0.2
       tslib: 2.7.0
 
-  '@tsed/swagger@8.14.1(@tsed/platform-http@8.14.1(@tsed/engines@8.14.1)(@tsed/logger@6.7.8)(@tsed/openspec@8.14.1)(@types/multer@1.4.12)(cross-env@10.0.0))':
+  '@tsed/swagger@8.14.1(@tsed/platform-http@8.14.1(@tsed/engines@8.14.1)(@tsed/logger@8.0.5)(@tsed/openspec@8.14.1)(@types/multer@2.2.0)(cross-env@7.0.3))':
     dependencies:
       '@tsed/normalize-path': 8.14.1
-      '@tsed/openapi-utils': 8.14.1(@tsed/platform-http@8.14.1(@tsed/engines@8.14.1)(@tsed/logger@6.7.8)(@tsed/openspec@8.14.1)(@types/multer@1.4.12)(cross-env@10.0.0))
+      '@tsed/openapi-utils': 8.14.1(@tsed/platform-http@8.14.1(@tsed/engines@8.14.1)(@tsed/logger@8.0.5)(@tsed/openspec@8.14.1)(@types/multer@2.2.0)(cross-env@7.0.3))
       '@tsed/openspec': 8.14.1
-      '@tsed/platform-http': 8.14.1(@tsed/engines@8.14.1)(@tsed/logger@6.7.8)(@tsed/openspec@8.14.1)(@types/multer@1.4.12)(cross-env@10.0.0)
+      '@tsed/platform-http': 8.14.1(@tsed/engines@8.14.1)(@tsed/logger@8.0.5)(@tsed/openspec@8.14.1)(@types/multer@2.2.0)(cross-env@7.0.3)
       swagger-ui-dist: 5.27.0
       tslib: 2.7.0
 
-  '@tsed/typeorm@7.85.1(@tsed/core@8.14.1)(@tsed/di@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/logger@6.7.8))(@tsed/json-mapper@8.14.1(@tsed/core@8.14.1)(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1)))(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1))(typeorm@0.3.28(sqlite3@5.1.7)(ts-node@10.9.2(@swc/core@1.15.3(@swc/helpers@0.5.17))(@types/node@24.1.0)(typescript@5.8.3)))':
+  '@tsed/typeorm@7.85.1(@tsed/core@8.14.1)(@tsed/di@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/logger@8.0.5))(@tsed/json-mapper@8.14.1(@tsed/core@8.14.1)(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1)))(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1))(typeorm@0.3.28(sqlite3@5.1.7(supports-color@5.5.0))(supports-color@5.5.0)(ts-node@10.9.2(@swc/core@1.15.3(@swc/helpers@0.5.17))(@types/node@24.1.0)(typescript@5.8.3)))':
     dependencies:
       '@tsed/core': 8.14.1
-      '@tsed/di': 8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/logger@6.7.8)
+      '@tsed/di': 8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/logger@8.0.5)
       '@tsed/json-mapper': 8.14.1(@tsed/core@8.14.1)(@tsed/schema@8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1))
       '@tsed/schema': 8.14.1(@tsed/core@8.14.1)(@tsed/hooks@8.14.1)(@tsed/openspec@8.14.1)
       tslib: 2.6.1
-      typeorm: 0.3.28(sqlite3@5.1.7)(ts-node@10.9.2(@swc/core@1.15.3(@swc/helpers@0.5.17))(@types/node@24.1.0)(typescript@5.8.3))
+      typeorm: 0.3.28(sqlite3@5.1.7(supports-color@5.5.0))(supports-color@5.5.0)(ts-node@10.9.2(@swc/core@1.15.3(@swc/helpers@0.5.17))(@types/node@24.1.0)(typescript@5.8.3))
+
+  '@tybys/wasm-util@0.10.3':
+    dependencies:
+      tslib: 2.8.1
+    optional: true
 
   '@types/bcrypt@6.0.0':
     dependencies:
@@ -3514,7 +4162,7 @@ snapshots:
 
   '@types/ms@2.1.0': {}
 
-  '@types/multer@1.4.12':
+  '@types/multer@2.2.0':
     dependencies:
       '@types/express': 5.0.6
 
@@ -3556,15 +4204,15 @@ snapshots:
 
   '@types/swagger-schema-official@2.0.25': {}
 
-  '@typescript-eslint/eslint-plugin@8.49.0(@typescript-eslint/parser@8.49.0(eslint@9.39.1)(typescript@5.8.3))(eslint@9.39.1)(typescript@5.8.3)':
+  '@typescript-eslint/eslint-plugin@8.49.0(@typescript-eslint/parser@8.49.0(eslint@9.39.1(supports-color@5.5.0))(supports-color@5.5.0)(typescript@5.8.3))(eslint@9.39.1(supports-color@5.5.0))(supports-color@5.5.0)(typescript@5.8.3)':
     dependencies:
       '@eslint-community/regexpp': 4.12.1
-      '@typescript-eslint/parser': 8.49.0(eslint@9.39.1)(typescript@5.8.3)
+      '@typescript-eslint/parser': 8.49.0(eslint@9.39.1(supports-color@5.5.0))(supports-color@5.5.0)(typescript@5.8.3)
       '@typescript-eslint/scope-manager': 8.49.0
-      '@typescript-eslint/type-utils': 8.49.0(eslint@9.39.1)(typescript@5.8.3)
-      '@typescript-eslint/utils': 8.49.0(eslint@9.39.1)(typescript@5.8.3)
+      '@typescript-eslint/type-utils': 8.49.0(eslint@9.39.1(supports-color@5.5.0))(supports-color@5.5.0)(typescript@5.8.3)
+      '@typescript-eslint/utils': 8.49.0(eslint@9.39.1(supports-color@5.5.0))(supports-color@5.5.0)(typescript@5.8.3)
       '@typescript-eslint/visitor-keys': 8.49.0
-      eslint: 9.39.1
+      eslint: 9.39.1(supports-color@5.5.0)
       ignore: 7.0.5
       natural-compare: 1.4.0
       ts-api-utils: 2.1.0(typescript@5.8.3)
@@ -3572,23 +4220,23 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@typescript-eslint/parser@8.49.0(eslint@9.39.1)(typescript@5.8.3)':
+  '@typescript-eslint/parser@8.49.0(eslint@9.39.1(supports-color@5.5.0))(supports-color@5.5.0)(typescript@5.8.3)':
     dependencies:
       '@typescript-eslint/scope-manager': 8.49.0
       '@typescript-eslint/types': 8.49.0
-      '@typescript-eslint/typescript-estree': 8.49.0(typescript@5.8.3)
+      '@typescript-eslint/typescript-estree': 8.49.0(supports-color@5.5.0)(typescript@5.8.3)
       '@typescript-eslint/visitor-keys': 8.49.0
-      debug: 4.4.3
-      eslint: 9.39.1
+      debug: 4.4.3(supports-color@5.5.0)
+      eslint: 9.39.1(supports-color@5.5.0)
       typescript: 5.8.3
     transitivePeerDependencies:
       - supports-color
 
-  '@typescript-eslint/project-service@8.49.0(typescript@5.8.3)':
+  '@typescript-eslint/project-service@8.49.0(supports-color@5.5.0)(typescript@5.8.3)':
     dependencies:
       '@typescript-eslint/tsconfig-utils': 8.49.0(typescript@5.8.3)
       '@typescript-eslint/types': 8.49.0
-      debug: 4.4.3
+      debug: 4.4.3(supports-color@5.5.0)
       typescript: 5.8.3
     transitivePeerDependencies:
       - supports-color
@@ -3602,13 +4250,13 @@ snapshots:
     dependencies:
       typescript: 5.8.3
 
-  '@typescript-eslint/type-utils@8.49.0(eslint@9.39.1)(typescript@5.8.3)':
+  '@typescript-eslint/type-utils@8.49.0(eslint@9.39.1(supports-color@5.5.0))(supports-color@5.5.0)(typescript@5.8.3)':
     dependencies:
       '@typescript-eslint/types': 8.49.0
-      '@typescript-eslint/typescript-estree': 8.49.0(typescript@5.8.3)
-      '@typescript-eslint/utils': 8.49.0(eslint@9.39.1)(typescript@5.8.3)
-      debug: 4.4.3
-      eslint: 9.39.1
+      '@typescript-eslint/typescript-estree': 8.49.0(supports-color@5.5.0)(typescript@5.8.3)
+      '@typescript-eslint/utils': 8.49.0(eslint@9.39.1(supports-color@5.5.0))(supports-color@5.5.0)(typescript@5.8.3)
+      debug: 4.4.3(supports-color@5.5.0)
+      eslint: 9.39.1(supports-color@5.5.0)
       ts-api-utils: 2.1.0(typescript@5.8.3)
       typescript: 5.8.3
     transitivePeerDependencies:
@@ -3616,13 +4264,13 @@ snapshots:
 
   '@typescript-eslint/types@8.49.0': {}
 
-  '@typescript-eslint/typescript-estree@8.49.0(typescript@5.8.3)':
+  '@typescript-eslint/typescript-estree@8.49.0(supports-color@5.5.0)(typescript@5.8.3)':
     dependencies:
-      '@typescript-eslint/project-service': 8.49.0(typescript@5.8.3)
+      '@typescript-eslint/project-service': 8.49.0(supports-color@5.5.0)(typescript@5.8.3)
       '@typescript-eslint/tsconfig-utils': 8.49.0(typescript@5.8.3)
       '@typescript-eslint/types': 8.49.0
       '@typescript-eslint/visitor-keys': 8.49.0
-      debug: 4.4.3
+      debug: 4.4.3(supports-color@5.5.0)
       minimatch: 9.0.5
       semver: 7.7.3
       tinyglobby: 0.2.15
@@ -3631,13 +4279,13 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@typescript-eslint/utils@8.49.0(eslint@9.39.1)(typescript@5.8.3)':
+  '@typescript-eslint/utils@8.49.0(eslint@9.39.1(supports-color@5.5.0))(supports-color@5.5.0)(typescript@5.8.3)':
     dependencies:
-      '@eslint-community/eslint-utils': 4.9.0(eslint@9.39.1)
+      '@eslint-community/eslint-utils': 4.9.0(eslint@9.39.1(supports-color@5.5.0))
       '@typescript-eslint/scope-manager': 8.49.0
       '@typescript-eslint/types': 8.49.0
-      '@typescript-eslint/typescript-estree': 8.49.0(typescript@5.8.3)
-      eslint: 9.39.1
+      '@typescript-eslint/typescript-estree': 8.49.0(supports-color@5.5.0)(typescript@5.8.3)
+      eslint: 9.39.1(supports-color@5.5.0)
       typescript: 5.8.3
     transitivePeerDependencies:
       - supports-color
@@ -3670,9 +4318,9 @@ snapshots:
 
   acorn@8.15.0: {}
 
-  agent-base@6.0.2:
+  agent-base@6.0.2(supports-color@5.5.0):
     dependencies:
-      debug: 4.4.3
+      debug: 4.4.3(supports-color@5.5.0)
     transitivePeerDependencies:
       - supports-color
     optional: true
@@ -3773,11 +4421,11 @@ snapshots:
       inherits: 2.0.4
       readable-stream: 3.6.2
 
-  body-parser@2.2.1:
+  body-parser@2.2.1(supports-color@5.5.0):
     dependencies:
       bytes: 3.1.2
       content-type: 1.0.5
-      debug: 4.4.3
+      debug: 4.4.3(supports-color@5.5.0)
       http-errors: 2.0.1
       iconv-lite: 0.7.0
       on-finished: 2.4.1
@@ -3915,6 +4563,8 @@ snapshots:
   color-support@1.1.3:
     optional: true
 
+  colorette@2.0.20: {}
+
   colors@1.4.0: {}
 
   commander@4.1.1: {}
@@ -3923,11 +4573,11 @@ snapshots:
     dependencies:
       mime-db: 1.54.0
 
-  compression@1.8.1:
+  compression@1.8.1(supports-color@5.5.0):
     dependencies:
       bytes: 3.1.2
       compressible: 2.0.18
-      debug: 2.6.9
+      debug: 2.6.9(supports-color@5.5.0)
       negotiator: 0.6.4
       on-headers: 1.1.0
       safe-buffer: 5.2.1
@@ -3985,9 +4635,8 @@ snapshots:
 
   create-require@1.1.1: {}
 
-  cross-env@10.0.0:
+  cross-env@7.0.3:
     dependencies:
-      '@epic-web/invariant': 1.0.0
       cross-spawn: 7.0.6
 
   cross-spawn@7.0.6:
@@ -4002,13 +4651,17 @@ snapshots:
 
   dayjs@1.11.19: {}
 
-  debug@2.6.9:
+  debug@2.6.9(supports-color@5.5.0):
     dependencies:
       ms: 2.0.0
+    optionalDependencies:
+      supports-color: 5.5.0
 
-  debug@3.1.0:
+  debug@3.1.0(supports-color@5.5.0):
     dependencies:
       ms: 2.0.0
+    optionalDependencies:
+      supports-color: 5.5.0
 
   debug@4.4.1(supports-color@5.5.0):
     dependencies:
@@ -4016,9 +4669,11 @@ snapshots:
     optionalDependencies:
       supports-color: 5.5.0
 
-  debug@4.4.3:
+  debug@4.4.3(supports-color@5.5.0):
     dependencies:
       ms: 2.1.3
+    optionalDependencies:
+      supports-color: 5.5.0
 
   decompress-response@6.0.0:
     dependencies:
@@ -4162,14 +4817,14 @@ snapshots:
 
   eslint-visitor-keys@4.2.1: {}
 
-  eslint@9.39.1:
+  eslint@9.39.1(supports-color@5.5.0):
     dependencies:
-      '@eslint-community/eslint-utils': 4.9.0(eslint@9.39.1)
+      '@eslint-community/eslint-utils': 4.9.0(eslint@9.39.1(supports-color@5.5.0))
       '@eslint-community/regexpp': 4.12.1
-      '@eslint/config-array': 0.21.1
+      '@eslint/config-array': 0.21.1(supports-color@5.5.0)
       '@eslint/config-helpers': 0.4.2
       '@eslint/core': 0.17.0
-      '@eslint/eslintrc': 3.3.1
+      '@eslint/eslintrc': 3.3.1(supports-color@5.5.0)
       '@eslint/js': 9.39.1
       '@eslint/plugin-kit': 0.4.1
       '@humanfs/node': 0.16.6
@@ -4223,10 +4878,10 @@ snapshots:
 
   expand-template@2.0.3: {}
 
-  express@5.1.0:
+  express@5.1.0(supports-color@5.5.0):
     dependencies:
       accepts: 2.0.0
-      body-parser: 2.2.1
+      body-parser: 2.2.1(supports-color@5.5.0)
       content-disposition: 1.0.0
       content-type: 1.0.5
       cookie: 0.7.2
@@ -4235,7 +4890,7 @@ snapshots:
       encodeurl: 2.0.0
       escape-html: 1.0.3
       etag: 1.8.1
-      finalhandler: 2.1.0
+      finalhandler: 2.1.0(supports-color@5.5.0)
       fresh: 2.0.0
       http-errors: 2.0.0
       merge-descriptors: 2.0.0
@@ -4246,9 +4901,9 @@ snapshots:
       proxy-addr: 2.0.7
       qs: 6.14.0
       range-parser: 1.2.1
-      router: 2.2.0
-      send: 1.2.0
-      serve-static: 2.2.0
+      router: 2.2.0(supports-color@5.5.0)
+      send: 1.2.0(supports-color@5.5.0)
+      serve-static: 2.2.0(supports-color@5.5.0)
       statuses: 2.0.2
       type-is: 2.0.1
       vary: 1.1.2
@@ -4283,7 +4938,7 @@ snapshots:
     dependencies:
       to-regex-range: 5.0.1
 
-  finalhandler@2.1.0:
+  finalhandler@2.1.0(supports-color@5.5.0):
     dependencies:
       debug: 4.4.1(supports-color@5.5.0)
       encodeurl: 2.0.0
@@ -4380,6 +5035,7 @@ snapshots:
   get-tsconfig@4.13.0:
     dependencies:
       resolve-pkg-maps: 1.0.0
+    optional: true
 
   github-from-package@0.0.0: {}
 
@@ -4475,19 +5131,19 @@ snapshots:
       statuses: 2.0.2
       toidentifier: 1.0.1
 
-  http-proxy-agent@4.0.1:
+  http-proxy-agent@4.0.1(supports-color@5.5.0):
     dependencies:
       '@tootallnate/once': 1.1.2
-      agent-base: 6.0.2
-      debug: 4.4.3
+      agent-base: 6.0.2(supports-color@5.5.0)
+      debug: 4.4.3(supports-color@5.5.0)
     transitivePeerDependencies:
       - supports-color
     optional: true
 
-  https-proxy-agent@5.0.1:
+  https-proxy-agent@5.0.1(supports-color@5.5.0):
     dependencies:
-      agent-base: 6.0.2
-      debug: 4.4.3
+      agent-base: 6.0.2(supports-color@5.5.0)
+      debug: 4.4.3(supports-color@5.5.0)
     transitivePeerDependencies:
       - supports-color
     optional: true
@@ -4686,13 +5342,13 @@ snapshots:
 
   make-error@1.3.6: {}
 
-  make-fetch-happen@9.1.0:
+  make-fetch-happen@9.1.0(supports-color@5.5.0):
     dependencies:
       agentkeepalive: 4.6.0
       cacache: 15.3.0
       http-cache-semantics: 4.2.0
-      http-proxy-agent: 4.0.1
-      https-proxy-agent: 5.0.1
+      http-proxy-agent: 4.0.1(supports-color@5.5.0)
+      https-proxy-agent: 5.0.1(supports-color@5.5.0)
       is-lambda: 1.0.1
       lru-cache: 6.0.0
       minipass: 3.3.6
@@ -4702,7 +5358,7 @@ snapshots:
       minipass-pipeline: 1.2.4
       negotiator: 0.6.4
       promise-retry: 2.0.1
-      socks-proxy-agent: 6.2.1
+      socks-proxy-agent: 6.2.1(supports-color@5.5.0)
       ssri: 8.0.1
     transitivePeerDependencies:
       - bluebird
@@ -4717,9 +5373,9 @@ snapshots:
 
   merge-descriptors@2.0.0: {}
 
-  method-override@3.0.0:
+  method-override@3.0.0(supports-color@5.5.0):
     dependencies:
-      debug: 3.1.0
+      debug: 3.1.0(supports-color@5.5.0)
       methods: 1.1.2
       parseurl: 1.3.3
       vary: 1.1.2
@@ -4858,12 +5514,12 @@ snapshots:
 
   node-gyp-build@4.8.4: {}
 
-  node-gyp@8.4.1:
+  node-gyp@8.4.1(supports-color@5.5.0):
     dependencies:
       env-paths: 2.2.1
       glob: 7.2.3
       graceful-fs: 4.2.11
-      make-fetch-happen: 9.1.0
+      make-fetch-happen: 9.1.0(supports-color@5.5.0)
       nopt: 5.0.0
       npmlog: 6.0.2
       rimraf: 3.0.2
@@ -4925,6 +5581,28 @@ snapshots:
       prelude-ls: 1.2.1
       type-check: 0.4.0
       word-wrap: 1.2.5
+
+  oxc-resolver@11.24.2:
+    optionalDependencies:
+      '@oxc-resolver/binding-android-arm-eabi': 11.24.2
+      '@oxc-resolver/binding-android-arm64': 11.24.2
+      '@oxc-resolver/binding-darwin-arm64': 11.24.2
+      '@oxc-resolver/binding-darwin-x64': 11.24.2
+      '@oxc-resolver/binding-freebsd-x64': 11.24.2
+      '@oxc-resolver/binding-linux-arm-gnueabihf': 11.24.2
+      '@oxc-resolver/binding-linux-arm-musleabihf': 11.24.2
+      '@oxc-resolver/binding-linux-arm64-gnu': 11.24.2
+      '@oxc-resolver/binding-linux-arm64-musl': 11.24.2
+      '@oxc-resolver/binding-linux-ppc64-gnu': 11.24.2
+      '@oxc-resolver/binding-linux-riscv64-gnu': 11.24.2
+      '@oxc-resolver/binding-linux-riscv64-musl': 11.24.2
+      '@oxc-resolver/binding-linux-s390x-gnu': 11.24.2
+      '@oxc-resolver/binding-linux-x64-gnu': 11.24.2
+      '@oxc-resolver/binding-linux-x64-musl': 11.24.2
+      '@oxc-resolver/binding-openharmony-arm64': 11.24.2
+      '@oxc-resolver/binding-wasm32-wasi': 11.24.2
+      '@oxc-resolver/binding-win32-arm64-msvc': 11.24.2
+      '@oxc-resolver/binding-win32-x64-msvc': 11.24.2
 
   p-limit@3.1.0:
     dependencies:
@@ -5096,7 +5774,8 @@ snapshots:
 
   resolve-from@5.0.0: {}
 
-  resolve-pkg-maps@1.0.0: {}
+  resolve-pkg-maps@1.0.0:
+    optional: true
 
   retry@0.12.0:
     optional: true
@@ -5134,7 +5813,7 @@ snapshots:
       '@rollup/rollup-win32-x64-msvc': 4.53.3
       fsevents: 2.3.3
 
-  router@2.2.0:
+  router@2.2.0(supports-color@5.5.0):
     dependencies:
       debug: 4.4.1(supports-color@5.5.0)
       depd: 2.0.0
@@ -5162,7 +5841,7 @@ snapshots:
 
   semver@7.7.3: {}
 
-  send@1.2.0:
+  send@1.2.0(supports-color@5.5.0):
     dependencies:
       debug: 4.4.1(supports-color@5.5.0)
       encodeurl: 2.0.0
@@ -5178,12 +5857,12 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  serve-static@2.2.0:
+  serve-static@2.2.0(supports-color@5.5.0):
     dependencies:
       encodeurl: 2.0.0
       escape-html: 1.0.3
       parseurl: 1.3.3
-      send: 1.2.0
+      send: 1.2.0(supports-color@5.5.0)
     transitivePeerDependencies:
       - supports-color
 
@@ -5263,10 +5942,10 @@ snapshots:
   smart-buffer@4.2.0:
     optional: true
 
-  socks-proxy-agent@6.2.1:
+  socks-proxy-agent@6.2.1(supports-color@5.5.0):
     dependencies:
-      agent-base: 6.0.2
-      debug: 4.4.3
+      agent-base: 6.0.2(supports-color@5.5.0)
+      debug: 4.4.3(supports-color@5.5.0)
       socks: 2.8.6
     transitivePeerDependencies:
       - supports-color
@@ -5278,6 +5957,13 @@ snapshots:
       smart-buffer: 4.2.0
     optional: true
 
+  source-map-support@0.5.21:
+    dependencies:
+      buffer-from: 1.1.2
+      source-map: 0.6.1
+
+  source-map@0.6.1: {}
+
   source-map@0.7.6: {}
 
   sprintf-js@1.1.3:
@@ -5285,14 +5971,14 @@ snapshots:
 
   sql-highlight@6.1.0: {}
 
-  sqlite3@5.1.7:
+  sqlite3@5.1.7(supports-color@5.5.0):
     dependencies:
       bindings: 1.5.0
       node-addon-api: 7.1.1
       prebuild-install: 7.1.3
       tar: 6.2.1
     optionalDependencies:
-      node-gyp: 8.4.1
+      node-gyp: 8.4.1(supports-color@5.5.0)
     transitivePeerDependencies:
       - bluebird
       - supports-color
@@ -5306,10 +5992,10 @@ snapshots:
 
   statuses@2.0.2: {}
 
-  streamroller@3.1.5:
+  streamroller@3.1.5(supports-color@5.5.0):
     dependencies:
       date-format: 4.0.14
-      debug: 4.4.3
+      debug: 4.4.3(supports-color@5.5.0)
       fs-extra: 8.1.0
     transitivePeerDependencies:
       - supports-color
@@ -5453,19 +6139,17 @@ snapshots:
 
   tslib@2.6.1: {}
 
-  tslib@2.6.2: {}
-
   tslib@2.7.0: {}
 
   tslib@2.8.1: {}
 
-  tsup@8.5.1(@swc/core@1.15.3(@swc/helpers@0.5.17))(tsx@4.21.0)(typescript@5.8.3):
+  tsup@8.5.1(@swc/core@1.15.3(@swc/helpers@0.5.17))(supports-color@5.5.0)(tsx@4.21.0)(typescript@5.8.3):
     dependencies:
       bundle-require: 5.1.0(esbuild@0.27.1)
       cac: 6.7.14
       chokidar: 4.0.3
       consola: 3.4.2
-      debug: 4.4.3
+      debug: 4.4.3(supports-color@5.5.0)
       esbuild: 0.27.1
       fix-dts-default-cjs-exports: 1.0.1
       joycon: 3.1.1
@@ -5493,6 +6177,7 @@ snapshots:
       get-tsconfig: 4.13.0
     optionalDependencies:
       fsevents: 2.3.3
+    optional: true
 
   tunnel-agent@0.6.0:
     dependencies:
@@ -5521,14 +6206,14 @@ snapshots:
 
   typedarray@0.0.6: {}
 
-  typeorm@0.3.28(sqlite3@5.1.7)(ts-node@10.9.2(@swc/core@1.15.3(@swc/helpers@0.5.17))(@types/node@24.1.0)(typescript@5.8.3)):
+  typeorm@0.3.28(sqlite3@5.1.7(supports-color@5.5.0))(supports-color@5.5.0)(ts-node@10.9.2(@swc/core@1.15.3(@swc/helpers@0.5.17))(@types/node@24.1.0)(typescript@5.8.3)):
     dependencies:
       '@sqltools/formatter': 1.2.5
       ansis: 4.2.0
       app-root-path: 3.1.0
       buffer: 6.0.3
       dayjs: 1.11.19
-      debug: 4.4.3
+      debug: 4.4.3(supports-color@5.5.0)
       dedent: 1.7.0
       dotenv: 16.6.1
       glob: 10.5.0
@@ -5539,19 +6224,19 @@ snapshots:
       uuid: 11.1.0
       yargs: 17.7.2
     optionalDependencies:
-      sqlite3: 5.1.7
+      sqlite3: 5.1.7(supports-color@5.5.0)
       ts-node: 10.9.2(@swc/core@1.15.3(@swc/helpers@0.5.17))(@types/node@24.1.0)(typescript@5.8.3)
     transitivePeerDependencies:
       - babel-plugin-macros
       - supports-color
 
-  typescript-eslint@8.49.0(eslint@9.39.1)(typescript@5.8.3):
+  typescript-eslint@8.49.0(eslint@9.39.1(supports-color@5.5.0))(supports-color@5.5.0)(typescript@5.8.3):
     dependencies:
-      '@typescript-eslint/eslint-plugin': 8.49.0(@typescript-eslint/parser@8.49.0(eslint@9.39.1)(typescript@5.8.3))(eslint@9.39.1)(typescript@5.8.3)
-      '@typescript-eslint/parser': 8.49.0(eslint@9.39.1)(typescript@5.8.3)
-      '@typescript-eslint/typescript-estree': 8.49.0(typescript@5.8.3)
-      '@typescript-eslint/utils': 8.49.0(eslint@9.39.1)(typescript@5.8.3)
-      eslint: 9.39.1
+      '@typescript-eslint/eslint-plugin': 8.49.0(@typescript-eslint/parser@8.49.0(eslint@9.39.1(supports-color@5.5.0))(supports-color@5.5.0)(typescript@5.8.3))(eslint@9.39.1(supports-color@5.5.0))(supports-color@5.5.0)(typescript@5.8.3)
+      '@typescript-eslint/parser': 8.49.0(eslint@9.39.1(supports-color@5.5.0))(supports-color@5.5.0)(typescript@5.8.3)
+      '@typescript-eslint/typescript-estree': 8.49.0(supports-color@5.5.0)(typescript@5.8.3)
+      '@typescript-eslint/utils': 8.49.0(eslint@9.39.1(supports-color@5.5.0))(supports-color@5.5.0)(typescript@5.8.3)
+      eslint: 9.39.1(supports-color@5.5.0)
       typescript: 5.8.3
     transitivePeerDependencies:
       - supports-color
