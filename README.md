@@ -4,6 +4,13 @@ Welcome to Just Todo It!
 
 This onboarding project will help you build fundamental knowledge of various parts of the framework that you will be working with.
 
+## 0. Prerequisites
+
+- Node.js 24.18.1
+- pnpm 11.18.0
+
+Both of these can be install using Mise. You can read more about Mise [here](https://mise.sh/) in the docs, or [here](https://infinum.com/handbook/frontend/node/security/securing-your-development-tools) in the Infinum's Node security guide.
+
 ## 1. What you will build
 
 You will be developing a simple to-do list application. Requirements are simple but ensure that you make good use of various framework features, including areas which are not covered very often in various online tutorials.
