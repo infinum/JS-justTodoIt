@@ -9,7 +9,15 @@ This onboarding project will help you build fundamental knowledge of various par
 - Node.js 24.18.1
 - pnpm 11.18.0
 
-Both of these can be install using Mise. You can read more about Mise [here](https://mise.sh/) in the docs, or [here](https://infinum.com/handbook/frontend/node/security/securing-your-development-tools) in the Infinum's Node security guide.
+The versions are pinned exactly (`engineStrict`), so a slightly different Node or pnpm version makes `pnpm install` fail. The easiest way to get both is Mise, which reads the versions from `api/package.json`:
+
+```bash
+cd api
+mise trust
+mise install
+```
+
+You can read more about Mise [here](https://mise.jdx.dev/) in the docs, or [here](https://infinum.com/handbook/frontend/node/security/securing-your-development-tools) in the Infinum's Node security guide.
 
 ## 1. What you will build
 
@@ -76,7 +84,7 @@ The server starts on `localhost:8080`. You can browse the endpoints and their sc
 
 `api/.env` configures the API (all variables are listed in [`api/README.md`](./api/README.md#environment-variables)). Two matter for local development:
 
-- `FRONTEND_URL` (default in `.env.example`: `http://localhost:3000`) is the only browser origin the API accepts requests from, and the base of the links in activation and password reset emails. If your app runs somewhere else (e.g. Angular's `http://localhost:4200`), change it and restart the API.
+- `FRONTEND_URL` (default in `.env.example`: `http://localhost:3000`) is the browser origin the API accepts requests from (together with any listed in `CORS_ALLOWED_ORIGINS`), and the base of the links in activation and password reset emails. If your app runs somewhere else (e.g. Angular's `http://localhost:4200`), change it and restart the API. It must match your app's origin exactly: no trailing slash, and `127.0.0.1` is not `localhost`.
 - `RESEND_API_KEY` is left unset, so every email the API would send is printed to the terminal where the API is running instead.
 
 The API uses SQLite. To clear the database and start from the beginning, stop the server, delete `api/database.sqlite` and start it again. **If you have a `database.sqlite` from an older version of this repository, delete it before starting the API**: the schema changed (Todo list titles became unique per user, not globally), and an old file may make the API fail.
@@ -96,7 +104,7 @@ The API uses SQLite. To clear the database and start from the beginning, stop th
   }
   ```
 
-  `code` is stable and meant for your code to branch on. `message` is for humans and may change. `details` is only present on validation errors and lists the failed fields. Error bodies never contain SQL or table and column names.
+  `code` is stable and meant for your code to branch on. `message` is a developer-facing description and may change; for many errors it's simply the code again, so map `code` to the text your users see. `details` is only present on validation errors and lists the failed fields. Error bodies never contain SQL or table and column names.
 
 Status codes you'll meet:
 
@@ -108,8 +116,8 @@ Status codes you'll meet:
 | `401`  | Any authentication failure: no cookie, invalid, expired or revoked token, wrong email or password | `token_missing`, `token_invalid`, `incorrect_email_or_password`                                                                    |
 | `403`  | Invalid or expired activation token                                                               | `activation_token_expired_or_invalid`                                                                                              |
 | `404`  | Unknown Todo list, or one that belongs to another user                                            | `not_found`                                                                                                                        |
-| `409`  | Email already registered, or you already have a Todo list with that title                         | `user_with_same_email_exists`, `todo_list_with_same_title_exists`                                                                  |
-| `412`  | Correct email and password, but the account isn't activated yet                                   | `user_not_activated`                                                                                                               |
+| `409`  | Email already registered, you already have a Todo list with that title, or two items in one list share a title | `user_with_same_email_exists`, `todo_list_with_same_title_exists`, `resource_conflict`                                  |
+| `412`  | Correct email and password, but the account isn't activated yet (rare: an account that was never activated has no password, so its login attempts get `401`) | `user_not_activated`                                                         |
 | `422`  | Resend activation email for an account that is already active                                     | `user_already_activated`                                                                                                           |
 
 ### 4.2. Authentication
@@ -120,8 +128,8 @@ Status codes you'll meet:
 | `POST` | `/auth/resend-activation-email` | `{ email }`            | `204`                             |
 | `POST` | `/auth/activate`                | `{ token, password }`  | `200` user                        |
 | `POST` | `/auth/login`                   | `{ email, password }`  | `200` user + session cookie       |
-| `POST` | `/auth/logout`                  | —                      | `204` + cookie cleared            |
-| `GET`  | `/auth/user`                    | —                      | `200` the logged-in user          |
+| `POST` | `/auth/logout`                  | —                      | `204` + cookie cleared (needs a valid session, otherwise `401`) |
+| `GET`  | `/auth/user`                    | —                      | `200` the logged-in user (`401` if nobody is) |
 | `POST` | `/auth/request-password-reset`  | `{ email }`            | `204` (also for an unknown email) |
 | `POST` | `/auth/reset-password`          | `{ token, password }`  | `200` user                        |
 
@@ -155,7 +163,7 @@ A successful login sets a `token` cookie. You can't read or modify it from JS, a
 | `Path`     | `/`                                                                                                                     |
 | `Max-Age`  | 10 days                                                                                                                 |
 
-While the session is in use, the API extends it: on an authenticated request made more than an hour after the token was issued, the response sets a fresh `token` cookie with the same flags. `POST /auth/logout` is the only way to clear the cookie, since JS can't touch it. A `401` from any endpoint other than login means the session is gone and the user is logged out.
+While the session is in use, the API extends it: on an authenticated request made more than an hour after the token was issued, the response sets a fresh `token` cookie with the same flags. The old token stops working a minute later, so that `Set-Cookie` has to reach the browser: if your app calls the API from a server (e.g. during server-side rendering) and forwards the cookie, it must also pass the refreshed cookie back. `POST /auth/logout` is the only way to clear the cookie, since JS can't touch it. A `401` from any endpoint other than login means the session is gone and the user is logged out.
 
 ### 4.3. Todo lists
 
@@ -169,9 +177,9 @@ Every route requires a session and only ever sees the logged-in user's lists.
 | `PATCH`  | `/todo-lists/:uuid` | `{ title?, todos? }` | `200` updated list   |
 | `DELETE` | `/todo-lists/:uuid` | —                    | `204`                |
 
-A list is `{ uuid, title, created, todos? }` and an item is `{ uuid, title, done }`. Items created with `POST /todo-lists` always start as not done (`{ title }` is all you send per item).
+A user is `{ uuid, email }`. A list is `{ uuid, title, created, todos? }` and an item is `{ uuid, title, done }`. Items created with `POST /todo-lists` always start as not done (`{ title }` is all you send per item; a `done` value is ignored).
 
-Titles have to be unique per user: two users can both have a "Groceries" list, but the same user can't have two, whether creating or renaming (`409 todo_list_with_same_title_exists`). Item titles have to be unique within their list.
+Titles have to be unique per user: two users can both have a "Groceries" list, but the same user can't have two, whether creating or renaming (`409 todo_list_with_same_title_exists`). Item titles have to be unique within their list (`409 resource_conflict`).
 
 #### Query parameters for `GET /todo-lists`
 
@@ -209,6 +217,8 @@ This is an API you don't control, like most APIs you'll work with. These behavio
 - **Pages are 1-indexed.** Many table and pagination components count from 0.
 - **`sortDirection` is uppercase** (`ASC`/`DESC`).
 - **`DELETE` responds `204` even if the list didn't exist.**
+- **`POST /todo-lists` creates every item as not done.** If your form lets users tick items while creating a list, decide what happens to those ticks.
+- **The session is refreshed through `Set-Cookie`.** An hour into a session, a response replaces the cookie and the old token expires a minute later. This matters if any of your API calls happen outside the browser.
 - **The session cookie can't be read from JS.** You find out who's logged in (or that nobody is) by calling `GET /auth/user`, and only the API can log you out.
 
 ## 5. Set up your AI workflow
@@ -236,7 +246,7 @@ The [MIT License](LICENSE)
 
 # Credits
 
-learnAngular is maintained and sponsored by
+Just Todo It is maintained and sponsored by
 [Infinum](https://www.infinum.com).
 
 <p align="center">

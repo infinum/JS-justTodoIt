@@ -46,7 +46,7 @@ Acceptance criteria:
 - Registration asks only for an email. On success the user is told to check their email.
 - The activation and reset pages read the token from the URL. An expired or invalid token shows a clear error instead of a broken form.
 - Activation and reset both collect a new password. They have the same form structure.
-- Each form shows the API's error responses (e.g. email already taken, wrong credentials, account not activated) as a readable message, not a raw error.
+- Each form shows the API's error responses (e.g. email already taken, wrong credentials, an expired activation or reset link) as a readable message, not a raw error.
 - After successful activation or password reset, the user ends up logged in or on the login page. Pick one and be consistent.
 - Locally the API doesn't send real emails. The activation and reset links are printed in the API server's terminal.
 

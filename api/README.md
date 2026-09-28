@@ -6,18 +6,18 @@ See [Ts.ED](https://tsed.io) project for more information.
 
 ## Build setup
 
-> **Important!** Ts.ED requires Node >= 10, Express >= 4 and TypeScript >= 3.
+> **Important!** This API requires the exact Node and pnpm versions pinned in `package.json` (see the root README).
 
 ```batch
 # install dependencies
-$ npm ci
+$ pnpm install
 
 # serve
-$ npm run start
+$ pnpm start
 
 # build for production
-$ npm run build
-$ npm run start:prod
+$ pnpm build
+$ pnpm start:prod
 ```
 
 ## Environment variables
