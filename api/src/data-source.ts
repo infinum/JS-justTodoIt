@@ -7,9 +7,9 @@ import { NewsletterPreferences } from './entities/newsletter-preferences';
 
 export const dataSourceOptions: DataSourceOptions = {
 	type: 'sqlite',
-	database: 'database.sqlite',
+	database: process.env.DB_PATH || 'database.sqlite',
 	synchronize: true,
-	logging: true,
+	logging: process.env.NODE_ENV !== 'test',
 	entities: [User, TodoList, Todo, DemographicProfile, NewsletterPreferences],
 	migrations: [],
 	subscribers: [],

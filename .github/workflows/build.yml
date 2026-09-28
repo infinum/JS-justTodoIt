@@ -15,22 +15,34 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        node: [20.x]
+    defaults:
+      run:
+        working-directory: api
 
     steps:
       - name: Checkout the repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      - name: Use Node.js ${{ matrix.node }}
-        uses: actions/setup-node@v3
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
         with:
-          node-version: ${{ matrix.node }}
+          package_json_file: api/package.json
 
-      - name: Build the application
-        run: |
-          cd api
-          npm ci
-          npm run build
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: api/package.json
+          cache: pnpm
+          cache-dependency-path: api/pnpm-lock.yaml
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint
+        run: pnpm test:lint
+
+      - name: Build
+        run: pnpm build
+
+      - name: Test
+        run: pnpm test
