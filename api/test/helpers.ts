@@ -137,6 +137,15 @@ export function postJson(server: TestServer, path: string, body: unknown, cookie
 	});
 }
 
+export function getJson(server: TestServer, path: string, cookie?: string): Promise<Response> {
+	return fetch(`${server.baseUrl}${path}`, {
+		headers: {
+			Accept: 'application/json',
+			...(cookie ? { Cookie: cookie } : {}),
+		},
+	});
+}
+
 /**
  * Extracts `name=value` of the given cookie from a response, ready to send back in a `Cookie` header.
  */

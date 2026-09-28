@@ -6,7 +6,7 @@ import { User } from '../../entities/user';
 import { ResponseErrorCode } from '../../enums/response-error-code.enum';
 import { AuthService } from '../../services/auth/auth.service';
 import { UserService } from '../../services/user/user.service';
-import { BadRequest, Forbidden, NotFound, PreconditionFailed, UnprocessableEntity } from '@tsed/exceptions';
+import { BadRequest, Conflict, Forbidden, NotFound, PreconditionFailed, UnprocessableEntity } from '@tsed/exceptions';
 import { DemographicProfile } from '../../entities/demographic-profile';
 import { Gender } from '../../enums/gender.enum';
 import { NewsletterPreferences } from '../../entities/newsletter-preferences';
@@ -77,11 +77,12 @@ export class AuthController {
 	@Post('/register')
 	@Summary('Registration')
 	@Returns(200, User)
+	@(Returns(Conflict.STATUS).Description('User with given email already exists'))
 	async register(@BodyParams() { email, password }: RegisterData): Promise<User> {
 		const existing = await this.userService.fetch({ email });
 
 		if (existing) {
-			throw new BadRequest('USER_EXISTS', { email });
+			throw new Conflict(ResponseErrorCode.USER_EXISTS);
 		}
 
 		const user = await this.userService.create({ email, password });

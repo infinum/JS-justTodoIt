@@ -1,6 +1,6 @@
 import { Controller, Req, Get, Post, BodyParams, QueryParams, PathParams, Res, Delete, Patch } from '@tsed/common';
 import { TodoList } from '../../entities/todo-list';
-import { Summary, Returns, Description, Required, Property, CollectionOf, Default } from '@tsed/schema';
+import { Summary, Returns, Description, Required, Property, CollectionOf, Default, Enum } from '@tsed/schema';
 import { TodosService } from '../../services/todos/todos.service';
 import { Auth } from '../../decorators/auth.decorator';
 import { Todo } from '../../entities/todo';
@@ -53,8 +53,8 @@ export class TodosController {
 		relations: Array<string>,
 		@QueryParams('pageNumber') @Default(DEFAULT_PAGE) pageNumber: number,
 		@QueryParams('pageSize') @Default(DEFAULT_PAGE_SIZE) pageSize: number,
-		@QueryParams('sortBy') @Default(TodoListSortBy.CREATED) sortBy: TodoListSortBy,
-		@QueryParams('sortDirection') @Default(SortDirection.DESC) sortDirection: SortDirection,
+		@QueryParams('sortBy') @Enum(TodoListSortBy) @Default(TodoListSortBy.CREATED) sortBy: TodoListSortBy,
+		@QueryParams('sortDirection') @Enum(SortDirection) @Default(SortDirection.DESC) sortDirection: SortDirection,
 		@QueryParams('title') title: string,
 		@Req() req: Req,
 		@Res() res: Res
