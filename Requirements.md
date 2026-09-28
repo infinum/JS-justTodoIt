@@ -24,7 +24,7 @@ Acceptance criteria:
 ### 1.2. Redirects
 
 - A **logged-out** user who opens a page that requires login (the Todo list table, a Todo list's details) is redirected to `/login`.
-- A **logged-in** user who opens an auth page (`/login`, `/register`, `/forgot-password`, `/activation`, `/reset-password`) is redirected to `/`.
+- A **logged-in** user who opens an auth page (`/login`, `/register`, `/forgot-password`, `/activate-account`, `/reset-password`) is redirected to `/`.
 
 Acceptance criteria:
 
@@ -36,7 +36,7 @@ Acceptance criteria:
 | Route                          | Purpose                                                                                      |
 | ------------------------------ | -------------------------------------------------------------------------------------------- |
 | `/register`                    | User registers with their email only. Links to `/login`.                                     |
-| `/activation?token=...`        | User opens the link from the activation email, sets a password and activates the account.    |
+| `/activate-account?token=...`  | User opens the link from the activation email, sets a password and activates the account.    |
 | `/login`                       | User logs in with email and password. Links to `/register` and `/forgot-password`.           |
 | `/forgot-password`             | User enters their email to receive a password reset link.                                    |
 | `/reset-password?token=...`    | User opens the link from the reset email and sets a new password.                            |

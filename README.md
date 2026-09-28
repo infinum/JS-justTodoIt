@@ -67,69 +67,149 @@ To start the API server:
 
 ```bash
 cd api
+cp .env.example .env
 pnpm install
 pnpm start
 ```
 
-The server will be started on `localhost:8080`.
+The server starts on `localhost:8080`. You can browse the endpoints and their schemas in Swagger at [localhost:8080/swagger](http://localhost:8080/swagger).
 
-You can check the API documentation on [localhost:8080/swagger](http://localhost:8080/swagger).
+`api/.env` configures the API (all variables are listed in [`api/README.md`](./api/README.md#environment-variables)). Two matter for local development:
 
-API uses SQLite. If at any point you want to clear the database and start from the beginning, simply delete `api/database.sqlite` file and restart the server.
+- `FRONTEND_URL` (default in `.env.example`: `http://localhost:3000`) is the only browser origin the API accepts requests from, and the base of the links in activation and password reset emails. If your app runs somewhere else (e.g. Angular's `http://localhost:4200`), change it and restart the API.
+- `RESEND_API_KEY` is left unset, so every email the API would send is printed to the terminal where the API is running instead.
 
-For local development, all emails the API might send will actually be logged to the terminal where the API is running.
+The API uses SQLite. To clear the database and start from the beginning, stop the server, delete `api/database.sqlite` and start it again. **If you have a `database.sqlite` from an older version of this repository, delete it before starting the API**: the schema changed (Todo list titles became unique per user, not globally), and an old file may make the API fail.
 
-### 4.1. Authorization flow
+### 4.1. Requests, responses and errors
 
-#### Registration
+- Send and accept JSON (`Content-Type: application/json`, `Accept: application/json`).
+- The session lives in a cookie, so every request must be sent with credentials (e.g. `credentials: 'include'` for `fetch`, `withCredentials` for Angular's `HttpClient` or axios). Never set an `Authorization` header.
+- Responses never include password hashes or activation and reset tokens.
+- Every error response has the same body:
 
-During registration, the user enters their email and receives an email with activation link (email is logged to terminal). This link is a link to the frontend application and it contains the activation token. Activation token is a JWT token containing user email. Example link:
+  ```json
+  {
+    "code": "todo_list_with_same_title_exists",
+    "message": "Resource already exists",
+    "requestId": "8f1c…"
+  }
+  ```
+
+  `code` is stable and meant for your code to branch on. `message` is for humans and may change. `details` is only present on validation errors and lists the failed fields. Error bodies never contain SQL or table and column names.
+
+Status codes you'll meet:
+
+| Status | When                                                                                              | Example `code`s                                                                                                                    |
+| ------ | ------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| `200`  | Success with a body (including `POST` that creates something)                                     |                                                                                                                                    |
+| `204`  | Success without a body: logout, request password reset, resend activation, delete a list          |                                                                                                                                    |
+| `400`  | Invalid body or query params, invalid reset token, item from another list                         | `validation_error`, `invalid_relation`, `password_reset_token_expired_or_invalid`, `todo_item_not_in_list`, `user_does_not_exists` |
+| `401`  | Any authentication failure: no cookie, invalid, expired or revoked token, wrong email or password | `token_missing`, `token_invalid`, `incorrect_email_or_password`                                                                    |
+| `403`  | Invalid or expired activation token                                                               | `activation_token_expired_or_invalid`                                                                                              |
+| `404`  | Unknown Todo list, or one that belongs to another user                                            | `not_found`                                                                                                                        |
+| `409`  | Email already registered, or you already have a Todo list with that title                         | `user_with_same_email_exists`, `todo_list_with_same_title_exists`                                                                  |
+| `412`  | Correct email and password, but the account isn't activated yet                                   | `user_not_activated`                                                                                                               |
+| `422`  | Resend activation email for an account that is already active                                     | `user_already_activated`                                                                                                           |
+
+### 4.2. Authentication
+
+| Method | Route                           | Body                   | Success                           |
+| ------ | ------------------------------- | ---------------------- | --------------------------------- |
+| `POST` | `/auth/register`                | `{ email, password? }` | `200` user                        |
+| `POST` | `/auth/resend-activation-email` | `{ email }`            | `204`                             |
+| `POST` | `/auth/activate`                | `{ token, password }`  | `200` user                        |
+| `POST` | `/auth/login`                   | `{ email, password }`  | `200` user + session cookie       |
+| `POST` | `/auth/logout`                  | —                      | `204` + cookie cleared            |
+| `GET`  | `/auth/user`                    | —                      | `200` the logged-in user          |
+| `POST` | `/auth/request-password-reset`  | `{ email }`            | `204` (also for an unknown email) |
+| `POST` | `/auth/reset-password`          | `{ token, password }`  | `200` user                        |
+
+#### Registration and activation
+
+If you register with only an email, the API sends an activation email (printed to the API's terminal). It contains a link to **your frontend app** with the activation token in the query string:
 
 ```
-http://localhost:4200/activation?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1dWlkIjoiNDhmNzFjZDAtZWJkNC00NDA2LWI5ZDQtMzdmNmVlMmUwMDVkIiwiZW1haWwiOiJqb2huLnNtaXRoQGV4YW1wbGUuY29tIiwiaWF0IjoxNTk0NjQ2NzQwLCJleHAiOjE1OTQ5MDU5NDB9.X0QXlQU3rK8dMCIYFGCHPLWbex_LWh8FfpIJmdOya4Q
+http://localhost:3000/activate-account?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1dWlkIjoiNDhmNzFjZDAtZWJkNC00NDA2LWI5ZDQtMzdmNmVlMmUwMDVkIiwiZW1haWwiOiJqb2huLnNtaXRoQGV4YW1wbGUuY29tIiwiaWF0IjoxNTk0NjQ2NzQwLCJleHAiOjE1OTQ5MDU5NDB9.X0QXlQU3rK8dMCIYFGCHPLWbex_LWh8FfpIJmdOya4Q
 ```
 
-You can decode the token, check if it has expired or not and read the email from it:
+So your app needs an `/activate-account` page. It reads `token` from the URL, lets the user choose a password and sends both to `POST /auth/activate`. The token is a JWT that expires after 3 days. You can decode it (no secret needed) to read the email and check the expiry before asking for a password:
 
 ![Decoded JWT activation token](./.assets/other/activation-token.png)
 
-#### Login
+If you register with an email **and** a password, the account is active straight away and no email is sent. Registering doesn't log you in: call `POST /auth/login` afterwards either way.
 
-Successful login API calls return `set-cookie` header - token will be stored in a HTTP-only cookie. You will not be able to read or modify this cookie using JS, this is the most secure option. Because of this, your API calls will need to be made with `withCredentials` option and there will be no manual setting of Authorization headers or anything like that.
+#### Password reset
 
-In production and for real projects, token cookie would be flagged as `secure` as well, but since you will be developing locally it is not (to keep things simple by avoiding the use of HTTPS on localhost with self-signed certificates).
+`POST /auth/request-password-reset` emails a link to `{FRONTEND_URL}/reset-password?token=…` (valid for 24 hours). It responds `204` whether or not the email exists, so it can't be used to discover accounts. Your `/reset-password` page sends the token and the new password to `POST /auth/reset-password`.
 
-#### Logout
+#### Session cookie
 
-Since the cookie is HTTP-only, you have to make an API call to clear the cookie.
+A successful login sets a `token` cookie. You can't read or modify it from JS, and you don't need to: the browser sends it with every request made with credentials.
 
-### 4.2. Managing Todo lists
+| Flag       | Value                                                                                                                   |
+| ---------- | ----------------------------------------------------------------------------------------------------------------------- |
+| `HttpOnly` | Always (unless `COOKIE_HTTP_ONLY=false`)                                                                                |
+| `Secure`   | Not set locally (`COOKIE_SECURE=false` in `.env.example`, so it works over plain `http://localhost`); set in production |
+| `SameSite` | `Lax`                                                                                                                   |
+| `Path`     | `/`                                                                                                                     |
+| `Max-Age`  | 10 days                                                                                                                 |
 
-Todo titles have to be unique for the user. Two different users can have Todo lists with the same title, but one specific user's Todo lists must all have unique titles.
+While the session is in use, the API extends it: on an authenticated request made more than an hour after the token was issued, the response sets a fresh `token` cookie with the same flags. `POST /auth/logout` is the only way to clear the cookie, since JS can't touch it. A `401` from any endpoint other than login means the session is gone and the user is logged out.
 
-All items of a specific Todo list must have unique titles.
+### 4.3. Todo lists
 
-#### Pagination
+Every route requires a session and only ever sees the logged-in user's lists.
 
-Todo fetching results are paginated. To find out how many pages there are, check value of `X-TOTAL-COUNT` response header. If there are 12 Todo lists in the database, first page will return 5 results and the header will contain value `12`. You can use this value together with request query parameters (current page and page size) to determine whether you can load next or previous page of results.
+| Method   | Route               | Body                 | Success              |
+| -------- | ------------------- | -------------------- | -------------------- |
+| `GET`    | `/todo-lists`       | —                    | `200` array of lists |
+| `GET`    | `/todo-lists/:uuid` | —                    | `200` list           |
+| `POST`   | `/todo-lists`       | `{ title, todos? }`  | `200` created list   |
+| `PATCH`  | `/todo-lists/:uuid` | `{ title?, todos? }` | `200` updated list   |
+| `DELETE` | `/todo-lists/:uuid` | —                    | `204`                |
 
-#### Relations
+A list is `{ uuid, title, created, todos? }` and an item is `{ uuid, title, done }`. Items created with `POST /todo-lists` always start as not done (`{ title }` is all you send per item).
 
-When fetching all or some specific Todo, you can send relation query param with a list of relations which should be loaded. Currently available values for relations are:
+Titles have to be unique per user: two users can both have a "Groceries" list, but the same user can't have two, whether creating or renaming (`409 todo_list_with_same_title_exists`). Item titles have to be unique within their list.
 
-- `todos` - includes all Todo items in the response
+#### Query parameters for `GET /todo-lists`
 
-#### Partial updates
+| Param           | Values                                           | Default   |
+| --------------- | ------------------------------------------------ | --------- |
+| `pageNumber`    | `1`, `2`, … (1-indexed)                          | `1`       |
+| `pageSize`      | number of lists per page                         | `5`       |
+| `sortBy`        | `created`, `title`                               | `created` |
+| `sortDirection` | `ASC`, `DESC` (uppercase only, `asc` is a `400`) | `DESC`    |
+| `title`         | text; returns lists whose title contains it      | —         |
+| `relations`     | `todos`                                          | none      |
 
-When updating a specific Todo, you can make a PATCH call with JSON which contains only those values which you want to update.
+`relations=todos` (also accepted by `GET /todo-lists/:uuid`) includes each list's items. Without it, lists come back without `todos`.
 
-If you want to update Todo title, just send a JSON with new `title` value and omit `todos`.
+The response body is a plain array of the requested page. The total number of lists matching the filter is only in the `X-TOTAL-COUNT` response header (readable cross-origin). For example, with 12 lists and the defaults, the first page has 5 lists and `X-TOTAL-COUNT: 12`, so there are 3 pages.
 
-If you want to update items, you always have to send all the items. Any missing items from the PATCH call will get removed and any new ones will get added.
+#### Updating a list with `PATCH`
 
-If you want to mark some todo item as done or simply rename it, sent a PATCH call with all other items as well and for this one specific item keep the same `uuid` but change `done` and/or `title` properties.
+- Send only what you want to change. To rename a list, send `{ "title": "New title" }` and omit `todos`. The items stay as they are.
+- If you send `todos`, it **replaces the whole item list**:
+  - an item with a `uuid` updates that existing item,
+  - an item without a `uuid` is created,
+  - any existing item you leave out is deleted.
+- Each item is written exactly as sent: a missing `done` means `false`, even for an item that was done.
+- So to tick one item, send every item, keeping their `uuid`s, `title`s and `done` values, with that one item's `done` changed.
+- A `uuid` that isn't one of this list's items is a `400 todo_item_not_in_list`, and nothing is changed.
+- A rejected `PATCH` (e.g. a title conflict) changes nothing.
 
-You can do all these partial updates at the same time or one by one.
+### 4.4. Constraints to design around
+
+This is an API you don't control, like most APIs you'll work with. These behaviours are deliberate. Working around them is part of the assignment, so describe how you did it in your PR's Decisions section:
+
+- **`PATCH` replaces all items.** Updating one item means sending all of them. Think about where the current items come from, what happens when two changes overlap, and what the user sees while a request is in flight.
+- **The total count is only in the `X-TOTAL-COUNT` header.** Your data-fetching layer has to expose response headers, not only the body.
+- **Pages are 1-indexed.** Many table and pagination components count from 0.
+- **`sortDirection` is uppercase** (`ASC`/`DESC`).
+- **`DELETE` responds `204` even if the list didn't exist.**
+- **The session cookie can't be read from JS.** You find out who's logged in (or that nobody is) by calling `GET /auth/user`, and only the API can log you out.
 
 ## 5. Set up your AI workflow
 
