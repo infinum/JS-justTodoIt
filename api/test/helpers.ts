@@ -104,25 +104,36 @@ export async function startServer(): Promise<TestServer> {
 	return { baseUrl, dbPath, stop };
 }
 
+function readUserToken(server: TestServer, email: string, column: 'activationToken' | 'passwordResetToken'): string {
+	const db = new DatabaseSync(server.dbPath, { readOnly: true });
+
+	try {
+		const row = db.prepare(`SELECT ${column} FROM user WHERE email = ?`).get(email) as
+			| Record<string, string | null>
+			| undefined;
+
+		if (!row?.[column]) {
+			throw new Error(`No ${column} found for ${email}`);
+		}
+
+		return row[column];
+	} finally {
+		db.close();
+	}
+}
+
 /**
  * Reads the activation token straight from the database, standing in for the activation email.
  */
 export function readActivationToken(server: TestServer, email: string): string {
-	const db = new DatabaseSync(server.dbPath, { readOnly: true });
+	return readUserToken(server, email, 'activationToken');
+}
 
-	try {
-		const row = db.prepare('SELECT activationToken FROM user WHERE email = ?').get(email) as
-			| { activationToken: string | null }
-			| undefined;
-
-		if (!row?.activationToken) {
-			throw new Error(`No activation token found for ${email}`);
-		}
-
-		return row.activationToken;
-	} finally {
-		db.close();
-	}
+/**
+ * Reads the password reset token straight from the database, standing in for the reset email.
+ */
+export function readPasswordResetToken(server: TestServer, email: string): string {
+	return readUserToken(server, email, 'passwordResetToken');
 }
 
 export function postJson(server: TestServer, path: string, body: unknown, cookie?: string): Promise<Response> {

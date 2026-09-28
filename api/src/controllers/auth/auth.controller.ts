@@ -3,7 +3,7 @@ import { Required, Email, Property, Enum, Returns, Summary, Description } from '
 import { Auth } from '../../decorators/auth.decorator';
 import { User } from '../../entities/user';
 import { ResponseErrorCode } from '../../enums/response-error-code.enum';
-import { clearSessionCookie, setSessionCookie } from '../../helpers';
+import { clearSessionCookie, sanitizeUser, setSessionCookie } from '../../helpers';
 import { AuthService } from '../../services/auth/auth.service';
 import { UserService } from '../../services/user/user.service';
 import {
@@ -95,7 +95,7 @@ export class AuthController {
 
 		const user = await this.userService.create({ email, password });
 
-		return user;
+		return sanitizeUser(user);
 	}
 
 	@Post('/resend-activation-email')
@@ -145,7 +145,6 @@ export class AuthController {
 
 		// Users without a password (not yet activated) can never match
 		const passwordOk = Boolean(user.passwordHash) && (await this.userService.compareHash(password, user.passwordHash));
-		delete user.passwordHash;
 
 		if (!passwordOk) {
 			throw new Unauthorized(ResponseErrorCode.INCORRECT_EMAIL_OR_PASSWORD);
@@ -161,7 +160,8 @@ export class AuthController {
 
 		res.user = user;
 
-		return user;
+		// Only after the isActivated check, which reads passwordHash
+		return sanitizeUser(user);
 	}
 
 	@Post('/logout')
@@ -189,7 +189,7 @@ export class AuthController {
 
 		res.user = activationResult;
 
-		return activationResult;
+		return sanitizeUser(activationResult);
 	}
 
 	@Post('/request-password-reset')
@@ -223,7 +223,7 @@ export class AuthController {
 
 		res.user = resetResult;
 
-		return resetResult;
+		return sanitizeUser(resetResult);
 	}
 
 	@Get('/user')

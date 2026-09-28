@@ -190,6 +190,10 @@ export class TodosController {
 		});
 		todoList.todos = todos;
 
-		return this.todosService.save(todoList);
+		const savedList = await this.todosService.save(todoList);
+		// The owner is the caller; don't echo their user record back
+		delete savedList.user;
+
+		return savedList;
 	}
 }

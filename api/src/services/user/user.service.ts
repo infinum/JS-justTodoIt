@@ -82,7 +82,7 @@ export class UserService {
 
 		const user = await this.fetch({ email, getActivationToken: true });
 
-		if (user.activationToken !== activationData.token) {
+		if (!user || user.activationToken !== activationData.token) {
 			return false;
 		}
 
@@ -126,7 +126,7 @@ export class UserService {
 
 		const user = await this.fetch({ email, getPasswordResetToken: true });
 
-		if (user.passwordResetToken !== passwordResetData.token) {
+		if (!user || user.passwordResetToken !== passwordResetData.token) {
 			return false;
 		}
 
