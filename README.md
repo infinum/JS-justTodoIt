@@ -17,6 +17,10 @@ You will be developing a simple to-do list application. Requirements are simple 
 
 Just Todo It is a practical application of knowledge, without too much hand-holding. There is a big focus on authentication handling because that is a part of almost every application but is rarely covered in various framework tutorial/courses, so it is good to learn some best practices early-on.
 
+The requirements describe **what** the app must do, not how. You'll almost certainly build it with an AI agent, and that's expected. The interesting part is the decisions you make along the way, and that's what review focuses on (see [How review works](#6-how-review-works-decisions-over-code)).
+
+This repository is a GitHub template. Your mentor creates a new repository from it for you, and you open your PRs there.
+
 ## 2. Project structure
 
 This repository contains some README files and `api/` directory. The frontend app you will be developing should be placed in a sibling directory, next to `/api` directory. To get started:
@@ -50,7 +54,9 @@ As for the frontend application file and folder organization, please refer to:
 
 ## 3. Application requirements & notes
 
-Please check out framework-specific requirements & notes:
+The app's requirements are the same for both frameworks: [Requirements.md](./Requirements.md).
+
+Framework-specific notes (scaffolding, optional suggestions and reading, and the concepts you'll be asked to explain in review):
 
 - [Next.js](./Nextjs.md)
 - [Angular](./Angular.md)
@@ -124,6 +130,25 @@ If you want to update items, you always have to send all the items. Any missing 
 If you want to mark some todo item as done or simply rename it, sent a PATCH call with all other items as well and for this one specific item keep the same `uuid` but change `done` and/or `title` properties.
 
 You can do all these partial updates at the same time or one by one.
+
+## 5. Set up your AI workflow
+
+Before writing any app code, set up your AI tooling with the Infinum AI stack:
+
+1. Open [`prompts/ai-engineering-setup.md`](https://github.com/infinum/ai/blob/main/prompts/ai-engineering-setup.md) in the [`infinum/ai`](https://github.com/infinum/ai) repository. It's an internal repository, so ask your mentor for access if you can't open it.
+2. Run that prompt with your coding agent **at project level, inside your app directory** (e.g. `just-todo-it/`), not globally. The setup (including the local PR review skill) then lives in your app and is committed to your repository with it.
+3. Commit the resulting configuration.
+
+**Before opening every PR**, run the local PR review skill it installed (e.g. `pr-review-code-simplicity`) on your branch. Fix or answer what it finds, then tick the self-review box in the PR description.
+
+## 6. How review works: decisions over code
+
+Your agent reviews the code. Your mentor reviews the decisions.
+
+- Line-level issues (naming, duplication, dead code, obvious bugs) should already be gone by the time a PR is opened. That's what the self-review in [step 5](#5-set-up-your-ai-workflow) is for.
+- Every PR uses the [PR template](./.github/pull_request_template.md), which you'll find in `.github/pull_request_template.md`. It's part of this template repository, so GitHub fills it in automatically in your repository. It asks for what changed, the **decisions** you made (options considered and trade-offs), open questions, and confirmation that you ran the self-review.
+- Review is a conversation about those decisions. Expect to be asked why you chose one approach over another, and to explain the concepts listed in your framework's notes file using your own code.
+- The API's quirks described in [section 4](#4-api) are deliberate constraints of an API you don't control. Deciding how to work around them is part of the assignment, so they belong in the Decisions section.
 
 # License
 
