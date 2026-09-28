@@ -26,7 +26,7 @@ export class AuthMiddleware {
 			throw new Unauthorized(ResponseErrorCode.TOKEN_MISSING);
 		}
 
-		const tokenData = await this.authService.verifyToken(token);
+		const tokenData = await this.authService.verifyToken(token, 'session');
 
 		if (!tokenData) {
 			throw new Unauthorized(ResponseErrorCode.TOKEN_INVALID);

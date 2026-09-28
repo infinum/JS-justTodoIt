@@ -25,6 +25,7 @@
 		"start": "node --watch --import @swc-node/register/esm-register --env-file=.env src/index.ts",
 		"start:prod": "node -r dotenv/config dist/index.js",
 		"test": "node --test --test-concurrency=1 'test/**/*.test.ts'",
+		"test:build": "API_TEST_BUILD=1 pnpm test",
 		"test:lint": "eslint src --ext .ts",
 		"test:lint:fix": "eslint src --ext .ts --fix",
 		"typeorm": "node --loader ts-node/esm node_modules/typeorm/cli.js -d src/data-source.ts",

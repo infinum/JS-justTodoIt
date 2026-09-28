@@ -52,13 +52,10 @@ export class TodosService {
 		const skip = Math.max((page.number - 1) * page.size, 0);
 		const take = page?.size ?? DEFAULT_PAGE_SIZE;
 
-		// Sorting
-		let order: Record<string, SortDirection>;
-		if (sortBy) {
-			order = {
-				[sortBy]: sortDirection ?? SortDirection.ASC,
-			};
-		}
+		// Sorting: `@Default` on query params only documents, so apply the documented defaults here
+		const order: Record<string, SortDirection> = {
+			[sortBy ?? TodoListSortBy.CREATED]: sortDirection ?? SortDirection.DESC,
+		};
 
 		const where: FindOptionsWhere<TodoList> = {
 			user,

@@ -73,7 +73,11 @@ export async function startServer(): Promise<TestServer> {
 	};
 	delete env.RESEND_API_KEY;
 
-	const child = spawn(process.execPath, ['--import', '@swc-node/register/esm-register', 'src/index.ts'], {
+	// `API_TEST_BUILD=1` runs the suite against the tsup build (`pnpm build` first) instead of the sources
+	const entry = process.env.API_TEST_BUILD
+		? ['dist/index.js']
+		: ['--import', '@swc-node/register/esm-register', 'src/index.ts'];
+	const child = spawn(process.execPath, entry, {
 		cwd: API_DIR,
 		env,
 		stdio: ['ignore', 'pipe', 'pipe'],

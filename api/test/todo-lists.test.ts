@@ -247,4 +247,33 @@ describe('todo list rules', () => {
 			{ title: 'New', done: false },
 		]);
 	});
+
+	test('a rename-only PATCH keeps the items', async () => {
+		const list = await createList(server, alice, uniqueTitle(), [{ title: 'Milk' }]);
+		const title = uniqueTitle('Renamed');
+
+		const response = await patchJson(server, `/todo-lists/${list.uuid}`, { title }, alice.cookie);
+
+		assert.equal(response.status, 200, await response.clone().text());
+		const after = await fetchList(server, alice, list.uuid);
+		assert.equal(after.title, title);
+		assert.deepEqual(
+			after.todos.map(({ uuid }) => uuid),
+			[list.todos[0].uuid]
+		);
+	});
+
+	test('a PATCH item without a title is a 400 validation error and leaves the list unchanged', async () => {
+		const list = await createList(server, alice, uniqueTitle(), [{ title: 'Milk' }]);
+
+		const response = await patchJson(server, `/todo-lists/${list.uuid}`, { todos: [{ done: true }] }, alice.cookie);
+
+		assert.equal(response.status, 400);
+		assert.equal(await readErrorCode(response), 'validation_error');
+		const after = await fetchList(server, alice, list.uuid);
+		assert.deepEqual(
+			after.todos.map(({ title, done }) => ({ title, done })),
+			[{ title: 'Milk', done: false }]
+		);
+	});
 });

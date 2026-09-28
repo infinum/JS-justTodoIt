@@ -27,6 +27,17 @@ class CreateTodoData {
 	todos: Array<CreateTodoItemData>;
 }
 
+class PatchTodoItemData {
+	@Property()
+	uuid: string;
+
+	@Required()
+	title: string;
+
+	@Property()
+	done: boolean;
+}
+
 class PatchTodoData {
 	@Property()
 	uuid: string;
@@ -34,8 +45,16 @@ class PatchTodoData {
 	@Property()
 	title: string;
 
-	@CollectionOf(Todo)
-	todos: Array<Todo>;
+	@CollectionOf(PatchTodoItemData)
+	todos: Array<PatchTodoItemData>;
+}
+
+const allowedRelations = ['todos'];
+
+function assertAllowedRelations(relations: Array<string> = []): void {
+	if (relations.some((relation) => !allowedRelations.includes(relation))) {
+		throw new BadRequest(ResponseErrorCode.INVALID_RELATION);
+	}
 }
 
 @Controller('/todo-lists')
@@ -60,6 +79,8 @@ export class TodosController {
 		@Req() req: Req,
 		@Res() res: Res
 	): Promise<Array<TodoList>> {
+		assertAllowedRelations(relations);
+
 		const pagedResult = await this.todosService.fetchAll({
 			user: req.user,
 			relations,
@@ -91,6 +112,8 @@ export class TodosController {
 		relations: Array<string>,
 		@Req() req: Req
 	): Promise<TodoList> {
+		assertAllowedRelations(relations);
+
 		const todoList = await this.todosService.fetchOne({
 			user: req.user,
 			relations,
@@ -138,7 +161,8 @@ export class TodosController {
 
 		let removedTodos: Array<Todo> = [];
 
-		if ('todos' in todoData) {
+		// Not `in`: the production build emits class fields, so unsent DTO fields are present as `undefined`
+		if (todoData.todos !== undefined) {
 			const oldUuids = todoList.todos.map(({ uuid }) => uuid);
 			const newUuids = (todoData.todos ?? []).map(({ uuid }) => uuid).filter(Boolean);
 
@@ -162,7 +186,7 @@ export class TodosController {
 			});
 		}
 
-		if ('title' in todoData) {
+		if (todoData.title !== undefined) {
 			todoList.title = todoData.title;
 		}
 

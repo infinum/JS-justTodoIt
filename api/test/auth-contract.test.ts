@@ -1,7 +1,15 @@
 import assert from 'node:assert/strict';
 import { createHmac } from 'node:crypto';
 import { after, before, describe, test } from 'node:test';
-import { createLoggedInUser, getJson, postJson, startServer, uniqueEmail } from './helpers.ts';
+import {
+	createLoggedInUser,
+	getJson,
+	postJson,
+	readActivationToken,
+	readPasswordResetToken,
+	startServer,
+	uniqueEmail,
+} from './helpers.ts';
 import type { TestServer } from './helpers.ts';
 
 const TEN_DAYS_S = 60 * 60 * 24 * 10;
@@ -11,10 +19,10 @@ function base64url(value: string | Buffer): string {
 	return Buffer.from(value).toString('base64url');
 }
 
-/** HS256 JWT signed with the test server's secret, so tests can mint expired or stale tokens. */
+/** HS256 session JWT signed with the test server's secret, so tests can mint expired or stale tokens. */
 function signToken(payload: Record<string, unknown>): string {
 	const header = base64url(JSON.stringify({ alg: 'HS256', typ: 'JWT' }));
-	const body = base64url(JSON.stringify(payload));
+	const body = base64url(JSON.stringify({ purpose: 'session', ...payload }));
 	const signature = createHmac('sha256', TEST_JWT_SECRET).update(`${header}.${body}`).digest('base64url');
 
 	return `${header}.${body}.${signature}`;
@@ -141,6 +149,22 @@ describe('auth contract', () => {
 			});
 
 			await assertUnauthorized(await getJson(server, '/auth/user', `token=${token}`));
+		});
+
+		test('an activation token is not a session token', async () => {
+			const email = uniqueEmail();
+			await postJson(server, '/auth/register', { email });
+			const activationToken = readActivationToken(server, email);
+
+			await assertUnauthorized(await getJson(server, '/auth/user', `token=${activationToken}`));
+		});
+
+		test('a password reset token is not a session token', async () => {
+			const { email } = await createLoggedInUser(server);
+			await postJson(server, '/auth/request-password-reset', { email });
+			const passwordResetToken = readPasswordResetToken(server, email);
+
+			await assertUnauthorized(await getJson(server, '/auth/user', `token=${passwordResetToken}`));
 		});
 
 		test('wrong password', async () => {
