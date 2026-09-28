@@ -220,6 +220,10 @@ This is an API you don't control, like most APIs you'll work with. These behavio
 - **`POST /todo-lists` creates every item as not done.** If your form lets users tick items while creating a list, decide what happens to those ticks.
 - **The session is refreshed through `Set-Cookie`.** An hour into a session, a response replaces the cookie and the old token expires a minute later. This matters if any of your API calls happen outside the browser.
 - **The session cookie can't be read from JS.** You find out who's logged in (or that nobody is) by calling `GET /auth/user`, and only the API can log you out.
+- **The `title` filter matches `%` and `_` as wildcards.** A search for `50%` also matches `50 apples`. Decide whether your search box escapes them or lives with it.
+- **`pageSize` has no upper limit, and a `pageNumber` of `0` or less returns page 1.** Keep your own paging inside the range the user can actually reach.
+- **Emails are case-sensitive.** `Ana@example.com` and `ana@example.com` are two different accounts, for both registering and logging in.
+- **Logging out only lasts until the API restarts.** The API forgets which tokens it revoked when it restarts, so a token saved from before a logout works again until it expires. Your app should drop the user's state on logout rather than rely on the old cookie failing.
 
 ## 5. Set up your AI workflow
 
