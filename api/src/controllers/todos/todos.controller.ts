@@ -4,11 +4,12 @@ import { Summary, Returns, Description, Required, Property, CollectionOf, Defaul
 import { TodosService } from '../../services/todos/todos.service';
 import { Auth } from '../../decorators/auth.decorator';
 import { Todo } from '../../entities/todo';
-import { NotFound } from '@tsed/exceptions';
+import { BadRequest, NotFound } from '@tsed/exceptions';
 import { SortDirection } from '../../enums/sort-direction.enum';
 import { TodoListSortBy } from '../../enums/todo-list-sort-by.enum';
 import { DEFAULT_PAGE_SIZE, DEFAULT_PAGE } from '../../constants';
 import { CustomHeader } from '../../enums/custom-headers.enum';
+import { ResponseErrorCode } from '../../enums/response-error-code.enum';
 
 class CreateTodoItemData {
 	@Required()
@@ -131,26 +132,41 @@ export class TodosController {
 			user: req.user,
 			relations: ['todos'],
 		});
+		if (!todoList) {
+			throw new NotFound(`Todo list with uuid "${uuid}" not found`);
+		}
+
+		let removedTodos: Array<Todo> = [];
+
+		if ('todos' in todoData) {
+			const oldUuids = todoList.todos.map(({ uuid }) => uuid);
+			const newUuids = (todoData.todos ?? []).map(({ uuid }) => uuid).filter(Boolean);
+
+			// Only this list's own items can be updated; anything else would re-parent another list's item
+			if (newUuids.some((itemUuid) => !oldUuids.includes(itemUuid))) {
+				throw new BadRequest(ResponseErrorCode.TODO_ITEM_NOT_IN_LIST);
+			}
+
+			removedTodos = todoList.todos.filter(({ uuid }) => !newUuids.includes(uuid));
+
+			// Replace-all: every item is written as sent, a missing `done` means not done
+			todoList.todos = (todoData.todos ?? []).map((itemData) => {
+				const todoItem = new Todo();
+				if (itemData.uuid) {
+					todoItem.uuid = itemData.uuid;
+				}
+				todoItem.title = itemData.title;
+				todoItem.done = itemData.done ?? false;
+
+				return todoItem;
+			});
+		}
 
 		if ('title' in todoData) {
 			todoList.title = todoData.title;
 		}
 
-		if ('todos' in todoData) {
-			const oldTodos = todoList.todos;
-			todoList.todos = todoData.todos;
-			const newUuids = todoList.todos
-				.map(({ uuid }: { uuid?: string | null }) => uuid)
-				.filter(Boolean) as string[];
-
-			for (const oldItem of oldTodos) {
-				if (!newUuids.includes(oldItem.uuid)) {
-					await oldItem.remove();
-				}
-			}
-		}
-
-		return this.todosService.save(todoList);
+		return this.todosService.save(todoList, removedTodos);
 	}
 
 	@Post('/')

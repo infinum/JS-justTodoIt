@@ -15,7 +15,7 @@ export class Todo extends BaseEntity {
 	@Property()
 	title: string;
 
-	@Column()
+	@Column({ default: false })
 	@Property()
 	done: boolean;
 

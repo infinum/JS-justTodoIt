@@ -137,6 +137,18 @@ export function postJson(server: TestServer, path: string, body: unknown, cookie
 	});
 }
 
+export function patchJson(server: TestServer, path: string, body: unknown, cookie?: string): Promise<Response> {
+	return fetch(`${server.baseUrl}${path}`, {
+		method: 'PATCH',
+		headers: {
+			'Content-Type': 'application/json',
+			Accept: 'application/json',
+			...(cookie ? { Cookie: cookie } : {}),
+		},
+		body: JSON.stringify(body),
+	});
+}
+
 export function getJson(server: TestServer, path: string, cookie?: string): Promise<Response> {
 	return fetch(`${server.baseUrl}${path}`, {
 		headers: {

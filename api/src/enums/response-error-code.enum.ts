@@ -12,6 +12,7 @@ export enum ResponseErrorCode {
 	ERROR_SENDING_EMAIL = 'error_sending_email',
 	PASSWORD_RESET_REQUEST_ERROR = 'password_reset_request_error',
 	TODO_LIST_TITLE_EXISTS = 'todo_list_with_same_title_exists',
+	TODO_ITEM_NOT_IN_LIST = 'todo_item_not_in_list',
 	RESOURCE_CONFLICT = 'resource_conflict',
 	VALIDATION_ERROR = 'validation_error',
 	INVALID_RELATION = 'invalid_relation',
