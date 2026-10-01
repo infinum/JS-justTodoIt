@@ -49,7 +49,7 @@ None of these are required. Use them, replace them or skip them, and record the 
 
 - Infinum Handbook: [Angular Handbook](https://infinum.com/handbook/books/frontend/angular/introduction), [File and module organization and naming](https://infinum.com/handbook/books/frontend/angular/angular-guidelines-and-best-practices/file-and-module-organization-and-naming), [Formatting, naming and best practices](https://infinum.com/handbook/books/frontend/angular/angular-guidelines-and-best-practices/formatting-naming-and-best-practices)
 - Angular: [official tutorials](https://angular.dev/tutorials)
-- [Reusing common layouts using the router](https://indepth.dev/posts/1235/how-to-reuse-common-layouts-in-angular-using-router-2)
+- [Nested routes](https://angular.dev/guide/routing/define-routes#nested-routes) for sharing a layout between pages
 
 ## 4. Concepts you'll be asked to explain
 

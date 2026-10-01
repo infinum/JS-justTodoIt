@@ -20,7 +20,7 @@ mise install
 
 pnpm 11 enforces a minimum release age for packages. If any `pnpm` command fails with `Invalid time value`, your global pnpm config sets `minimumReleaseAge` as a duration such as `3d`. pnpm expects minutes, so change it to a number (e.g. `10080` for 7 days).
 
-You can read more about Mise [here](https://mise.jdx.dev/) in the docs, or [here](https://infinum.com/handbook/frontend/node/security/securing-your-development-tools) in the Infinum's Node security guide.
+You can read more in the [mise docs](https://mise.jdx.dev/), and about why every environment should run the same Node version in the Infinum Handbook's [Managing Node-NPM versions](https://infinum.com/handbook/frontend/node/managing-node-npm-versions).
 
 ## 1. What you will build
 

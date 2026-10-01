@@ -34,8 +34,8 @@ None of these are required. Use them, replace them or skip them, and record the 
 
 ## 3. Suggested reading (optional)
 
-- Infinum Handbook: [Getting started with React](https://infinum.com/handbook/frontend/react/getting-started/ecosystem), [React guidelines and practices](https://infinum.com/handbook/books/frontend/react/react-guidelines-and-best-practices), [Project structure](https://infinum.com/handbook/frontend/react/project-structure#app-router), [Testing best practices](https://infinum.com/handbook/frontend/react/testing-best-practices)
-- Next.js: [Getting started](https://nextjs.org/docs/app/getting-started), [Fetching data](https://nextjs.org/docs/app/getting-started/fetching-data), [Updating data (Server Actions)](https://nextjs.org/docs/app/getting-started/updating-data), [Caching and revalidating](https://nextjs.org/docs/app/getting-started/caching-and-revalidating), [Testing](https://nextjs.org/docs/app/guides/testing)
+- Infinum Handbook: [Getting started with React](https://infinum.com/handbook/frontend/react/getting-started/ecosystem), [React guidelines and practices](https://infinum.com/handbook/books/frontend/react/react-guidelines-and-best-practices), [Project structure](https://infinum.com/handbook/frontend/react/project-structure#app-router), [Testing best practices](https://infinum.com/handbook/frontend/react/testing/best-practices)
+- Next.js: [Getting started](https://nextjs.org/docs/app/getting-started), [Fetching data](https://nextjs.org/docs/app/getting-started/fetching-data), [Mutating data (Server Functions)](https://nextjs.org/docs/app/getting-started/mutating-data), [Caching](https://nextjs.org/docs/app/getting-started/caching), [Testing](https://nextjs.org/docs/app/guides/testing)
 - React: [react.dev](https://react.dev/)
 - [Compound components](https://kentcdodds.com/blog/compound-components-with-react-hooks), one way of sharing a form between create and edit
 
