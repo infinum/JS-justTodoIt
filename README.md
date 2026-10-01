@@ -59,13 +59,19 @@ As for the frontend application file and folder organization, please refer to:
 
 ### 2.1. Set up your AI workflow
 
-After scaffolding, before any feature code, set up your AI tooling with the Infinum AI stack:
+After scaffolding, before any feature code, set up your AI tooling in two steps.
 
-1. Open [`prompts/ai-engineering-setup.md`](https://github.com/infinum/ai/blob/main/prompts/ai-engineering-setup.md) in the [`infinum/ai`](https://github.com/infinum/ai) repository.
-2. Run that prompt with your coding agent **at project level, inside your app directory** (`just-todo-it/`), not globally. The setup (including the local PR review skill) then lives in your app and is committed to your repository with it.
-3. Commit the resulting configuration.
+**1. Required: install the PR review skill into your app.** From `just-todo-it/`:
 
-**Before opening every PR**, run the local PR review skill it installed (e.g. `pr-review-code-simplicity`) on your branch. Fix or answer what it finds, then tick both boxes under "Self-review done" in the PR description and name the skill you used.
+```bash
+pnpm dlx skills@1.7.0 add infinum/ai --skill pr-review-code-simplicity -y
+```
+
+This uses the [`skills`](https://github.com/vercel-labs/skills) CLI to install the [`pr-review-code-simplicity`](https://github.com/infinum/ai/tree/main/plugins/pr-review-code-simplicity) skill from [`infinum/ai`](https://github.com/infinum/ai) into your project. It writes `.agents/skills/` (read by Codex, Cursor and most other agents), a `.claude/skills/` symlink for Claude Code, and a `skills-lock.json` recording which version you installed. Commit all three, so your mentor can run the same review on your PRs.
+
+**2. Recommended: set up the wider Infinum AI stack on your machine.** Run the [`prompts/ai-engineering-setup.md`](https://github.com/infinum/ai/blob/main/prompts/ai-engineering-setup.md) prompt with your coding agent. It installs globally, for every project you work on, so nothing from it goes into your repository.
+
+**Before opening every PR**, run `pr-review-code-simplicity` on your branch. Fix or answer what it finds, then tick both boxes under "Self-review done" in the PR description and name the skill you used.
 
 ## 3. Application requirements & notes
 

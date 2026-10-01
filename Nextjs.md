@@ -7,29 +7,24 @@ What the app must do is described in [Requirements.md](./Requirements.md). This 
 From the repository root, next to `api/`:
 
 ```bash
-pnpm create next-app just-todo-it -e https://github.com/infinum/JS-React-Example/tree/onboarding-starter-v2
+pnpm create next-app just-todo-it --yes
 ```
 
-The install at the end of that command stops with `ERR_PNPM_IGNORED_BUILDS` for `fsevents`. pnpm 11 doesn't run a dependency's build script until you approve it, and the starter's `just-todo-it/pnpm-workspace.yaml` leaves `fsevents` as `set this to true or false`. Finish the setup inside the app:
+`--yes` takes the defaults: TypeScript, ESLint, Tailwind, the App Router and the `@/*` import alias. Drop it if you want to choose for yourself.
 
-```bash
-cd just-todo-it
-mise trust  # the starter ships its own mise.toml, created after you ran `mise trust --all`
-# In pnpm-workspace.yaml: set `fsevents: false`, and add `minimumReleaseAge: 10080` (7 days, the same as api/)
-pnpm install
-cp .env.example .env.local
-```
+Then, inside `just-todo-it/`:
 
-In `.env.local`, set `NEXT_PUBLIC_API_ENDPOINT` to your API's URL (`http://localhost:8080/` unless you changed `HTTP_PORT`).
+- In `pnpm-workspace.yaml`, add `minimumReleaseAge: 10080` (7 days, the same as `api/`).
+- Create `.env.local` with your API's URL, e.g. `NEXT_PUBLIC_API_ENDPOINT=http://localhost:8080/` (change the port if you changed `HTTP_PORT`). The name is up to you, but only variables prefixed with `NEXT_PUBLIC_` reach the browser.
 
-The starter uses Next.js with the App Router. It doesn't include an auth library, so choosing one (or none) is up to you.
+This is a plain Next.js app with no auth library, test runner or pre-commit hook. Choosing and adding those is part of your first PR (see [README §5](./README.md#5-how-review-works-decisions-over-code) and [Requirements §6](./Requirements.md#6-code-quality-expectations)).
 
 ## 2. Suggested libraries (optional)
 
 None of these are required. Use them, replace them or skip them, and record the choice and why in your PR.
 
 - **Auth:** this API already owns the session through its HTTP-only cookie, so plain `fetch` calls plus redirect logic can be enough, and **no auth library** is a good default. Libraries like [Better Auth](https://www.better-auth.com/docs) are common in Next.js apps, but they expect to own the session themselves, so adopting one here means deciding how it fits around the API's cookie. Either way, you should be able to explain what your choice does for you and what it doesn't.
-- **UI:** [Tailwind](https://tailwindcss.com/) and [shadcn/ui](https://ui.shadcn.com/) are what most of our React projects use.
+- **UI:** [Tailwind](https://tailwindcss.com/) (already in the default scaffold) and [shadcn/ui](https://ui.shadcn.com/) are what most of our React projects use.
 - **Forms:** [React Hook Form](https://react-hook-form.com/), including [`useFieldArray`](https://react-hook-form.com/docs/usefieldarray) for dynamic item lists and [`FormProvider`/`useFormContext`](https://react-hook-form.com/docs/formprovider) for sharing a form across components.
 - **Testing:** [Testing Library](https://testing-library.com/docs/react-testing-library/intro/) with your test runner of choice.
 
