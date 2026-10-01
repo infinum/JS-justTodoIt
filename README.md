@@ -2,7 +2,7 @@
 
 Welcome to Just Todo It!
 
-This onboarding project will help you build fundamental knowledge of various parts of the framework that you will be working with.
+This onboarding project gets you building a real app against an API you don't control, and making (and explaining) the decisions that go into it.
 
 ## 0. Prerequisites
 
@@ -24,11 +24,11 @@ You can read more about Mise [here](https://mise.jdx.dev/) in the docs, or [here
 
 ## 1. What you will build
 
-You will be developing a simple to-do list application. Requirements are simple but ensure that you make good use of various framework features, including areas which are not covered very often in various online tutorials.
+You will be developing a simple to-do list application. The features are simple, but the requirements cover the parts real apps get wrong: session handling, redirects on a full page reload, URL state, debouncing and race conditions, and an API with awkward constraints.
 
 Just Todo It is a practical application of knowledge, without too much hand-holding. There is a big focus on authentication handling because that is a part of almost every application but is rarely covered in various framework tutorial/courses, so it is good to learn some best practices early-on.
 
-The requirements describe **what** the app must do, not how. You'll almost certainly build it with an AI agent, and that's expected. The interesting part is the decisions you make along the way, and that's what review focuses on (see [How review works](#6-how-review-works-decisions-over-code)).
+The requirements describe **what** the app must do, not how. You'll almost certainly build it with an AI agent, and that's expected. The interesting part is the decisions you make along the way, and that's what review focuses on (see [How review works](#5-how-review-works-decisions-over-code)).
 
 This repository is a GitHub template. Your mentor creates a new repository from it for you, and you open your PRs there.
 
@@ -54,8 +54,18 @@ Your final structure might look something like this:
 
 As for the frontend application file and folder organization, please refer to:
 
-- React - [Project structure](https://infinum.com/handbook/frontend/react/project-structure) Handbook chapter
+- Next.js - [Project structure](https://infinum.com/handbook/frontend/react/project-structure) Handbook chapter
 - Angular - [File and module organization and naming](https://infinum.com/handbook/books/frontend/angular/angular-guidelines-and-best-practices/file-and-module-organization-and-naming) Handbook chapter
+
+### 2.1. Set up your AI workflow
+
+After scaffolding, before any feature code, set up your AI tooling with the Infinum AI stack:
+
+1. Open [`prompts/ai-engineering-setup.md`](https://github.com/infinum/ai/blob/main/prompts/ai-engineering-setup.md) in the [`infinum/ai`](https://github.com/infinum/ai) repository. It's an internal repository, so ask your mentor for access before your first day.
+2. Run that prompt with your coding agent **at project level, inside your app directory** (`just-todo-it/`), not globally. The setup (including the local PR review skill) then lives in your app and is committed to your repository with it.
+3. Commit the resulting configuration.
+
+**Before opening every PR**, run the local PR review skill it installed (e.g. `pr-review-code-simplicity`) on your branch. Fix or answer what it finds, then tick both boxes under "Self-review done" in the PR description and name the skill you used.
 
 ## 3. Application requirements & notes
 
@@ -79,10 +89,11 @@ pnpm start
 
 The server starts on `localhost:8080`. You can browse the endpoints and their schemas in Swagger at [localhost:8080/swagger](http://localhost:8080/swagger).
 
-`api/.env` configures the API (all variables are listed in [`api/README.md`](./api/README.md#environment-variables)). Two matter for local development:
+`api/.env` configures the API (all variables are listed in [`api/README.md`](./api/README.md#environment-variables)). These matter for local development:
 
 - `FRONTEND_URL` (default in `.env.example`: `http://localhost:3000`) is the browser origin the API accepts requests from (together with any listed in `CORS_ALLOWED_ORIGINS`), and the base of the links in activation and password reset emails. If your app runs somewhere else (e.g. Angular's `http://localhost:4200`), change it and restart the API. It must match your app's origin exactly: no trailing slash, and `127.0.0.1` is not `localhost`.
-- `RESEND_API_KEY` is left unset, so every email the API would send is printed to the terminal where the API is running instead.
+- `RESEND_API_KEY` is left unset, so every email the API would send is printed to the terminal where the API is running instead. It's printed in a wide table among the database query logs, so search the output for `activate-account?token=` or `reset-password?token=` to find the link.
+- `HTTP_PORT` (default `8080`): change it if that port is taken, and point your app at the new port.
 
 The API uses SQLite. To clear the database and start from the beginning, stop the server, delete `api/database.sqlite` and start it again. **If you have a `database.sqlite` from an older version of this repository, delete it before starting the API**: the schema changed (Todo list titles became unique per user, not globally), and an old file may make the API fail.
 
@@ -109,12 +120,12 @@ Status codes you'll meet:
 | ------ | ------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
 | `200`  | Success with a body (including `POST` that creates something)                                     |                                                                                                                                    |
 | `204`  | Success without a body: logout, request password reset, resend activation, delete a list          |                                                                                                                                    |
-| `400`  | Invalid body or query params, invalid reset token, item from another list                         | `validation_error`, `invalid_relation`, `password_reset_token_expired_or_invalid`, `todo_item_not_in_list`, `user_does_not_exists` |
+| `400`  | Invalid body or query params, unknown `relations` value, invalid reset token, item from another list, resend activation for an unknown email | `validation_error`, `invalid_relation`, `password_reset_token_expired_or_invalid`, `todo_item_not_in_list`, `user_does_not_exists` |
 | `401`  | Any authentication failure: no cookie, invalid, expired or revoked token, wrong email or password | `token_missing`, `token_invalid`, `incorrect_email_or_password`                                                                    |
 | `403`  | Invalid or expired activation token                                                               | `activation_token_expired_or_invalid`                                                                                              |
-| `404`  | Unknown Todo list, or one that belongs to another user                                            | `not_found`                                                                                                                        |
+| `404`  | `GET`/`PATCH` of an unknown Todo list, or one that belongs to another user (`DELETE` returns `204`) | `not_found`                                                                                                                        |
 | `409`  | Email already registered, you already have a Todo list with that title, or two items in one list share a title | `user_with_same_email_exists`, `todo_list_with_same_title_exists`, `resource_conflict`                                  |
-| `412`  | Correct email and password, but the account isn't activated yet (rare: an account that was never activated has no password, so its login attempts get `401`) | `user_not_activated`                                                         |
+| `412`  | Rarely seen: a never-activated account has no password, so its login gets `401` instead        | `user_not_activated`                                                         |
 | `422`  | Resend activation email for an account that is already active                                     | `user_already_activated`                                                                                                           |
 
 ### 4.2. Authentication
@@ -125,10 +136,12 @@ Status codes you'll meet:
 | `POST` | `/auth/resend-activation-email` | `{ email }`            | `204`                             |
 | `POST` | `/auth/activate`                | `{ token, password }`  | `200` user                        |
 | `POST` | `/auth/login`                   | `{ email, password }`  | `200` user + session cookie       |
-| `POST` | `/auth/logout`                  | —                      | `204` + cookie cleared (needs a valid session, otherwise `401`) |
+| `POST` | `/auth/logout`                  | —                      | `204` + `token` and `sessionId` cookies cleared (needs a valid session, otherwise `401`) |
 | `GET`  | `/auth/user`                    | —                      | `200` the logged-in user (`401` if nobody is) |
 | `POST` | `/auth/request-password-reset`  | `{ email }`            | `204` (also for an unknown email) |
 | `POST` | `/auth/reset-password`          | `{ token, password }`  | `200` user                        |
+
+Swagger also lists `/auth/demographic-profile` and `/auth/newsletter-preferences`. They're out of scope for this project, so you can ignore them.
 
 #### Registration and activation
 
@@ -220,26 +233,18 @@ This is an API you don't control, like most APIs you'll work with. These behavio
 - **The `title` filter matches `%` and `_` as wildcards.** A search for `50%` also matches `50 apples`. Decide whether your search box escapes them or lives with it.
 - **`pageSize` has no upper limit, and a `pageNumber` of `0` or less returns page 1.** Keep your own paging inside the range the user can actually reach.
 - **Emails are case-sensitive.** `Ana@example.com` and `ana@example.com` are two different accounts, for both registering and logging in.
+- **Resetting the password doesn't end existing sessions.** A browser that was logged in before the reset stays logged in.
 - **Logging out only lasts until the API restarts.** The API forgets which tokens it revoked when it restarts, so a token saved from before a logout works again until it expires. Your app should drop the user's state on logout rather than rely on the old cookie failing.
 
-## 5. Set up your AI workflow
-
-Before writing any app code, set up your AI tooling with the Infinum AI stack:
-
-1. Open [`prompts/ai-engineering-setup.md`](https://github.com/infinum/ai/blob/main/prompts/ai-engineering-setup.md) in the [`infinum/ai`](https://github.com/infinum/ai) repository. It's an internal repository, so ask your mentor for access if you can't open it.
-2. Run that prompt with your coding agent **at project level, inside your app directory** (e.g. `just-todo-it/`), not globally. The setup (including the local PR review skill) then lives in your app and is committed to your repository with it.
-3. Commit the resulting configuration.
-
-**Before opening every PR**, run the local PR review skill it installed (e.g. `pr-review-code-simplicity`) on your branch. Fix or answer what it finds, then tick the self-review box in the PR description.
-
-## 6. How review works: decisions over code
+## 5. How review works: decisions over code
 
 Your agent reviews the code. Your mentor reviews the decisions.
 
-- Line-level issues (naming, duplication, dead code, obvious bugs) should already be gone by the time a PR is opened. That's what the self-review in [step 5](#5-set-up-your-ai-workflow) is for.
+- Line-level issues (naming, duplication, dead code, obvious bugs) should already be gone by the time a PR is opened. That's what the [self-review](#21-set-up-your-ai-workflow) is for.
 - Every PR uses the [PR template](./.github/pull_request_template.md), which you'll find in `.github/pull_request_template.md`. It's part of this template repository, so GitHub fills it in automatically in your repository. It asks for what changed, the **decisions** you made (options considered and trade-offs), open questions, and confirmation that you ran the self-review.
 - Review is a conversation about those decisions. Expect to be asked why you chose one approach over another, and to explain the concepts listed in your framework's notes file using your own code.
 - The API's quirks described in [section 4](#4-api) are deliberate constraints of an API you don't control. Deciding how to work around them is part of the assignment, so they belong in the Decisions section.
+- **Your first PR** is the scaffold, the AI setup and the tooling (lint, typecheck, format and the pre-commit hook from [Requirements §6](./Requirements.md#6-code-quality-expectations)), with no features. After that, keep PRs to one feature area each (e.g. auth pages, the table, the form), opened against `main`.
 
 # License
 

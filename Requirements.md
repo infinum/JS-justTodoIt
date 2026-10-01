@@ -6,20 +6,20 @@ Each section lists behaviours and acceptance criteria. A requirement is met when
 
 > **Screenshots are reference, not spec.** They show one possible layout and the states the app has to handle. Use them as a visual target for content and states. Pixel-matching them is not a requirement. The Next.js set is embedded below. The Angular set is in [`.assets/app/angular/`](./.assets/app/angular/), together with a [demo video](./.assets/app/angular/demo.mp4).
 
-The API you build against is in `api/` and documented in the [README](./README.md#4-api). Treat it as a third-party API you don't control. Its constraints (replace-all updates, the total count in a response header, 1-indexed pages) are part of the problem you're solving.
+The API you build against is in `api/` and documented in the [README](./README.md#4-api). Treat it as a third-party API you don't control. Its [constraints](./README.md#44-constraints-to-design-around) (replace-all updates, the total count in a response header, 1-indexed pages) are part of the problem you're solving.
 
 ## 1. Auth flow & routes
 
 ### 1.1. Session
 
-- The session is the API's HTTP-only `token` cookie. The app never reads, stores or forwards the token itself, and never sends an `Authorization` header.
+- The session is the API's HTTP-only `token` cookie. The app never stores the token where JS can read it and never sends an `Authorization` header. Any server-side call that forwards the cookie also passes refreshed `Set-Cookie` headers back to the browser.
 - Every API request that needs the session sends the cookie (including cross-origin requests from the app's origin to the API).
 
 Acceptance criteria:
 
 - After login, a full page reload keeps the user logged in.
 - On a full page reload the app knows who the user is **before** it renders anything that depends on it. A logged-in user never sees a flash of the logged-out UI, such as the "Log in" link or the login page.
-- When the API answers any request with `401`, the app treats the user as logged out and sends them to the login page.
+- A `401` from any authenticated request (not login, and not the initial who-am-I check on public pages) logs the user out and sends them to `/login`.
 
 ### 1.2. Redirects
 
@@ -45,7 +45,7 @@ Acceptance criteria:
 
 - Registration asks only for an email. On success the user is told to check their email.
 - The activation and reset pages read the token from the URL. An expired or invalid token shows a clear error instead of a broken form.
-- Activation and reset both collect a new password. They have the same form structure.
+- Activation and reset both collect a new password, with the same fields and the same validation messages.
 - Each form shows the API's error responses (e.g. email already taken, wrong credentials, an expired activation or reset link) as a readable message, not a raw error.
 - After successful activation or password reset, the user ends up logged in or on the login page. Pick one and be consistent.
 - Locally the API doesn't send real emails. The activation and reset links are printed in the API server's terminal.
@@ -62,7 +62,7 @@ Acceptance criteria:
 
 ## 2. User menu
 
-A header is shared by the app's pages and shows the app title and a user menu.
+A header is shared by the app's main pages and shows the app title and a user menu.
 
 Acceptance criteria:
 
@@ -82,11 +82,11 @@ Acceptance criteria:
 - **Sorting:** the user can sort by name and by creation date, in both directions. Default sort is **creation date, descending**.
 - **Filtering:** the user can filter by name. Results update as the user types, with no submit button.
   - Requests are debounced. Typing a word makes one request after the user pauses, not one per keystroke.
-  - No unnecessary requests: the same query isn't sent again, and nothing is sent when the value hasn't actually changed.
+  - No unnecessary requests: changing the input and restoring it before the debounce fires sends nothing.
   - **No race conditions:** the table always shows the results for the latest input, even if an earlier, slower response arrives after a later one.
   - Changing the filter resets to the first page.
 - Sorting and filtering work together, with pagination on top of both.
-- **State is preserved:** page, page size, sort and filter survive:
+- **State is preserved:** page, sort and filter survive:
   - a full page reload, and
   - going to a Todo list's details and coming back (including via the browser back button).
 - The URL is the source of truth for this state. Copying the URL into a new tab shows the same table.
@@ -107,7 +107,7 @@ Acceptance criteria:
 
 ## 4. Todo list form (create & edit)
 
-A Todo list has a **name** and one or more **items**. Each item has a **name** and a **done** state.
+A Todo list has a **name** and one or more **items**. Each item has a **name** and a **done** state. The API calls a name `title`.
 
 Acceptance criteria:
 
@@ -122,7 +122,7 @@ Acceptance criteria:
 - **Edit:** the details page (`/<uuid>`) shows the same form, pre-filled with the list's current name and items. Saving updates the list.
   - The API replaces **all** of a list's items on every update. The app must send the complete set of items so that none are lost or duplicated.
   - Opening the details page of a list that doesn't exist, or isn't the user's, shows a not-found state.
-- **Create and edit share one form.** The fields, validation and item add/remove behaviour live in one place. Only the initial values and the submit action differ. How you compose it is up to you, and it's a good candidate for a PR decision.
+- **Create and edit use the same form:** the same fields, the same validation messages and the same item add/remove behaviour. Only the initial values and the submit action differ. How you share it between the two is up to you, and it's a good candidate for a PR decision.
 
 ![Create form, empty](./.assets/app/nextjs/todo-form-create-new-empty.png)
 
@@ -143,7 +143,7 @@ You choose the tools and the structure. The following behaviours must be covered
   - submits the expected payload in create mode and in edit mode
 - **Todo list table:**
   - shows the empty state
-  - shows a list of items
+  - shows the user's Todo lists
   - pagination moves between pages and shows the total count
   - sorting changes the order
   - filtering is debounced, and a slow earlier response doesn't overwrite a later one
@@ -157,6 +157,7 @@ Tests run with a single command and pass on a clean checkout.
 ## 6. Code-quality expectations
 
 - Linting and type-checking pass with no errors.
-- Both run automatically **before every commit**, so a commit with lint or type errors can't be made by accident. Formatting is automated and consistent.
+- Both run automatically **before every commit**, so a commit with lint or type errors can't be made by accident.
+- A formatter is configured, and a format check runs before every commit as well.
 - Tests pass before a PR is opened.
-- Every PR uses the repository's PR template: what changed, the decisions you made (with the options you considered and the trade-offs), open questions, and confirmation that you ran the self-review. See the [README](./README.md#5-set-up-your-ai-workflow).
+- Every PR uses the repository's PR template: what changed, the decisions you made (with the options you considered and the trade-offs), open questions, and confirmation that you ran the self-review. See the [README](./README.md#5-how-review-works-decisions-over-code).

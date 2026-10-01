@@ -27,7 +27,7 @@ The starter uses Next.js with the App Router. It doesn't include an auth library
 
 None of these are required. Use them, replace them or skip them, and record the choice and why in your PR.
 
-- **Auth:** [Better Auth](https://www.better-auth.com/docs) is the current recommendation for Next.js apps. Using **no auth library** is equally valid here: the API already owns the session through its HTTP-only cookie, so plain `fetch` calls plus redirect logic can be enough. Either way, you should be able to explain what the library does for you and what it doesn't.
+- **Auth:** this API already owns the session through its HTTP-only cookie, so plain `fetch` calls plus redirect logic can be enough, and **no auth library** is a good default. Libraries like [Better Auth](https://www.better-auth.com/docs) are common in Next.js apps, but they expect to own the session themselves, so adopting one here means deciding how it fits around the API's cookie. Either way, you should be able to explain what your choice does for you and what it doesn't.
 - **UI:** [Tailwind](https://tailwindcss.com/) and [shadcn/ui](https://ui.shadcn.com/) are what most of our React projects use.
 - **Forms:** [React Hook Form](https://react-hook-form.com/), including [`useFieldArray`](https://react-hook-form.com/docs/usefieldarray) for dynamic item lists and [`FormProvider`/`useFormContext`](https://react-hook-form.com/docs/formprovider) for sharing a form across components.
 - **Testing:** [Testing Library](https://testing-library.com/docs/react-testing-library/intro/) with your test runner of choice.
@@ -52,5 +52,5 @@ In review, expect to walk through these using your own code:
 - **Debouncing and race conditions.** How filtering avoids request spam, and how a stale response is prevented from winning.
 - **Replace-all updates.** How your edit form turns the user's changes into the full item list the API expects.
 - **Reading response headers.** Where the total count from `X-TOTAL-COUNT` enters your data flow.
-- **Form reuse.** How create and edit share fields and validation without duplicating them.
+- **Form reuse.** How create and edit (and activation and reset password) share fields and validation without duplicating them.
 - **Client/server boundaries.** Where `'use client'` sits in your tree and why it's there and not higher.

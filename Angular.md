@@ -16,7 +16,7 @@ Replace `xyz` with a component prefix you like. The other flags answer the quest
 
 - `--style=scss`: SCSS (see the suggestions below). Pick CSS or Tailwind instead if you prefer.
 - `--ssr=false`: the requirements don't need server-side rendering, and leaving it out keeps the auth flow in the browser. Turning it on is a valid decision, but then you have to handle the session cookie on the server too.
-- `--ai-config=none`: your AI setup comes from [README §5](./README.md#5-set-up-your-ai-workflow), so don't let Angular generate a separate one.
+- `--ai-config=none`: your AI setup comes from [README §2.1](./README.md#21-set-up-your-ai-workflow), so don't let Angular generate a separate one.
 - `--skip-git`: you're already inside a git repository.
 - `--skip-install`: you'll install after the next step.
 
