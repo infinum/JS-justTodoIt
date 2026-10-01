@@ -9,7 +9,7 @@ export const dataSourceOptions: DataSourceOptions = {
 	type: 'sqlite',
 	database: process.env.DB_PATH || 'database.sqlite',
 	synchronize: true,
-	logging: process.env.NODE_ENV !== 'test',
+	logging: false,
 	entities: [User, TodoList, Todo, DemographicProfile, NewsletterPreferences],
 	migrations: [],
 	subscribers: [],

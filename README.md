@@ -92,7 +92,7 @@ The server starts on `localhost:8080`. You can browse the endpoints and their sc
 `api/.env` configures the API (all variables are listed in [`api/README.md`](./api/README.md#environment-variables)). These matter for local development:
 
 - `FRONTEND_URL` (default in `.env.example`: `http://localhost:3000`) is the browser origin the API accepts requests from (together with any listed in `CORS_ALLOWED_ORIGINS`), and the base of the links in activation and password reset emails. If your app runs somewhere else (e.g. Angular's `http://localhost:4200`), change it and restart the API. It must match your app's origin exactly: no trailing slash, and `127.0.0.1` is not `localhost`.
-- `RESEND_API_KEY` is left unset, so every email the API would send is printed to the terminal where the API is running instead. It's printed in a wide table among the database query logs, so search the output for `activate-account?token=` or `reset-password?token=` to find the link.
+- `RESEND_API_KEY` is left unset, so every email the API would send is printed to the terminal where the API is running instead. Each email is printed as a wide table, and the link you need is the one containing `activate-account?token=` or `reset-password?token=`.
 - `HTTP_PORT` (default `8080`): change it if that port is taken, and point your app at the new port.
 
 The API uses SQLite. To clear the database and start from the beginning, stop the server, delete `api/database.sqlite` and start it again. **If you have a `database.sqlite` from an older version of this repository, delete it before starting the API**: the schema changed (Todo list titles became unique per user, not globally), and an old file may make the API fail.
