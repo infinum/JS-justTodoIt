@@ -64,10 +64,11 @@ After scaffolding, before any feature code, set up your AI tooling in two steps.
 **1. Required: install the PR review skill into your app.** From `just-todo-it/`:
 
 ```bash
-pnpm dlx skills@1.7.0 add infinum/ai --skill pr-review-code-simplicity -y
+pnpm add -D skills@1.7.0
+pnpm exec skills add infinum/ai --skill pr-review-code-simplicity -y
 ```
 
-This uses the [`skills`](https://github.com/vercel-labs/skills) CLI to install the [`pr-review-code-simplicity`](https://github.com/infinum/ai/tree/main/plugins/pr-review-code-simplicity) skill from [`infinum/ai`](https://github.com/infinum/ai) into your project. It writes `.agents/skills/` (read by Codex, Cursor and most other agents), a `.claude/skills/` symlink for Claude Code, and a `skills-lock.json` recording which version you installed. Commit all three, so your mentor can run the same review on your PRs.
+The [`skills`](https://github.com/vercel-labs/skills) CLI is installed as a dev dependency rather than run with `pnpm dlx`, so it goes through your lockfile and the `minimumReleaseAge` you set while scaffolding (the Handbook's Node security chapter bans `npx` and `pnpm dlx` for this reason). It then installs the [`pr-review-code-simplicity`](https://github.com/infinum/ai/tree/main/plugins/pr-review-code-simplicity) skill from [`infinum/ai`](https://github.com/infinum/ai) into your project. That writes `.agents/skills/` (read by Codex, Cursor and most other agents), a `.claude/skills/` symlink for Claude Code, and a `skills-lock.json` recording which version you installed. Commit all of it, so your mentor can run the same review on your PRs.
 
 **2. Recommended: set up the wider Infinum AI stack on your machine.** Run the [`prompts/ai-engineering-setup.md`](https://github.com/infinum/ai/blob/main/prompts/ai-engineering-setup.md) prompt with your coding agent. It installs globally, for every project you work on, so nothing from it goes into your repository.
 
