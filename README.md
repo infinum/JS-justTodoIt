@@ -9,13 +9,16 @@ This onboarding project will help you build fundamental knowledge of various par
 - Node.js 24.18.1
 - pnpm 11.18.0
 
-The versions are pinned exactly (`engineStrict`), so a slightly different Node or pnpm version makes `pnpm install` fail. The easiest way to get both is Mise, which reads the versions from `api/package.json`:
+The versions are pinned exactly (`engineStrict`), so a slightly different Node or pnpm version makes `pnpm install` fail. The easiest way to get both is Mise, which picks them up from the `mise.toml` and `package.json` files in this repository. Run this once in the repository root:
 
 ```bash
-cd api
-mise trust
+mise trust --all
 mise install
 ```
+
+`--all` also trusts `api/mise.toml`. Without it, mise errors (or waits on a trust prompt) as soon as you run a command in a directory whose config it hasn't been told to trust.
+
+pnpm 11 enforces a minimum release age for packages. If any `pnpm` command fails with `Invalid time value`, your global pnpm config sets `minimumReleaseAge` as a duration such as `3d`. pnpm expects minutes, so change it to a number (e.g. `10080` for 7 days).
 
 You can read more about Mise [here](https://mise.jdx.dev/) in the docs, or [here](https://infinum.com/handbook/frontend/node/security/securing-your-development-tools) in the Infinum's Node security guide.
 
@@ -31,16 +34,10 @@ This repository is a GitHub template. Your mentor creates a new repository from 
 
 ## 2. Project structure
 
-This repository contains some README files and `api/` directory. The frontend app you will be developing should be placed in a sibling directory, next to `/api` directory. To get started:
+This repository contains some README files and `api/` directory. The frontend app you will be developing should be placed in a sibling directory, next to `/api` directory, named `just-todo-it`. To get started, follow the Scaffold step in your framework's notes. It covers the scaffold command and the pnpm setup the app needs:
 
-- React
-  ```bash
-  pnpm create next-app just-todo-it -e https://github.com/infinum/JS-React-Example/tree/onboarding-starter-v2
-  ```
-- Angular
-  ```bash
-  ng new just-todo-it
-  ```
+- Next.js: [Nextjs.md §1](./Nextjs.md#1-scaffold)
+- Angular: [Angular.md §1](./Angular.md#1-scaffold)
 
 Your final structure might look something like this:
 

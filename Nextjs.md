@@ -10,6 +10,17 @@ From the repository root, next to `api/`:
 pnpm create next-app just-todo-it -e https://github.com/infinum/JS-React-Example/tree/onboarding-starter-v2
 ```
 
+The install at the end of that command stops with `ERR_PNPM_IGNORED_BUILDS` for `fsevents`. pnpm 11 doesn't run a dependency's build script until you approve it, and the starter's `just-todo-it/pnpm-workspace.yaml` leaves `fsevents` as `set this to true or false`. Finish the setup inside the app:
+
+```bash
+cd just-todo-it
+# In pnpm-workspace.yaml: set `fsevents: false`, and add `minimumReleaseAge: 10080` (7 days, the same as api/)
+pnpm install
+cp .env.example .env.local
+```
+
+In `.env.local`, set `NEXT_PUBLIC_API_ENDPOINT` to your API's URL (`http://localhost:8080/` unless you changed `HTTP_PORT`).
+
 The starter uses Next.js with the App Router. It doesn't include an auth library, so choosing one (or none) is up to you.
 
 ## 2. Suggested libraries (optional)

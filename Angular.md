@@ -9,10 +9,28 @@ Reference screenshots for this track are in [`.assets/app/angular/`](./.assets/a
 From the repository root, next to `api/`:
 
 ```bash
-ng new just-todo-it
+pnpm dlx @angular/cli@latest new just-todo-it --style=scss --ssr=false --prefix=xyz --ai-config=none --package-manager=pnpm --skip-git --skip-install
 ```
 
-Pick a component prefix you like.
+Replace `xyz` with a component prefix you like. The other flags answer the questions `ng new` would otherwise ask:
+
+- `--style=scss`: SCSS (see the suggestions below). Pick CSS or Tailwind instead if you prefer.
+- `--ssr=false`: the requirements don't need server-side rendering, and leaving it out keeps the auth flow in the browser. Turning it on is a valid decision, but then you have to handle the session cookie on the server too.
+- `--ai-config=none`: your AI setup comes from [README §5](./README.md#5-set-up-your-ai-workflow), so don't let Angular generate a separate one.
+- `--skip-git`: you're already inside a git repository.
+- `--skip-install`: you'll install after the next step.
+
+Then install inside the app:
+
+```bash
+cd just-todo-it
+echo 'minimumReleaseAge: 10080 # 7 days, the same as api/' > pnpm-workspace.yaml
+pnpm install
+```
+
+The install stops with `ERR_PNPM_IGNORED_BUILDS`, because pnpm 11 doesn't run a dependency's build script (here `esbuild`, `lmdb`, `@parcel/watcher` and `msgpackr-extract`) until you approve it. Run `pnpm approve-builds`, or set each one to `true` in `pnpm-workspace.yaml`, then run `pnpm install` again.
+
+There's no global `ng`: inside the app, run the CLI as `pnpm ng …` (e.g. `pnpm ng serve`).
 
 ## 2. Suggestions (optional)
 
@@ -20,7 +38,7 @@ None of these are required. Use them, replace them or skip them, and record the 
 
 - **OnPush change detection** as the default for generated components. Run this right after generating the project:
   ```bash
-  ng config schematics.@schematics/angular.component.changeDetection OnPush
+  pnpm ng config schematics.@schematics/angular.component.changeDetection OnPush
   ```
 - **UI:** [Angular Material](https://material.angular.dev/guide/getting-started), with whichever theme you prefer.
 - **Styles:** SCSS, with shared partials in e.g. `src/app/styles` and [style preprocessor options](https://angular.dev/reference/configs/workspace-config#style-preprocessor-options) to keep import paths short.
