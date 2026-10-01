@@ -61,7 +61,7 @@ As for the frontend application file and folder organization, please refer to:
 
 After scaffolding, before any feature code, set up your AI tooling with the Infinum AI stack:
 
-1. Open [`prompts/ai-engineering-setup.md`](https://github.com/infinum/ai/blob/main/prompts/ai-engineering-setup.md) in the [`infinum/ai`](https://github.com/infinum/ai) repository. It's an internal repository, so ask your mentor for access before your first day.
+1. Open [`prompts/ai-engineering-setup.md`](https://github.com/infinum/ai/blob/main/prompts/ai-engineering-setup.md) in the [`infinum/ai`](https://github.com/infinum/ai) repository.
 2. Run that prompt with your coding agent **at project level, inside your app directory** (`just-todo-it/`), not globally. The setup (including the local PR review skill) then lives in your app and is committed to your repository with it.
 3. Commit the resulting configuration.
 
