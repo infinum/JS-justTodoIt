@@ -28,18 +28,16 @@ echo 'minimumReleaseAge: 10080 # 7 days, the same as api/' > pnpm-workspace.yaml
 pnpm install
 ```
 
-The install stops with `ERR_PNPM_IGNORED_BUILDS`, because pnpm 11 doesn't run a dependency's build script (here `esbuild`, `lmdb`, `@parcel/watcher` and `msgpackr-extract`) until you approve it. Run `pnpm approve-builds`, or set each one to `true` in `pnpm-workspace.yaml`, then run `pnpm install` again.
+The install stops with `ERR_PNPM_IGNORED_BUILDS`, because pnpm 11 doesn't run a dependency's build script (here `esbuild`, `lmdb`, `@parcel/watcher` and `msgpackr-extract`) until you approve it. pnpm has already added them to `pnpm-workspace.yaml` under `allowBuilds:` with the placeholder `set this to true or false`. Set each one to `true` (or run `pnpm approve-builds`, which is interactive), then run `pnpm install` again.
 
 There's no global `ng`: inside the app, run the CLI as `pnpm ng …` (e.g. `pnpm ng serve`).
+
+A new project has no environment files, so pick how the app learns the API's URL: `pnpm ng generate environments`, or a [dev-server proxy](https://angular.dev/tools/cli/serve#proxying-to-a-backend-server) (which also avoids CORS). Either way, remember the API's `FRONTEND_URL` must be `http://localhost:4200` (README §4).
 
 ## 2. Suggestions (optional)
 
 None of these are required. Use them, replace them or skip them, and record the choice and why in your PR.
 
-- **OnPush change detection** as the default for generated components. Run this right after generating the project:
-  ```bash
-  pnpm ng config schematics.@schematics/angular.component.changeDetection OnPush
-  ```
 - **UI:** [Angular Material](https://material.angular.dev/guide/getting-started), with whichever theme you prefer.
 - **Styles:** SCSS, with shared partials in e.g. `src/app/styles` and [style preprocessor options](https://angular.dev/reference/configs/workspace-config#style-preprocessor-options) to keep import paths short.
 - **Tokens:** [jwt-decode](https://github.com/auth0/jwt-decode) if you want to read data (e.g. the email) from the activation or reset token.
@@ -55,7 +53,7 @@ None of these are required. Use them, replace them or skip them, and record the 
 
 In review, expect to walk through these using your own code:
 
-- **OnPush change detection.** What triggers a re-render under OnPush, and how your components get new data without manual subscriptions (e.g. the async pipe or signals).
+- **OnPush change detection** (the default for new components since Angular 22). What triggers a re-render under OnPush, and how your components get new data without manual subscriptions (e.g. the async pipe or signals).
 - **The [single observable pattern](https://infinum.com/handbook/books/frontend/angular/angular-guidelines-and-best-practices/formatting-naming-and-best-practices#the-single-observable-pattern).** How you avoid nested `ng-container` / async pipe chains in templates.
 - **App initialisation.** How the current user is fetched from `GET /auth/user` before the first route renders (e.g. an app initializer), and how the auth state is then shared.
 - **Guards and redirects.** How logged-in and logged-out redirects are enforced, including on a full page reload.

@@ -14,6 +14,7 @@ The install at the end of that command stops with `ERR_PNPM_IGNORED_BUILDS` for 
 
 ```bash
 cd just-todo-it
+mise trust  # the starter ships its own mise.toml, created after you ran `mise trust --all`
 # In pnpm-workspace.yaml: set `fsevents: false`, and add `minimumReleaseAge: 10080` (7 days, the same as api/)
 pnpm install
 cp .env.example .env.local
