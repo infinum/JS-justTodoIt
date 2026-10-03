@@ -9,11 +9,12 @@ Reference screenshots for this track are in [`.assets/app/angular/`](./.assets/a
 From the repository root, next to `api/`:
 
 ```bash
-pnpm dlx @angular/cli@latest new just-todo-it --style=scss --ssr=false --prefix=xyz --ai-config=none --package-manager=pnpm --skip-git --skip-install
+pnpm --config.minimum-release-age=10080 dlx @angular/cli@^22 new just-todo-it --style=scss --ssr=false --prefix=xyz --ai-config=none --package-manager=pnpm --skip-git --skip-install
 ```
 
 Replace `xyz` with a component prefix you like. The other flags answer the questions `ng new` would otherwise ask:
 
+- `--config.minimum-release-age=10080`: applies the same 7-day rule as `api/` to the CLI itself, so it picks a release that's at least a week old. Without it, an Angular release from the last few days would make the install below fail, because the new project pins Angular to the CLI's version.
 - `--style=scss`: SCSS (see the suggestions below). Pick CSS or Tailwind instead if you prefer.
 - `--ssr=false`: the requirements don't need server-side rendering, and leaving it out keeps the auth flow in the browser. Turning it on is a valid decision, but then you have to handle the session cookie on the server too.
 - `--ai-config=none`: your AI setup comes from [README §2.1](./README.md#21-set-up-your-ai-workflow), so don't let Angular generate a separate one.

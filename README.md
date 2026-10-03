@@ -9,7 +9,7 @@ This onboarding project gets you building a real app against an API you don't co
 - Node.js 24.18.1
 - pnpm 11.18.0
 
-The versions are pinned exactly (`engineStrict`), so a slightly different Node or pnpm version makes `pnpm install` fail. The easiest way to get both is Mise, which picks them up from the `mise.toml` and `package.json` files in this repository. Run this once in the repository root:
+`api/` pins these versions exactly (`engineStrict`), so a slightly different Node or pnpm version makes `pnpm install` fail there. The easiest way to get both is Mise, which picks them up from the `mise.toml` and `package.json` files in this repository. Run this once in the repository root:
 
 ```bash
 mise trust --all
@@ -132,7 +132,6 @@ Status codes you'll meet:
 | `403`  | Invalid or expired activation token                                                               | `activation_token_expired_or_invalid`                                                                                              |
 | `404`  | `GET`/`PATCH` of an unknown Todo list, or one that belongs to another user (`DELETE` returns `204`) | `not_found`                                                                                                                        |
 | `409`  | Email already registered, you already have a Todo list with that title, or two items in one list share a title | `user_with_same_email_exists`, `todo_list_with_same_title_exists`, `resource_conflict`                                  |
-| `412`  | Rarely seen: a never-activated account has no password, so its login gets `401` instead        | `user_not_activated`                                                         |
 | `422`  | Resend activation email for an account that is already active                                     | `user_already_activated`                                                                                                           |
 
 ### 4.2. Authentication
@@ -246,9 +245,9 @@ This is an API you don't control, like most APIs you'll work with. These behavio
 Your agent reviews the code. Your mentor reviews the decisions.
 
 - Line-level issues (naming, duplication, dead code, obvious bugs) should already be gone by the time a PR is opened. That's what the [self-review](#21-set-up-your-ai-workflow) is for.
-- Every PR uses the [PR template](./.github/pull_request_template.md), which you'll find in `.github/pull_request_template.md`. It's part of this template repository, so GitHub fills it in automatically in your repository. It asks for what changed, the **decisions** you made (options considered and trade-offs), open questions, and confirmation that you ran the self-review.
+- Every PR uses the [PR template](./.github/pull_request_template.md). It's part of this template repository, so GitHub fills it in automatically in your repository. It asks for what changed, the **decisions** you made (options considered and trade-offs), open questions, and confirmation that you ran the self-review.
 - Review is a conversation about those decisions. Expect to be asked why you chose one approach over another, and to explain the concepts listed in your framework's notes file using your own code.
-- The API's quirks described in [section 4](#4-api) are deliberate constraints of an API you don't control. Deciding how to work around them is part of the assignment, so they belong in the Decisions section.
+- How you worked around the [API's constraints](#44-constraints-to-design-around) belongs in the Decisions section too.
 - **Your first PR** is the scaffold, the AI setup and the tooling (lint, typecheck, format and the pre-commit hook from [Requirements §6](./Requirements.md#6-code-quality-expectations)), with no features. After that, keep PRs to one feature area each (e.g. auth pages, the table, the form), opened against `main`.
 
 # License
