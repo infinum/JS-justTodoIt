@@ -1,5 +1,5 @@
 import '@tsed/ajv';
-import { AfterRoutesInit, BeforeRoutesInit, PlatformAcceptMimesMiddleware, PlatformApplication } from '@tsed/common';
+import { BeforeRoutesInit, PlatformAcceptMimesMiddleware, PlatformApplication } from '@tsed/common';
 import { Configuration, Inject } from '@tsed/di';
 import '@tsed/platform-express'; // /!\ keep this import
 import '@tsed/swagger'; // import swagger Ts.ED module
@@ -14,7 +14,7 @@ import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
 import { CORS_ALLOWED_ORIGINS, HTTP_PORT, ROOT_DIR } from './constants';
 import { CustomHeader } from './enums/custom-headers.enum';
-import { ErrorHandlingMiddleware } from './middlewares/error-handling.middleware';
+import './filters/error.filter';
 import { AuthController } from './controllers/auth/auth.controller';
 import { TodosController } from './controllers/todos/todos.controller';
 import './services/connections/DefaultConnection'; // Import database connection
@@ -36,7 +36,7 @@ const rootDir = dirname(fileURLToPath(import.meta.url));
 		},
 	],
 })
-export class Server implements BeforeRoutesInit, AfterRoutesInit {
+export class Server implements BeforeRoutesInit {
 	constructor(@Inject() private app: PlatformApplication) {}
 
 	$beforeRoutesInit(): void {
@@ -68,9 +68,5 @@ export class Server implements BeforeRoutesInit, AfterRoutesInit {
 			);
 
 		return null;
-	}
-
-	$afterRoutesInit(): void {
-		this.app.use(ErrorHandlingMiddleware);
 	}
 }
