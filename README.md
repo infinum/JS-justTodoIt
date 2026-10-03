@@ -28,9 +28,7 @@ You will be developing a simple to-do list application. The features are simple,
 
 Just Todo It is a practical application of knowledge, without too much hand-holding. There is a big focus on authentication handling because that is a part of almost every application but is rarely covered in various framework tutorial/courses, so it is good to learn some best practices early-on.
 
-The requirements describe **what** the app must do, not how. You'll almost certainly build it with an AI agent, and that's expected. The interesting part is the decisions you make along the way, and that's what review focuses on (see [How review works](#5-how-review-works-decisions-over-code)).
-
-This repository is a GitHub template. Your mentor creates a new repository from it for you, and you open your PRs there.
+The [requirements](./Requirements.md) describe **what** the app must do, not how. You'll almost certainly build it with an AI agent, and that's expected. The interesting part is the decisions you make along the way, and that's what review focuses on (see [How review works](#5-how-review-works-decisions-over-code)).
 
 ## 2. Project structure
 
@@ -52,10 +50,9 @@ Your final structure might look something like this:
 └── README.md
 ```
 
-As for the frontend application file and folder organization, please refer to:
+`api/` and `just-todo-it/` are two separate projects, each with its own `package.json` and lockfile. The repository root is not a workspace, so install and run each one from its own directory.
 
-- Next.js - [Project structure](https://infinum.com/handbook/frontend/react/project-structure) Handbook chapter
-- Angular - [File and module organization and naming](https://infinum.com/handbook/books/frontend/angular/angular-guidelines-and-best-practices/file-and-module-organization-and-naming) Handbook chapter
+On the Angular track, organize the app's files as described in the Handbook's [File and module organization and naming](https://infinum.com/handbook/books/frontend/angular/angular-guidelines-and-best-practices/file-and-module-organization-and-naming) chapter.
 
 ### 2.1. Set up your AI workflow
 
@@ -245,7 +242,7 @@ This is an API you don't control, like most APIs you'll work with. These behavio
 Your agent reviews the code. Your mentor reviews the decisions.
 
 - Line-level issues (naming, duplication, dead code, obvious bugs) should already be gone by the time a PR is opened. That's what the [self-review](#21-set-up-your-ai-workflow) is for.
-- Every PR uses the [PR template](./.github/pull_request_template.md). It's part of this template repository, so GitHub fills it in automatically in your repository. It asks for what changed, the **decisions** you made (options considered and trade-offs), open questions, and confirmation that you ran the self-review.
+- Every PR uses the [PR template](./.github/pull_request_template.md). GitHub fills it in automatically when you open a PR. It asks for what changed, the **decisions** you made (options considered and trade-offs), open questions, and confirmation that you ran the self-review.
 - Review is a conversation about those decisions. Expect to be asked why you chose one approach over another, and to explain the concepts listed in your framework's notes file using your own code.
 - How you worked around the [API's constraints](#44-constraints-to-design-around) belongs in the Decisions section too.
 - **Your first PR** is the scaffold, the AI setup and the tooling (lint, typecheck, format and the pre-commit hook from [Requirements §6](./Requirements.md#6-code-quality-expectations)), with no features. After that, keep PRs to one feature area each (e.g. auth pages, the table, the form), opened against `main`.
