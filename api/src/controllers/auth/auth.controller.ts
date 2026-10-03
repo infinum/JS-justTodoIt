@@ -11,7 +11,6 @@ import {
 	Conflict,
 	Forbidden,
 	NotFound,
-	PreconditionFailed,
 	Unauthorized,
 	UnprocessableEntity,
 } from '@tsed/exceptions';
@@ -132,7 +131,6 @@ export class AuthController {
 	@Summary('Login')
 	@Returns(200, User)
 	@(Returns(Unauthorized.STATUS).Description('Incorrect email or password'))
-	@(Returns(PreconditionFailed.STATUS).Description('Correct credentials, but the user has not been activated yet'))
 	async login(@BodyParams() { email, password }: LoginData, @Res() res: Res): Promise<User> {
 		const user = await this.userService.fetch({
 			email,
@@ -143,16 +141,11 @@ export class AuthController {
 			throw new Unauthorized(ResponseErrorCode.INCORRECT_EMAIL_OR_PASSWORD);
 		}
 
-		// Users without a password (not yet activated) can never match
+		// Accounts are only activated by setting a password, so unactivated users can never match
 		const passwordOk = Boolean(user.passwordHash) && (await this.userService.compareHash(password, user.passwordHash));
 
 		if (!passwordOk) {
 			throw new Unauthorized(ResponseErrorCode.INCORRECT_EMAIL_OR_PASSWORD);
-		}
-
-		// Checked after the password so the response doesn't reveal whether an account exists
-		if (!user.isActivated) {
-			throw new PreconditionFailed(ResponseErrorCode.USER_NOT_ACTIVATED);
 		}
 
 		const token = await this.authService.createToken(user);
@@ -160,7 +153,6 @@ export class AuthController {
 
 		res.user = user;
 
-		// Only after the isActivated check, which reads passwordHash
 		return sanitizeUser(user);
 	}
 
@@ -171,7 +163,7 @@ export class AuthController {
 	logout(@Req() req: Req, @Res() res: Res): void {
 		this.authService.revokeToken(req.token, req.tokenData);
 		clearSessionCookie(res);
-		res.clearCookie('sessionId').sendStatus(204);
+		res.sendStatus(204);
 	}
 
 	@Post('/activate')

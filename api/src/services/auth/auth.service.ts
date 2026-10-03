@@ -68,6 +68,7 @@ export class AuthService {
 			verify(token, JWT_SECRET, (err: Error | null, decoded?: ITokenData) => {
 				if (err || !decoded || decoded.purpose !== purpose) {
 					resolve(false);
+					return;
 				}
 
 				resolve(decoded);
