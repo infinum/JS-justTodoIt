@@ -8,7 +8,7 @@ From the repository root, next to `api/`:
 
 ```bash
 pnpm --config.minimum-release-age=10080 create next-app@^16 just-todo-it --skip-install \
-  -e https://github.com/infinum/JS-React-Example/tree/onboarding-starter-v2
+  -e https://github.com/infinum/JS-React-Example/tree/onboarding-starter-v3
 ```
 
 This copies our Next.js starter into `just-todo-it/`. `--config.minimum-release-age=10080` applies the same 7-day rule as `api/` to the scaffolding tool itself, so it picks a release that's at least a week old. `--skip-install` holds off installing until you're inside the app, where the starter's own `pnpm-workspace.yaml` applies that rule to the app's dependencies too.
