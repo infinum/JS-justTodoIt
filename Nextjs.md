@@ -7,35 +7,41 @@ What the app must do is described in [Requirements.md](./Requirements.md). This 
 From the repository root, next to `api/`:
 
 ```bash
-pnpm --config.minimum-release-age=10080 create next-app@^16 just-todo-it --yes --skip-install
+pnpm --config.minimum-release-age=10080 create next-app@^16 just-todo-it --skip-install \
+  -e https://github.com/infinum/JS-React-Example/tree/onboarding-starter-v2
 ```
 
-`--config.minimum-release-age=10080` applies the same 7-day rule as `api/` to the scaffolding tool itself, so it picks a release that's at least a week old. Without it, a framework release from the last few days would make the install below fail, because the scaffold pins the framework to its own version.
-
-`--yes` takes the defaults: TypeScript, ESLint, Tailwind, the App Router and the `@/*` import alias. Drop it if you want to choose for yourself. `--skip-install` holds off installing until the release-age rule is in place.
+This copies our Next.js starter into `just-todo-it/`. `--config.minimum-release-age=10080` applies the same 7-day rule as `api/` to the scaffolding tool itself, so it picks a release that's at least a week old. `--skip-install` holds off installing until you're inside the app, where the starter's own `pnpm-workspace.yaml` applies that rule to the app's dependencies too.
 
 Then install inside the app:
 
 ```bash
 cd just-todo-it
-echo 'minimumReleaseAge: 10080 # 7 days, the same as api/' >> pnpm-workspace.yaml
+mise trust  # the starter has its own mise.toml, which `mise trust --all` didn't cover
 pnpm install
+cp .env.example .env.local
 ```
 
-Then, still inside `just-todo-it/`:
+`.env.local` holds your API's URL as `NEXT_PUBLIC_API_ENDPOINT` (change the port if you changed `HTTP_PORT`). Only variables prefixed with `NEXT_PUBLIC_` reach the browser.
 
-- Create `.env.local` with your API's URL, e.g. `NEXT_PUBLIC_API_ENDPOINT=http://localhost:8080/` (change the port if you changed `HTTP_PORT`). The name is up to you, but only variables prefixed with `NEXT_PUBLIC_` reach the browser.
+The starter comes with:
 
-This is a plain Next.js app with no auth library, test runner or pre-commit hook. Choosing and adding those is part of your first PR (see [README §5](./README.md#5-how-review-works-decisions-over-code) and [Requirements §6](./Requirements.md#6-code-quality-expectations)).
+- Next.js 16 with the App Router and TypeScript
+- Tailwind and a few [shadcn/ui](https://ui.shadcn.com/) components in `src/components/ui`, plus the company fonts
+- ESLint, Prettier and `pnpm typecheck`
+- Jest with Testing Library and jest-axe
+- a pre-commit hook (husky and lint-staged) that lints and formats staged files
+
+It doesn't include an auth library or a data-fetching layer. Choosing those is up to you. Check the starter against [Requirements §6](./Requirements.md#6-code-quality-expectations) as part of your first PR (see [README §5](./README.md#5-how-review-works-decisions-over-code)). For example, the hook doesn't type-check yet.
 
 ## 2. Suggested libraries (optional)
 
 None of these are required. Use them, replace them or skip them, and record the choice and why in your PR.
 
 - **Auth:** this API already owns the session through its HTTP-only cookie, so plain `fetch` calls plus redirect logic can be enough, and **no auth library** is a good default. Libraries like [Better Auth](https://www.better-auth.com/docs) are common in Next.js apps, but they expect to own the session themselves, so adopting one here means deciding how it fits around the API's cookie. Either way, you should be able to explain what your choice does for you and what it doesn't.
-- **UI:** [Tailwind](https://tailwindcss.com/) (already in the default scaffold) and [shadcn/ui](https://ui.shadcn.com/) are what most of our React projects use.
+- **UI:** the starter uses [Tailwind](https://tailwindcss.com/) and [shadcn/ui](https://ui.shadcn.com/), like most of our React projects. Add more components with `pnpm dlx shadcn@latest add <component>`.
 - **Forms:** [React Hook Form](https://react-hook-form.com/), including [`useFieldArray`](https://react-hook-form.com/docs/usefieldarray) for dynamic item lists and [`FormProvider`/`useFormContext`](https://react-hook-form.com/docs/formprovider) for sharing a form across components.
-- **Testing:** [Testing Library](https://testing-library.com/docs/react-testing-library/intro/) with your test runner of choice.
+- **Testing:** the starter sets up Jest with [Testing Library](https://testing-library.com/docs/react-testing-library/intro/). Add end-to-end tests if you want them.
 
 ## 3. Suggested reading (optional)
 
