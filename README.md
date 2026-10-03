@@ -148,8 +148,6 @@ Status codes you'll meet:
 | `POST` | `/auth/request-password-reset`  | `{ email }`            | `204` (also for an unknown email) |
 | `POST` | `/auth/reset-password`          | `{ token, password }`  | `200` user                        |
 
-Swagger also lists `/auth/demographic-profile` and `/auth/newsletter-preferences`. They're out of scope for this project, so you can ignore them.
-
 #### Registration and activation
 
 If you register with only an email, the API sends an activation email (printed to the API's terminal). It contains a link to **your frontend app** with the activation token in the query string:
