@@ -7,14 +7,23 @@ What the app must do is described in [Requirements.md](./Requirements.md). This 
 From the repository root, next to `api/`:
 
 ```bash
-pnpm create next-app just-todo-it --yes
+pnpm --config.minimum-release-age=10080 create next-app@^16 just-todo-it --yes --skip-install
 ```
 
-`--yes` takes the defaults: TypeScript, ESLint, Tailwind, the App Router and the `@/*` import alias. Drop it if you want to choose for yourself.
+`--config.minimum-release-age=10080` applies the same 7-day rule as `api/` to the scaffolding tool itself, so it picks a release that's at least a week old. Without it, a framework release from the last few days would make the install below fail, because the scaffold pins the framework to its own version.
 
-Then, inside `just-todo-it/`:
+`--yes` takes the defaults: TypeScript, ESLint, Tailwind, the App Router and the `@/*` import alias. Drop it if you want to choose for yourself. `--skip-install` holds off installing until the release-age rule is in place.
 
-- In `pnpm-workspace.yaml`, add `minimumReleaseAge: 10080` (7 days, the same as `api/`).
+Then install inside the app:
+
+```bash
+cd just-todo-it
+echo 'minimumReleaseAge: 10080 # 7 days, the same as api/' >> pnpm-workspace.yaml
+pnpm install
+```
+
+Then, still inside `just-todo-it/`:
+
 - Create `.env.local` with your API's URL, e.g. `NEXT_PUBLIC_API_ENDPOINT=http://localhost:8080/` (change the port if you changed `HTTP_PORT`). The name is up to you, but only variables prefixed with `NEXT_PUBLIC_` reach the browser.
 
 This is a plain Next.js app with no auth library, test runner or pre-commit hook. Choosing and adding those is part of your first PR (see [README §5](./README.md#5-how-review-works-decisions-over-code) and [Requirements §6](./Requirements.md#6-code-quality-expectations)).
