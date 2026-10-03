@@ -1,6 +1,5 @@
 export enum ResponseErrorCode {
 	INCORRECT_EMAIL_OR_PASSWORD = 'incorrect_email_or_password',
-	USER_NOT_ACTIVATED = 'user_not_activated',
 	USER_ALREADY_ACTIVATED = 'user_already_activated',
 	USER_EXISTS = 'user_with_same_email_exists',
 	USER_DOES_NOT_EXISTS = 'user_does_not_exists',
@@ -11,4 +10,14 @@ export enum ResponseErrorCode {
 	ENTITY_ACCESS_FORBIDDEN = 'entity_access_forbidden',
 	ERROR_SENDING_EMAIL = 'error_sending_email',
 	PASSWORD_RESET_REQUEST_ERROR = 'password_reset_request_error',
+	TODO_LIST_TITLE_EXISTS = 'todo_list_with_same_title_exists',
+	TODO_ITEM_NOT_IN_LIST = 'todo_item_not_in_list',
+	RESOURCE_CONFLICT = 'resource_conflict',
+	VALIDATION_ERROR = 'validation_error',
+	INVALID_RELATION = 'invalid_relation',
+	BAD_REQUEST = 'bad_request',
+	UNAUTHORIZED = 'unauthorized',
+	FORBIDDEN = 'forbidden',
+	NOT_FOUND = 'not_found',
+	INTERNAL_SERVER_ERROR = 'internal_server_error',
 }

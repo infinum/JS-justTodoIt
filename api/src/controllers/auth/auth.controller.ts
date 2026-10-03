@@ -1,12 +1,19 @@
 import { BodyParams, Controller, Get, Post, Req, Res, QueryParams } from '@tsed/common';
 import { Required, Email, Property, Enum, Returns, Summary, Description } from '@tsed/schema';
-import { COOKIE_HTTP_ONLY, COOKIE_SECURE } from '../../constants';
 import { Auth } from '../../decorators/auth.decorator';
 import { User } from '../../entities/user';
 import { ResponseErrorCode } from '../../enums/response-error-code.enum';
+import { clearSessionCookie, sanitizeUser, setSessionCookie } from '../../helpers';
 import { AuthService } from '../../services/auth/auth.service';
 import { UserService } from '../../services/user/user.service';
-import { BadRequest, Forbidden, NotFound, PreconditionFailed, UnprocessableEntity } from '@tsed/exceptions';
+import {
+	BadRequest,
+	Conflict,
+	Forbidden,
+	NotFound,
+	Unauthorized,
+	UnprocessableEntity,
+} from '@tsed/exceptions';
 import { DemographicProfile } from '../../entities/demographic-profile';
 import { Gender } from '../../enums/gender.enum';
 import { NewsletterPreferences } from '../../entities/newsletter-preferences';
@@ -77,16 +84,17 @@ export class AuthController {
 	@Post('/register')
 	@Summary('Registration')
 	@Returns(200, User)
+	@(Returns(Conflict.STATUS).Description('User with given email already exists'))
 	async register(@BodyParams() { email, password }: RegisterData): Promise<User> {
 		const existing = await this.userService.fetch({ email });
 
 		if (existing) {
-			throw new BadRequest('USER_EXISTS', { email });
+			throw new Conflict(ResponseErrorCode.USER_EXISTS);
 		}
 
 		const user = await this.userService.create({ email, password });
 
-		return user;
+		return sanitizeUser(user);
 	}
 
 	@Post('/resend-activation-email')
@@ -122,6 +130,7 @@ export class AuthController {
 	@Post('/login')
 	@Summary('Login')
 	@Returns(200, User)
+	@(Returns(Unauthorized.STATUS).Description('Incorrect email or password'))
 	async login(@BodyParams() { email, password }: LoginData, @Res() res: Res): Promise<User> {
 		const user = await this.userService.fetch({
 			email,
@@ -129,37 +138,32 @@ export class AuthController {
 		});
 
 		if (!user) {
-			throw new BadRequest(ResponseErrorCode.INCORRECT_EMAIL_OR_PASSWORD);
+			throw new Unauthorized(ResponseErrorCode.INCORRECT_EMAIL_OR_PASSWORD);
 		}
 
-		if (!user.isActivated) {
-			throw new PreconditionFailed(ResponseErrorCode.USER_NOT_ACTIVATED);
-		}
-
-		const passwordOk = await this.userService.compareHash(password, user.passwordHash);
-		delete user.passwordHash;
+		// Accounts are only activated by setting a password, so unactivated users can never match
+		const passwordOk = Boolean(user.passwordHash) && (await this.userService.compareHash(password, user.passwordHash));
 
 		if (!passwordOk) {
-			throw new BadRequest(ResponseErrorCode.INCORRECT_EMAIL_OR_PASSWORD);
+			throw new Unauthorized(ResponseErrorCode.INCORRECT_EMAIL_OR_PASSWORD);
 		}
 
 		const token = await this.authService.createToken(user);
-		res.cookie('token', token, {
-			httpOnly: COOKIE_HTTP_ONLY,
-			secure: COOKIE_SECURE,
-		});
+		setSessionCookie(res, token);
 
 		res.user = user;
 
-		return user;
+		return sanitizeUser(user);
 	}
 
 	@Post('/logout')
 	@Summary('Logout')
 	@Auth({ passUser: true, passToken: true })
+	@Returns(204)
 	logout(@Req() req: Req, @Res() res: Res): void {
 		this.authService.revokeToken(req.token, req.tokenData);
-		res.clearCookie('token').clearCookie('sessionId').status(204);
+		clearSessionCookie(res);
+		res.sendStatus(204);
 	}
 
 	@Post('/activate')
@@ -177,11 +181,12 @@ export class AuthController {
 
 		res.user = activationResult;
 
-		return activationResult;
+		return sanitizeUser(activationResult);
 	}
 
 	@Post('/request-password-reset')
 	@Summary('Request password reset')
+	@Returns(204)
 	async requestPasswordReset(@BodyParams() { email }: RequestPasswordResetData, @Res() res: Res): Promise<void> {
 		const user = await this.userService.fetch({ email, getPasswordHash: true });
 
@@ -193,7 +198,7 @@ export class AuthController {
 		await this.userService.requestPasswordReset(user);
 		res.user = user;
 
-		res.status(204);
+		res.sendStatus(204);
 	}
 
 	@Post('/reset-password')
@@ -210,7 +215,7 @@ export class AuthController {
 
 		res.user = resetResult;
 
-		return resetResult;
+		return sanitizeUser(resetResult);
 	}
 
 	@Get('/user')

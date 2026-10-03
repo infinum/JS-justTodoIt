@@ -2,6 +2,7 @@ import { Service } from '@tsed/di';
 import { DeleteResult, FindOptionsWhere, Like } from 'typeorm';
 import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from '../../constants';
 import { TodoList } from '../../entities/todo-list';
+import { Todo } from '../../entities/todo';
 import { User } from '../../entities/user';
 import { SortDirection } from '../../enums/sort-direction.enum';
 import { TodoListSortBy } from '../../enums/todo-list-sort-by.enum';
@@ -51,13 +52,10 @@ export class TodosService {
 		const skip = Math.max((page.number - 1) * page.size, 0);
 		const take = page?.size ?? DEFAULT_PAGE_SIZE;
 
-		// Sorting
-		let order: Record<string, SortDirection>;
-		if (sortBy) {
-			order = {
-				[sortBy]: sortDirection ?? SortDirection.ASC,
-			};
-		}
+		// Sorting: `@Default` on query params only documents, so apply the documented defaults here
+		const order: Record<string, SortDirection> = {
+			[sortBy ?? TodoListSortBy.CREATED]: sortDirection ?? SortDirection.DESC,
+		};
 
 		const where: FindOptionsWhere<TodoList> = {
 			user,
@@ -102,7 +100,17 @@ export class TodosService {
 		});
 	}
 
-	public save(todo: TodoList): Promise<TodoList> {
-		return this.repository.save(todo);
+	/**
+	 * Saves the list and deletes `removedTodos` in one transaction,
+	 * so a rejected save (e.g. a title conflict) changes nothing.
+	 */
+	public save(todoList: TodoList, removedTodos: Array<Todo> = []): Promise<TodoList> {
+		return this.repository.manager.transaction(async (manager) => {
+			if (removedTodos.length) {
+				await manager.remove(removedTodos);
+			}
+
+			return manager.save(todoList);
+		});
 	}
 }

@@ -9,20 +9,16 @@ import {
 	JWT_SECRET,
 } from '../../constants';
 import { User } from '../../entities/user';
-import { ITokenData } from '../../interfaces/token-data.interface';
+import { dropExpiredTokens, type ITokenExpirationInfo } from '../../helpers';
+import { ITokenData, TokenPurpose } from '../../interfaces/token-data.interface';
 
-const { sign, verify } = jwt;
+const { verify } = jwt;
 
 const signAsync: (
 	payload: string | Buffer | object,
 	secretOrPrivateKey: Secret,
 	options?: SignOptions
 ) => Promise<string> = promisify(jwt.sign);
-
-interface ITokenExpirationInfo {
-	issuedAt: number;
-	expiresAt: number;
-}
 
 @Service()
 export class AuthService {
@@ -36,6 +32,7 @@ export class AuthService {
 		return this.signToken({
 			uuid: user.uuid,
 			email: user.email,
+			purpose: 'session',
 		});
 	}
 
@@ -44,6 +41,7 @@ export class AuthService {
 			{
 				uuid,
 				email,
+				purpose: 'activation',
 			},
 			JWT_ACTIVATION_EXPIRATION_TIME_S
 		);
@@ -54,20 +52,23 @@ export class AuthService {
 			{
 				uuid,
 				email,
+				purpose: 'password_reset',
 			},
 			JWT_PASSWORD_RESET_EXPIRATION_TIME_S
 		);
 	}
 
-	async verifyToken(token: string): Promise<false | ITokenData> {
+	// All tokens share one secret, so the purpose claim is what stops e.g. an activation token working as a session
+	async verifyToken(token: string, purpose: TokenPurpose): Promise<false | ITokenData> {
 		if (this.isTokenRevoked(token)) {
 			return false;
 		}
 
 		return new Promise((resolve) => {
 			verify(token, JWT_SECRET, (err: Error | null, decoded?: ITokenData) => {
-				if (err || !decoded) {
+				if (err || !decoded || decoded.purpose !== purpose) {
 					resolve(false);
+					return;
 				}
 
 				resolve(decoded);
@@ -90,10 +91,10 @@ export class AuthService {
 
 		delete tokenData.iat;
 		delete tokenData.exp;
-		return this.signToken(tokenData);
+		return this.signToken({ ...tokenData, purpose: 'session' });
 	}
 
-	private signToken(tokenData: ITokenData, expiresIn = JWT_EXPIRATION_TIME_S): Promise<string> {
+	private signToken(tokenData: ITokenData & { purpose: TokenPurpose }, expiresIn = JWT_EXPIRATION_TIME_S): Promise<string> {
 		return signAsync(tokenData, JWT_SECRET, { expiresIn });
 	}
 
@@ -108,16 +109,6 @@ export class AuthService {
 	}
 
 	private cleanExpiredRevokedTokens() {
-		this.revokedTokens = Object.keys(this.revokedTokens).reduce(
-			(acc: Record<string, ITokenExpirationInfo>, cur: string) => {
-				const tokenExpirationInfo = this.revokedTokens[cur];
-				if (tokenExpirationInfo.expiresAt >= Date.now()) {
-					acc[cur] = tokenExpirationInfo;
-				}
-
-				return acc;
-			},
-			{}
-		);
+		this.revokedTokens = dropExpiredTokens(this.revokedTokens);
 	}
 }

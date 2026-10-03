@@ -1,9 +1,20 @@
-import { Entity, PrimaryGeneratedColumn, ManyToOne, Column, BaseEntity, OneToMany, type Relation } from 'typeorm';
+import {
+	Entity,
+	PrimaryGeneratedColumn,
+	ManyToOne,
+	Column,
+	BaseEntity,
+	OneToMany,
+	Unique,
+	type Relation,
+} from 'typeorm';
 import { Property } from '@tsed/schema';
 import { User } from './user';
 import { Todo } from './todo';
 
 @Entity()
+// Titles are unique per owner, not globally
+@Unique('TODO_LIST_USER_TITLE', ['user', 'title'])
 export class TodoList extends BaseEntity {
 	@PrimaryGeneratedColumn('uuid')
 	@Property()
@@ -11,7 +22,6 @@ export class TodoList extends BaseEntity {
 
 	@Column({
 		nullable: false,
-		unique: true,
 	})
 	@Property()
 	title: string;
