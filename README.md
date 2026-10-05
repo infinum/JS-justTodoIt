@@ -65,7 +65,7 @@ pnpm add -D skills@1.7.0
 pnpm exec skills add infinum/ai --skill pr-review-code-simplicity -y
 ```
 
-The [`skills`](https://github.com/vercel-labs/skills) CLI is installed as a dev dependency rather than run with `pnpm dlx`, so it goes through your lockfile and the `minimumReleaseAge` you set while scaffolding (the Handbook's Node security chapter bans `npx` and `pnpm dlx` for this reason). It then installs the [`pr-review-code-simplicity`](https://github.com/infinum/ai/tree/main/plugins/pr-review-code-simplicity) skill from [`infinum/ai`](https://github.com/infinum/ai) into your project. That writes `.agents/skills/` (read by Codex, Cursor and most other agents), a `.claude/skills/` symlink for Claude Code, and a `skills-lock.json` recording which version you installed. Commit all of it, so your mentor can run the same review on your PRs.
+The [`skills`](https://github.com/vercel-labs/skills) CLI is installed as a dev dependency rather than run with `pnpm dlx`, so it goes through your lockfile and the `minimumReleaseAge` you set while scaffolding (the one-off scaffold commands get the same 7-day rule by passing `--config.minimum-release-age`). It then installs the [`pr-review-code-simplicity`](https://github.com/infinum/ai/tree/main/plugins/pr-review-code-simplicity) skill from [`infinum/ai`](https://github.com/infinum/ai) into your project. That writes `.agents/skills/` (read by Codex, Cursor and most other agents), a `.claude/skills/` symlink for Claude Code, and a `skills-lock.json` recording which version you installed. Commit all of it, so your mentor can run the same review on your PRs.
 
 **2. Recommended: set up the wider Infinum AI stack on your machine.** Run the [`prompts/ai-engineering-setup.md`](https://github.com/infinum/ai/blob/main/prompts/ai-engineering-setup.md) prompt with your coding agent. When it asks for the install scope, choose user/global, so nothing from it goes into your repository.
 
@@ -255,12 +255,3 @@ The [MIT License](LICENSE)
 
 Just Todo It is maintained and sponsored by
 [Infinum](https://www.infinum.com).
-
-<p align="center">
-  <a href='https://infinum.com'>
-    <picture>
-        <source srcset="https://assets.infinum.com/brand/logo/static/white.svg" media="(prefers-color-scheme: dark)">
-        <img src="https://assets.infinum.com/brand/logo/static/default.svg">
-    </picture>
-  </a>
-</p>
