@@ -2,7 +2,7 @@
 
 What the app must do is described in [Requirements.md](./Requirements.md). This file only covers how to get started on the Angular track, some optional suggestions, and the concepts you'll be asked to explain in review.
 
-Reference screenshots for this track are in [`.assets/app/angular/`](./.assets/app/angular/), together with a [demo video](./.assets/app/angular/demo.mp4). Like the Next.js set, they're reference, not spec.
+Reference screenshots for this track are in [`.assets/app/angular/`](./.assets/app/angular/), together with a [demo video](./.assets/app/angular/demo.mp4). They come from an older version of the app and are reference, not spec. Where they differ from Requirements.md (e.g. the `/todo-lists` route, a page size of 10, forgot-password as a modal), Requirements.md wins.
 
 ## 1. Scaffold
 
@@ -18,7 +18,7 @@ Replace `xyz` with a component prefix you like. The other flags answer the quest
 - `--style=scss`: SCSS (see the suggestions below). Pick CSS or Tailwind instead if you prefer.
 - `--ssr=false`: the requirements don't need server-side rendering, and leaving it out keeps the auth flow in the browser. Turning it on is a valid decision, but then you have to handle the session cookie on the server too.
 - `--ai-config=none`: your AI setup comes from [README §2.1](./README.md#21-set-up-your-ai-workflow), so don't let Angular generate a separate one.
-- `--skip-git`: you're already inside a git repository.
+- `--skip-git`: you're already inside a git repository, so `just-todo-it/` isn't the git root. Keep that in mind when you set up the pre-commit hook, and check that a commit with a lint error is actually rejected.
 - `--skip-install`: you'll install after the next step.
 
 Then install inside the app:

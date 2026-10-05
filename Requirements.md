@@ -4,7 +4,7 @@ This document describes **what** the app must do, whichever framework you're on.
 
 Each section lists behaviours and acceptance criteria. A requirement is met when every acceptance criterion under it can be shown to hold, by you, your tests or your reviewer. Framework-specific notes (scaffolding, optional suggestions, concepts you'll be asked to explain) are in [Nextjs.md](./Nextjs.md) and [Angular.md](./Angular.md).
 
-> **Screenshots are reference, not spec.** They show one possible layout and the states the app has to handle. Use them as a visual target for content and states. Pixel-matching them is not a requirement: they come from an older version of the app built with Chakra UI, so your app won't look like them. The Next.js set is embedded below. The Angular set is in [`.assets/app/angular/`](./.assets/app/angular/), together with a [demo video](./.assets/app/angular/demo.mp4).
+> **Screenshots are reference, not spec.** They show one possible layout and the states the app has to handle. Use them as a visual target for content and states, not pixels. Where a screenshot and the text disagree, the text wins. The Next.js set (built from the Next.js starter) is embedded below. The Angular set is in [`.assets/app/angular/`](./.assets/app/angular/), together with a [demo video](./.assets/app/angular/demo.mp4).
 
 The API you build against is in `api/` and documented in the [README](./README.md#4-api). Treat it as a third-party API you don't control. Its [constraints](./README.md#44-constraints-to-design-around) (replace-all updates, the total count in a response header, 1-indexed pages) are part of the problem you're solving.
 

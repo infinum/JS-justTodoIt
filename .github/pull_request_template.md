@@ -26,6 +26,6 @@ how create and edit share a form.
 ## Self-review done
 
 - [ ] I ran the local PR review skill on this branch and addressed or answered its findings
-- [ ] Lint, typecheck and tests pass
+- [ ] Lint, typecheck, format check and tests pass
 
 Skill used: <!-- e.g. pr-review-code-simplicity -->

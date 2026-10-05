@@ -39,7 +39,7 @@ It doesn't include an auth library or a data-fetching layer. Choosing those is u
 None of these are required. Use them, replace them or skip them, and record the choice and why in your PR.
 
 - **Auth:** this API already owns the session through its HTTP-only cookie, so plain `fetch` calls plus redirect logic can be enough, and **no auth library** is a good default. Libraries like [Better Auth](https://www.better-auth.com/docs) are common in Next.js apps, but they expect to own the session themselves, so adopting one here means deciding how it fits around the API's cookie. Either way, you should be able to explain what your choice does for you and what it doesn't.
-- **UI:** the starter uses [Tailwind](https://tailwindcss.com/) and [shadcn/ui](https://ui.shadcn.com/), like most of our React projects. Add more components with `pnpm dlx shadcn@latest add <component>`.
+- **UI:** the starter uses [Tailwind](https://tailwindcss.com/) and [shadcn/ui](https://ui.shadcn.com/), like most of our React projects. Add more components with `pnpm exec shadcn add <component>` (shadcn is already a dev dependency).
 - **Forms:** [React Hook Form](https://react-hook-form.com/), including [`useFieldArray`](https://react-hook-form.com/docs/usefieldarray) for dynamic item lists and [`FormProvider`/`useFormContext`](https://react-hook-form.com/docs/formprovider) for sharing a form across components.
 - **Testing:** the starter sets up Jest with [Testing Library](https://testing-library.com/docs/react-testing-library/intro/). Add end-to-end tests if you want them.
 

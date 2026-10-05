@@ -67,7 +67,7 @@ pnpm exec skills add infinum/ai --skill pr-review-code-simplicity -y
 
 The [`skills`](https://github.com/vercel-labs/skills) CLI is installed as a dev dependency rather than run with `pnpm dlx`, so it goes through your lockfile and the `minimumReleaseAge` you set while scaffolding (the Handbook's Node security chapter bans `npx` and `pnpm dlx` for this reason). It then installs the [`pr-review-code-simplicity`](https://github.com/infinum/ai/tree/main/plugins/pr-review-code-simplicity) skill from [`infinum/ai`](https://github.com/infinum/ai) into your project. That writes `.agents/skills/` (read by Codex, Cursor and most other agents), a `.claude/skills/` symlink for Claude Code, and a `skills-lock.json` recording which version you installed. Commit all of it, so your mentor can run the same review on your PRs.
 
-**2. Recommended: set up the wider Infinum AI stack on your machine.** Run the [`prompts/ai-engineering-setup.md`](https://github.com/infinum/ai/blob/main/prompts/ai-engineering-setup.md) prompt with your coding agent. It installs globally, for every project you work on, so nothing from it goes into your repository.
+**2. Recommended: set up the wider Infinum AI stack on your machine.** Run the [`prompts/ai-engineering-setup.md`](https://github.com/infinum/ai/blob/main/prompts/ai-engineering-setup.md) prompt with your coding agent. When it asks for the install scope, choose user/global, so nothing from it goes into your repository.
 
 **Before opening every PR**, run `pr-review-code-simplicity` on your branch. Fix or answer what it finds, then tick both boxes under "Self-review done" in the PR description and name the skill you used.
 
@@ -139,7 +139,7 @@ Status codes you'll meet:
 | `POST` | `/auth/resend-activation-email` | `{ email }`            | `204`                             |
 | `POST` | `/auth/activate`                | `{ token, password }`  | `200` user                        |
 | `POST` | `/auth/login`                   | `{ email, password }`  | `200` user + session cookie       |
-| `POST` | `/auth/logout`                  | —                      | `204` + `token` and `sessionId` cookies cleared (needs a valid session, otherwise `401`) |
+| `POST` | `/auth/logout`                  | —                      | `204` + `token` cookie cleared (needs a valid session, otherwise `401`) |
 | `GET`  | `/auth/user`                    | —                      | `200` the logged-in user (`401` if nobody is) |
 | `POST` | `/auth/request-password-reset`  | `{ email }`            | `204` (also for an unknown email) |
 | `POST` | `/auth/reset-password`          | `{ token, password }`  | `200` user                        |
