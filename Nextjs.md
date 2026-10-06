@@ -1,215 +1,66 @@
 # Notes for Next.js
 
-Before you start, we suggest reading through our [Getting started with React](https://infinum.com/handbook/frontend/react/getting-started/ecosystem) guide. During development, we recommend referencing our more in-depth [React guidelines and practices](https://infinum.com/handbook/books/frontend/react/react-guidelines-and-best-practices) handbook.\*\*\*\*
+What the app must do is described in [Requirements.md](./Requirements.md). This file only covers how to get started on the Next.js track, some optional suggestions, and the concepts you'll be asked to explain in review.
 
-You will build this app with Next.js framework so we also suggest you go through the official [Learn Next.js](https://nextjs.org/docs/app/getting-started) tutorial.
+## 1. Scaffold
 
-If you need information about the React core API be sure to check the [React Docs](https://react.dev/).
+From the repository root, next to `api/`:
 
-## 1. Application requirements & notes
+```bash
+pnpm --config.minimum-release-age=10080 create next-app@^16 just-todo-it --skip-install \
+  -e https://github.com/infinum/JS-React-Example/tree/onboarding-starter-v3
+```
 
-Please follow these requirements:
+This copies our Next.js starter into `just-todo-it/`. `--config.minimum-release-age=10080` applies the same 7-day rule as `api/` to the scaffolding tool itself, so it picks a release that's at least a week old. `--skip-install` holds off installing until you're inside the app, where the starter's own `pnpm-workspace.yaml` applies that rule to the app's dependencies too.
 
-- Use React hooks
-- Get familiar with [Tailwind](http://tailwindcss.com/) and [ShadCN](https://ui.shadcn.com/) component library
-- Use [React Hook Form](https://react-hook-form.com/) for handling forms
-- Use [React Hook Form - Error Message](https://github.com/react-hook-form/error-message)
-- Use [React Hook Form - useFieldArray](https://react-hook-form.com/docs/usefieldarrayy) for adding and removing todos
-- Use Next Auth to handle authentication:
-  - [NextAuth.js](https://next-auth.js.org/)
-  - [NextAuth handbook chapter](https://infinum.com/handbook/frontend/react/recipes/next-auth)
-- Get familiar with Next.js data fetching concepts:
-  - [Data Fetching and Caching](https://nextjs.org/docs/app/building-your-application/data-fetching/fetching)
-  - [Server Actions and Mutations](https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations)
-  - Incremental Static Regeneration (ISR): [revalidate](https://nextjs.org/docs/app/guides/incremental-static-regeneration)
+Then install inside the app:
 
-Application UI structure:
+```bash
+cd just-todo-it
+mise trust  # the starter has its own mise.toml, which `mise trust --all` didn't cover
+pnpm install
+cp .env.example .env.local
+```
 
-- `Layout` component for sharing navigation between pages
-  - `Navigation` component with application title and user menu
-    - User menu shows `Log in` and `Register` links if the user is not logged in
-    - User menu shows the user's email and `Log out` button if the user is logged in
-- `TodoLists` component for rendering, sorting, filtering and creation of paginated `TodoList` collection
-- `TodoListDetails` component for preview and update `TodoList` details
-- `TodoListForm` component which uses `useFieldArray` and `useForm` for handling form inputs
+`.env.local` holds your API's URL as `NEXT_PUBLIC_API_ENDPOINT` (change the port if you changed `HTTP_PORT`). Only variables prefixed with `NEXT_PUBLIC_` reach the browser.
 
-> Check the [Project structure](https://infinum.com/handbook/frontend/react/project-structure#app-router) Handbook for better understanding
+The starter comes with:
 
-### 1.1. Authorization flow
+- Next.js 16 with the App Router and TypeScript
+- Tailwind and a few [shadcn/ui](https://ui.shadcn.com/) components in `src/components/ui`, plus the company fonts
+- ESLint, Prettier and `pnpm typecheck`
+- Jest with Testing Library and jest-axe
+- a pre-commit hook (husky and lint-staged) that lints and formats staged files
 
-If a logged in user tries to navigate to some of authorization pages, they should be redirected to the homepage, since it does not make sense for logged in user to see the login page.
+It doesn't include an auth library or a data-fetching layer. Choosing those is up to you. Check the starter against [Requirements §6](./Requirements.md#6-code-quality-expectations) as part of your first PR (see [README §5](./README.md#5-how-review-works-decisions-over-code)). For example, the hook doesn't type-check yet.
 
-If a logged out user tries to navigate to some of the pages that require login, they should be redirected to the login page.
+## 2. Suggested libraries (optional)
 
-#### 1.1.1. Registration
+None of these are required. Use them, replace them or skip them, and record the choice and why in your PR.
 
-During registration, user enters only their e-mail address. An email is sent with activation link that the user can click. This link contains a token that you can read more about in a later section of this readme.
+- **Auth:** this API already owns the session through its HTTP-only cookie, so plain `fetch` calls plus redirect logic can be enough, and **no auth library** is a good default. Libraries like [Better Auth](https://www.better-auth.com/docs) are common in Next.js apps, but they expect to own the session themselves, so adopting one here means deciding how it fits around the API's cookie. Either way, you should be able to explain what your choice does for you and what it doesn't.
+- **UI:** the starter uses [Tailwind](https://tailwindcss.com/) and [shadcn/ui](https://ui.shadcn.com/), like most of our React projects. Add more components with `pnpm exec shadcn add <component>` (shadcn is already a dev dependency).
+- **Forms:** [React Hook Form](https://react-hook-form.com/), including [`useFieldArray`](https://react-hook-form.com/docs/usefieldarray) for dynamic item lists and [`FormProvider`/`useFormContext`](https://react-hook-form.com/docs/formprovider) for sharing a form across components.
+- **Testing:** the starter sets up Jest with [Testing Library](https://testing-library.com/docs/react-testing-library/intro/). Add end-to-end tests if you want them.
 
-You should implement the following pages:
+## 3. Suggested reading (optional)
 
-- Registration - `/register`
-  - Should show a link to `/login` route
-- Account activation - `/activation?token=...`
-- Log in - `/login`
-  - Should show links to `/register` and `/forgot-password` routes
-- Forgot password - `/forgot-password`
-- Reset password - `/reset-password?token=...`
+- Infinum Handbook: [Getting started with React](https://infinum.com/handbook/frontend/react/getting-started/ecosystem), [React guidelines and practices](https://infinum.com/handbook/books/frontend/react/react-guidelines-and-best-practices), [Testing best practices](https://infinum.com/handbook/frontend/react/testing/best-practices)
+- Next.js: [Getting started](https://nextjs.org/docs/app/getting-started), [Fetching data](https://nextjs.org/docs/app/getting-started/fetching-data), [Mutating data (Server Functions)](https://nextjs.org/docs/app/getting-started/mutating-data), [Caching](https://nextjs.org/docs/app/getting-started/caching), [Testing](https://nextjs.org/docs/app/guides/testing)
+- React: [react.dev](https://react.dev/)
 
-Additional notes:
+## 4. Concepts you'll be asked to explain
 
-- User should be able to log out
-- Application should load user data upon full page reload
-  - Utilize `GET` `/auth/user` API call and think about what is the best way to load user data during app initialization
-  - Make use of [NextAuth hooks](https://next-auth.js.org/getting-started/client) to get access to user object
-- If user enters `/login` route while already logged in, he should be redirected to `/`
-- If user enters any secure route (e.g. `/`, `/:uuid`) while not logged in, he should be redirected to `/login`
+In review, expect to walk through these using your own code:
 
-_Note_: Backend server that is running locally does not sent an actual email. Activation link can be seen in terminal log of the server.
-
-![Register](./.assets/app/nextjs/register.png)
-
-#### 1.1.2. Login
-
-![Login](./.assets/app/nextjs/login.png)
-
-#### 1.1.3. Request password reset
-
-Similar to registration, password reset sends an email with password reset link that includes a token. Again, no actual email is sent, you can get the link from the terminal log of the server.
-
-![Request password reset](./.assets/app/nextjs/forgot-password.png)
-
-#### 1.1.4. Account activation
-
-![Account activation](./.assets/app/nextjs/activation.png)
-
-#### 1.1.5. Password reset
-
-This page is opened once the user follows the link from request password reset email. URL contains a token similar to the one for activation. Again, more info about these tokens can be found in a later chapter.
-
-![Reset password](./.assets/app/nextjs/reset-password.png)
-
-#### 1.1.6. User menu
-
-Once the user is logged in, they can see an avatar icon in the header menu and trigger a log out action from the dropdown menu that is opened when the user clicks on their email.
-
-![Reset password](./.assets/app/nextjs/user-menu.png)
-
-### 1.2. Managing Todos
-
-All of the todo management routes should be protected with a guard that does not allow unauthorized users to see these pages. If an unauthorized user tries opening one of these routes, they should be redirected to login page.
-
-#### 1.2.1. Table of Todo lists
-
-This page shows a paginated table of all of the user's Todo lists:
-
-- User can go to next/previous page
-- User can sort Todo lists by name and creation date
-  - Default sort: creation date, descending
-- User can filter Todo lists by name
-  - API calls should be made on-the-fly as the user types (there is no submit button), with some debounce time
-  - Avoid making unnecessary API calls
-  - Ensure that results from the API are processed in correct order and that there are no race conditions
-- User should be able to both sort and filter simultaneously
-- Pagination, sorting and filtering parameters should be preserved if:
-  - The user refreshes the page
-  - The user goes to some Todo details and comes back to the list
-- Default page size should be 5
-- Pagination component should show the total count of results
-- User can navigate to edit page of a particular Todo
-- User can delete a particular Todo (with confirmation dialog prompt)
-
-##### Empty state
-
-![Empty state](./.assets/app/nextjs/todo-list-empty.png)
-
-##### Table with some items
-
-![Empty state](./.assets/app/nextjs/todo-list.png)
-
-##### Sorted by title
-
-![Sort by name](./.assets/app/nextjs/todo-list-sort.png)
-
-##### Filters
-
-![Name filter](./.assets/app/nextjs/todo-list-filters.png)
-
-##### Delete action prompt
-
-![Delete action prompt](./.assets/app/nextjs/todo-list-delete-confirmation.png)
-
-#### 1.2.2. Create a new Todo list
-
-Todo form consists of:
-
-- Todo list name
-- Array of Todo items
-  - Each Todo item has a name and `done` state
-
-Please ensure that all the form validations are implemented:
-
-- Todo list name is required
-- At least one Todo item is required
-- Todo item name is required
-
-User should not be able to trigger an API call if the form is invalid.
-
-Think about how to design component API and break it in multiple parts so you can compose both create and edit forms from the same components.
-
-Suggested composition:
-
-- `TodoForm` component that is responsible for rendering the form
-- `TodoFormFields` component that is responsible for rendering the form fields
-- `TodoFormSubmit` component that is responsible for rendering the form submit button
-
-Things to investigate:
-
-- [useFieldArray](https://react-hook-form.com/api/usefieldarray/) hook. It will help you with managing the array of Todo items.
-- [FormProvider](https://react-hook-form.com/api/formprovider/) and [useFormContext](https://react-hook-form.com/api/useformcontext/) hooks. They will help you with re-using the form for both create and edit actions.
-- [Multipart Component](https://kentcdodds.com/blog/compound-components-with-react-hooks) also known as Compound Components. It will help you with re-using the form for both create and edit actions.
-
-##### Empty state
-
-![Create new Todo empty state](./.assets/app/nextjs/todo-form-create-new-empty.png)
-
-##### Filled out
-
-![Create new Todo filled state](./.assets/app/nextjs/todo-form-create-new-filled.png)
-
-##### Validation error example #1
-
-![Create new Todo error example #1](./.assets/app/nextjs/todo-form-error.png)
-
-#### 1.2.3. Edit existing Todo
-
-When the user clicks "Details" action in the table, they are navigated to a particular Todo page where they can edit the Todo. The form is identical, but the API call is different. Find a way to re-use the form from the Create Todo modal.
-
-![Edit existing Todo](./.assets/app/nextjs/todo-form-edit-existing.png)
-
-## 1.4. Testing
-
-To get on board with testing best practices and to get familiar with the testing library, make sure to read these articles:
-
-- [Testing Library](https://testing-library.com/docs/react-testing-library/intro/)
-- [Infinum Handbooks - Testing Best Practices](https://infinum.com/handbook/frontend/react/testing-best-practices)
-- [Next.js - Testing](https://nextjs.org/docs/testing)
-
-Write some tests, for example:
-
-- TodoFormFields
-  - `should show title`
-  - `should update title`
-  - `should mark as done`
-  - `should handle removing`
-
-- TodoList
-  - `should show empty state`
-  - `should show list of items`
-  - `should show pagination`
-  - `should show sorting`
-  - `should show filtering`
-  - `should show delete confirmation`
-  - `should delete item`
-  - `should navigate to edit page`
-
-> **Note:** The test cases above are just examples. Real test cases depends on how you implement the components, but they should be similar to the ones above. Feel free to add more test cases.
+- **Server vs client data fetching.** Which data you fetch in Server Components, which on the client, and why. What happens to the API's session cookie when the request is made from the Next.js server instead of the browser.
+- **Server Actions and mutations.** Whether you used them for create/edit/delete, and how the table and details page get fresh data afterwards (revalidation, refetching, cache invalidation).
+- **Caching.** What Next.js caches by default for your requests and routes, and how that interacts with per-user data.
+- **How the user is loaded on first render.** Where `GET /auth/user` is called on a full page reload, and how you avoid flashing the logged-out UI.
+- **Where redirects happen.** Middleware/proxy, layouts, pages or the client, and what each option costs.
+- **URL as state.** How the table's page, sort and filter live in search params, and how navigation and the back button restore them.
+- **Debouncing and race conditions.** How filtering avoids request spam, and how a stale response is prevented from winning.
+- **Replace-all updates.** How your edit form turns the user's changes into the full item list the API expects.
+- **Reading response headers.** Where the total count from `X-TOTAL-COUNT` enters your data flow.
+- **Form reuse.** How create and edit (and activation and reset password) share fields and validation without duplicating them.
+- **Client/server boundaries.** Where `'use client'` sits in your tree and why it's there and not higher.

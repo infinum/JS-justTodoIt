@@ -1,156 +1,68 @@
 # Notes for Angular
 
-Before you start, we suggest reading through our [Angular Handbook](https://infinum.com/handbook/books/frontend/angular/introduction) and going through the official [Tour of Heroes tutorial](https://angular.io/tutorial) before starting this project as it explains many Angular features along the way.
+What the app must do is described in [Requirements.md](./Requirements.md). This file only covers how to get started on the Angular track, some optional suggestions, and the concepts you'll be asked to explain in review.
 
-## 1. Application requirements & notes
+Reference screenshots for this track are in [`.assets/app/angular/`](./.assets/app/angular/), together with a [demo video](./.assets/app/angular/demo.mp4). They come from an older version of the app and are reference, not spec. Where they differ from Requirements.md (e.g. the `/todo-lists` route, a page size of 10, forgot-password as a modal), Requirements.md wins.
 
-When implementing the application, please:
+## 1. Scaffold
 
-- Choose some nice prefix
-- Use lazy loading of modules
-- Use SCSS
-- Use OnPush change detection
-  - Run this command right after you generate the project
-    ```bash
-    ng config schematics.@schematics/angular.component.changeDetection OnPush
-    ```
-  - When using OnPush CD, [use async pipe at much as possible](https://infinum.com/handbook/books/frontend/angular/angular-guidelines-and-best-practices/formatting-naming-and-best-practices#avoid-manual-subscriptions-and-asynchronous-property-assignment)
-- Use [Angular Material](https://material.angular.io/guide/getting-started) to speed up component development
-  - Use whichever theme you prefer
-- Create `src/app/styles` directory for your shared SCSS partials
-  - Use [Style preprocessor options](https://angular.io/guide/workspace-config#style-preprocessor-options) to make SCSS import paths nicer
-- Use `APP_INITIALIZER` to fetch user data on initial application load
-  - Initialize User/Auth service with user data on success
-- Use [the single observable pattern](https://infinum.com/handbook/books/frontend/angular/angular-guidelines-and-best-practices/formatting-naming-and-best-practices#the-single-observable-pattern) in order to avoid `ng-container` hell
-- [Create multiple layout components](https://indepth.dev/posts/1235/how-to-reuse-common-layouts-in-angular-using-router-2)
-- Add eslint, prettier and husky
-  - Use Infinum's [config for eslint](https://github.com/infinum/js-linters) and follow the [handbook](https://infinum.com/handbook/frontend/code-quality/tools)
-  - Run linters and check if the app compiles (e.g. using `tsc --no-emit`) in a pre-commit hook
-- Use [jwt-decode](https://github.com/auth0/jwt-decode) to parse data from tokens
-- Store table pagination, sorting and filtering state in URL
-- Re-use certain forms that have the same structure
-  - e.g. activation and reset password forms
+From the repository root, next to `api/`:
 
-### 1.1. Authorization flow
+```bash
+pnpm --config.minimum-release-age=10080 dlx @angular/cli@^22 new just-todo-it --style=scss --ssr=false --prefix=xyz --ai-config=none --package-manager=pnpm --skip-git --skip-install
+```
 
-If a logged in user tries to navigate to some of authorization pages, they should be redirected to the homepage, since it does not make sense for logged in user to see the login page.
+Replace `xyz` with a component prefix you like. The other flags answer the questions `ng new` would otherwise ask:
 
-If a logged out user tries to navigate to some of the pages that require login, they should be redirected to the login page.
+- `--config.minimum-release-age=10080`: applies the same 7-day rule as `api/` to the CLI itself, so it picks a release that's at least a week old. Without it, an Angular release from the last few days would make the install below fail, because the new project pins Angular to the CLI's version.
+- `--style=scss`: SCSS (see the suggestions below). Pick CSS or Tailwind instead if you prefer.
+- `--ssr=false`: the requirements don't need server-side rendering, and leaving it out keeps the auth flow in the browser. Turning it on is a valid decision, but then you have to handle the session cookie on the server too.
+- `--ai-config=none`: your AI setup comes from [README §2.1](./README.md#21-set-up-your-ai-workflow), so don't let Angular generate a separate one.
+- `--skip-git`: you're already inside a git repository, so `just-todo-it/` isn't the git root. Keep that in mind when you set up the pre-commit hook, and check that a commit with a lint error is actually rejected.
+- `--skip-install`: you'll install after the next step.
 
-#### 1.1.1. Registration
+Then install inside the app:
 
-During registration, user enters only their e-mail address. An email is sent with activation link that the user can click. This link contains a token that you can read more about in a later section of this readme.
+```bash
+cd just-todo-it
+echo 'minimumReleaseAge: 10080 # 7 days, the same as api/' > pnpm-workspace.yaml
+pnpm install
+```
 
-_Note_: Backend server that is running locally does not sent an actual email. Activation link can be seen in terminal log of the server (as demonstrated in the video).
+The install stops with `ERR_PNPM_IGNORED_BUILDS`, because pnpm 11 doesn't run a dependency's build script (here `esbuild`, `lmdb`, `@parcel/watcher` and `msgpackr-extract`) until you approve it. pnpm has already added them to `pnpm-workspace.yaml` under `allowBuilds:` with the placeholder `set this to true or false`. Set each one to `true` (or run `pnpm approve-builds`, which is interactive), then run `pnpm install` again.
 
-![Register](./.assets/app/angular/register.png)
+There's no global `ng`: inside the app, run the CLI as `pnpm ng …` (e.g. `pnpm ng serve`).
 
-#### 1.1.2. Login
+A new project has no environment files, so pick how the app learns the API's URL: `pnpm ng generate environments`, or a [dev-server proxy](https://angular.dev/tools/cli/serve#proxying-to-a-backend-server) (which also avoids CORS). Either way, remember the API's `FRONTEND_URL` must be `http://localhost:4200` (README §4).
 
-![Login](./.assets/app/angular/login.png)
+## 2. Suggestions (optional)
 
-#### 1.1.3. Request password reset
+None of these are required. Use them, replace them or skip them, and record the choice and why in your PR.
 
-Similar to registration, password reset sends an email with password reset link that includes a token. Again, no actual email is sent, you can get the link from the terminal log of the server.
+- **UI:** [Angular Material](https://material.angular.dev/guide/getting-started), with whichever theme you prefer.
+- **Styles:** SCSS, with shared partials in e.g. `src/app/styles` and [style preprocessor options](https://angular.dev/reference/configs/workspace-config#style-preprocessor-options) to keep import paths short.
+- **Tokens:** [jwt-decode](https://github.com/auth0/jwt-decode) if you want to read data (e.g. the email) from the activation or reset token.
+- **Linting:** Infinum's [ESLint config](https://github.com/infinum/js-linters). See the [code quality tools](https://infinum.com/handbook/frontend/code-quality/tools) handbook chapter.
 
-![Request password reset](./.assets/app/angular/request-password-reset.png)
+## 3. Suggested reading (optional)
 
-#### 1.1.4. Account activation
+- Infinum Handbook: [Angular Handbook](https://infinum.com/handbook/books/frontend/angular/introduction), [File and module organization and naming](https://infinum.com/handbook/books/frontend/angular/angular-guidelines-and-best-practices/file-and-module-organization-and-naming), [Formatting, naming and best practices](https://infinum.com/handbook/books/frontend/angular/angular-guidelines-and-best-practices/formatting-naming-and-best-practices)
+- Angular: [official tutorials](https://angular.dev/tutorials)
+- [Nested routes](https://angular.dev/guide/routing/define-routes#nested-routes) for sharing a layout between pages
 
-Account activation and password reset pages are a bit different from other pages - they do not have the same layout - there is no header component and the content of the page is centred in the middle of the screen. Think about how you can achieve this without having `if`s for hiding/showing elements or style adjustments.
+## 4. Concepts you'll be asked to explain
 
-![Account activation](./.assets/app/angular/account-activation.png)
+In review, expect to walk through these using your own code:
 
-#### 1.1.5. Password reset
-
-This page is opened once the user follows the link from request password reset email. URL contains a token similar to the one for activation. Again, more info about these tokens can be found in a later chapter.
-
-![Reset password](./.assets/app/angular/reset-password.png)
-
-#### 1.1.6. User menu
-
-Once the user is logged in, they can see their email in the header menu and trigger log out action from the dropdown menu that is opened when the user clicks on their email.
-
-![Reset password](./.assets/app/angular/user-menu.png)
-
-### 1.2. Managing Todos
-
-All of the todo management routes should be protected with a guard that does not allow unauthorized users to see these pages. If an unauthorized user tries opening one of these routes, they should be redirected to login page.
-
-#### 1.2.1. Table of Todo lists
-
-This page shows a paginated table of all of the user's Todo lists:
-
-- User can go to next/previous page
-- User can sort Todo lists by name and creation date
-  - Default sort: creation date, descending
-- User can filter Todo lists by name
-  - API calls should be made on-the-fly as the user types (there is no submit button), with some debounce time
-  - Avoid making unnecessary API calls
-  - Ensure that results from the API are processed in correct order and that there are no race conditions
-- User should be able to both sort and filter simultaneously
-- Pagination, sorting and filtering parameters should be preserved if:
-  - The user refreshes the page
-  - The user goes to some Todo details and comes back to the list
-- Default page size should be 5
-- Pagination component should show the total count of results
-- User can navigate to edit page of a particular Todo
-- User can delete a particular Todo (with confirmation dialog prompt)
-
-##### Empty state:
-
-![Empty state](./.assets/app/angular/todo-list-empty.png)
-
-##### Table with some items:
-
-![Empty state](./.assets/app/angular/todo-list.png)
-
-##### Sorted by name:
-
-![Sort by name](./.assets/app/angular/todo-list-sort.png)
-
-##### Name filter:
-
-![Name filter](./.assets/app/angular/todo-list-filters.png)
-
-##### Delete action prompt:
-
-![Delete action prompt](./.assets/app/angular/todo-list-delete-confirmation.png)
-
-#### 1.2.2. Create a new Todo list
-
-Todo form consists of:
-
-- Todo list name
-- Array of Todo items
-  - Each Todo item has a name and done state
-
-Please ensure that all the form validations are implemented:
-
-- Todo list name is required
-- At least one Todo item is required
-- Todo item name is required
-
-User should not be able to trigger an API call if the form is invalid.
-
-##### Empty state
-
-![Create new Todo empty state](./.assets/app/angular/todo-form-create-new-empty.png)
-
-##### Filled out
-
-![Create new Todo empty state](./.assets/app/angular/todo-form-create-new-filled.png)
-
-##### Validation error example #1
-
-![Create new Todo error example #1](./.assets/app/angular/todo-form-error-1.png)
-
-##### Validation error example #2
-
-![Create new Todo error example #2](./.assets/app/angular/todo-form-error-2.png)
-
-#### 1.2.3. Edit existing Todo list
-
-When the users clicks "Details" action in the table, he is navigated to a particular Todo page where they can edit the Todo. The form is identical, but the API call is different. Find a way to re-use this form.
-
-![Edit existing Todo](./.assets/app/angular/todo-form-edit-existing.png)
+- **OnPush change detection** (the default for new components since Angular 22). What triggers a re-render under OnPush, and how your components get new data without manual subscriptions (e.g. the async pipe or signals).
+- **The [single observable pattern](https://infinum.com/handbook/books/frontend/angular/angular-guidelines-and-best-practices/formatting-naming-and-best-practices#the-single-observable-pattern).** How you avoid nested `ng-container` / async pipe chains in templates.
+- **App initialisation.** How the current user is fetched from `GET /auth/user` before the first route renders (e.g. an app initializer), and how the auth state is then shared.
+- **Guards and redirects.** How logged-in and logged-out redirects are enforced, including on a full page reload.
+- **Multiple layouts without conditionals.** The activation and reset pages in the reference screenshots use a different layout (no header, centred content). How you get that from routing rather than `if`s or style overrides.
+- **Lazy loading.** Which routes are lazy-loaded and what that buys you.
+- **HTTP handling.** How the session cookie is sent with every request, and where `401` responses are handled once for the whole app.
+- **Debouncing and race conditions.** Which RxJS operators keep filtering from spamming the API and keep a stale response from winning, and why those operators.
+- **URL as state.** How the table's page, sort and filter live in query params and are restored on reload and back navigation.
+- **Replace-all updates.** How your edit form turns the user's changes into the full item list the API expects.
+- **Reading response headers.** How the total count from `X-TOTAL-COUNT` reaches the pagination.
+- **Form reuse.** How create and edit (and activation and reset password) share form structure without duplication.
