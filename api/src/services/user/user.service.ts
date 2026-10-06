@@ -72,7 +72,7 @@ export class UserService {
 	}
 
 	async activate(activationData: IPasswordSettingData): Promise<false | User> {
-		const tokenData = await this.authService.verifyToken(activationData.token);
+		const tokenData = await this.authService.verifyToken(activationData.token, 'activation');
 
 		if (!tokenData) {
 			return false;
@@ -82,7 +82,7 @@ export class UserService {
 
 		const user = await this.fetch({ email, getActivationToken: true });
 
-		if (user.activationToken !== activationData.token) {
+		if (!user || user.activationToken !== activationData.token) {
 			return false;
 		}
 
@@ -116,7 +116,7 @@ export class UserService {
 	}
 
 	async resetPassword(passwordResetData: IPasswordSettingData): Promise<false | User> {
-		const tokenData = await this.authService.verifyToken(passwordResetData.token);
+		const tokenData = await this.authService.verifyToken(passwordResetData.token, 'password_reset');
 
 		if (!tokenData) {
 			return false;
@@ -126,7 +126,7 @@ export class UserService {
 
 		const user = await this.fetch({ email, getPasswordResetToken: true });
 
-		if (user.passwordResetToken !== passwordResetData.token) {
+		if (!user || user.passwordResetToken !== passwordResetData.token) {
 			return false;
 		}
 

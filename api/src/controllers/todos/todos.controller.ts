@@ -1,14 +1,15 @@
 import { Controller, Req, Get, Post, BodyParams, QueryParams, PathParams, Res, Delete, Patch } from '@tsed/common';
 import { TodoList } from '../../entities/todo-list';
-import { Summary, Returns, Description, Required, Property, CollectionOf, Default } from '@tsed/schema';
+import { Summary, Returns, Description, Required, Property, CollectionOf, Default, Enum } from '@tsed/schema';
 import { TodosService } from '../../services/todos/todos.service';
 import { Auth } from '../../decorators/auth.decorator';
 import { Todo } from '../../entities/todo';
-import { NotFound } from '@tsed/exceptions';
+import { BadRequest, NotFound } from '@tsed/exceptions';
 import { SortDirection } from '../../enums/sort-direction.enum';
 import { TodoListSortBy } from '../../enums/todo-list-sort-by.enum';
 import { DEFAULT_PAGE_SIZE, DEFAULT_PAGE } from '../../constants';
 import { CustomHeader } from '../../enums/custom-headers.enum';
+import { ResponseErrorCode } from '../../enums/response-error-code.enum';
 
 class CreateTodoItemData {
 	@Required()
@@ -26,6 +27,17 @@ class CreateTodoData {
 	todos: Array<CreateTodoItemData>;
 }
 
+class PatchTodoItemData {
+	@Property()
+	uuid: string;
+
+	@Required()
+	title: string;
+
+	@Property()
+	done: boolean;
+}
+
 class PatchTodoData {
 	@Property()
 	uuid: string;
@@ -33,8 +45,16 @@ class PatchTodoData {
 	@Property()
 	title: string;
 
-	@CollectionOf(Todo)
-	todos: Array<Todo>;
+	@CollectionOf(PatchTodoItemData)
+	todos: Array<PatchTodoItemData>;
+}
+
+const allowedRelations = ['todos'];
+
+function assertAllowedRelations(relations: Array<string> = []): void {
+	if (relations.some((relation) => !allowedRelations.includes(relation))) {
+		throw new BadRequest(ResponseErrorCode.INVALID_RELATION);
+	}
 }
 
 @Controller('/todo-lists')
@@ -53,12 +73,14 @@ export class TodosController {
 		relations: Array<string>,
 		@QueryParams('pageNumber') @Default(DEFAULT_PAGE) pageNumber: number,
 		@QueryParams('pageSize') @Default(DEFAULT_PAGE_SIZE) pageSize: number,
-		@QueryParams('sortBy') @Default(TodoListSortBy.CREATED) sortBy: TodoListSortBy,
-		@QueryParams('sortDirection') @Default(SortDirection.DESC) sortDirection: SortDirection,
+		@QueryParams('sortBy') @Enum(TodoListSortBy) @Default(TodoListSortBy.CREATED) sortBy: TodoListSortBy,
+		@QueryParams('sortDirection') @Enum(SortDirection) @Default(SortDirection.DESC) sortDirection: SortDirection,
 		@QueryParams('title') title: string,
 		@Req() req: Req,
 		@Res() res: Res
 	): Promise<Array<TodoList>> {
+		assertAllowedRelations(relations);
+
 		const pagedResult = await this.todosService.fetchAll({
 			user: req.user,
 			relations,
@@ -90,6 +112,8 @@ export class TodosController {
 		relations: Array<string>,
 		@Req() req: Req
 	): Promise<TodoList> {
+		assertAllowedRelations(relations);
+
 		const todoList = await this.todosService.fetchOne({
 			user: req.user,
 			relations,
@@ -131,26 +155,42 @@ export class TodosController {
 			user: req.user,
 			relations: ['todos'],
 		});
+		if (!todoList) {
+			throw new NotFound(`Todo list with uuid "${uuid}" not found`);
+		}
 
-		if ('title' in todoData) {
+		let removedTodos: Array<Todo> = [];
+
+		// Not `in`: the production build emits class fields, so unsent DTO fields are present as `undefined`
+		if (todoData.todos !== undefined) {
+			const oldUuids = todoList.todos.map(({ uuid }) => uuid);
+			const newUuids = (todoData.todos ?? []).map(({ uuid }) => uuid).filter(Boolean);
+
+			// Only this list's own items can be updated; anything else would re-parent another list's item
+			if (newUuids.some((itemUuid) => !oldUuids.includes(itemUuid))) {
+				throw new BadRequest(ResponseErrorCode.TODO_ITEM_NOT_IN_LIST);
+			}
+
+			removedTodos = todoList.todos.filter(({ uuid }) => !newUuids.includes(uuid));
+
+			// Replace-all: every item is written as sent, a missing `done` means not done
+			todoList.todos = (todoData.todos ?? []).map((itemData) => {
+				const todoItem = new Todo();
+				if (itemData.uuid) {
+					todoItem.uuid = itemData.uuid;
+				}
+				todoItem.title = itemData.title;
+				todoItem.done = itemData.done ?? false;
+
+				return todoItem;
+			});
+		}
+
+		if (todoData.title !== undefined) {
 			todoList.title = todoData.title;
 		}
 
-		if ('todos' in todoData) {
-			const oldTodos = todoList.todos;
-			todoList.todos = todoData.todos;
-			const newUuids = todoList.todos
-				.map(({ uuid }: { uuid?: string | null }) => uuid)
-				.filter(Boolean) as string[];
-
-			for (const oldItem of oldTodos) {
-				if (!newUuids.includes(oldItem.uuid)) {
-					await oldItem.remove();
-				}
-			}
-		}
-
-		return this.todosService.save(todoList);
+		return this.todosService.save(todoList, removedTodos);
 	}
 
 	@Post('/')
@@ -174,6 +214,10 @@ export class TodosController {
 		});
 		todoList.todos = todos;
 
-		return this.todosService.save(todoList);
+		const savedList = await this.todosService.save(todoList);
+		// The owner is the caller; don't echo their user record back
+		delete savedList.user;
+
+		return savedList;
 	}
 }

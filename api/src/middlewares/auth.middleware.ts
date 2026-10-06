@@ -2,9 +2,10 @@ import { Middleware, Req, Res, Context } from '@tsed/common';
 import { EXTEND_TOKEN_DURATION_AUTOMATICALLY, EXTEND_TOKEN_FREQUENCY_S, JWT_EXPIRATION_TIME_S } from '../constants';
 import { ResponseErrorCode } from '../enums/response-error-code.enum';
 import { ICustomAuthOptions } from '../interfaces/custom-auth-options.interface';
+import { setSessionCookie } from '../helpers';
 import { AuthService } from '../services/auth/auth.service';
 import { UserService } from '../services/user/user.service';
-import { Unauthorized, Forbidden } from '@tsed/exceptions';
+import { Unauthorized } from '@tsed/exceptions';
 
 @Middleware()
 export class AuthMiddleware {
@@ -25,15 +26,15 @@ export class AuthMiddleware {
 			throw new Unauthorized(ResponseErrorCode.TOKEN_MISSING);
 		}
 
-		const tokenData = await this.authService.verifyToken(token);
+		const tokenData = await this.authService.verifyToken(token, 'session');
 
 		if (!tokenData) {
-			throw new Forbidden(ResponseErrorCode.TOKEN_INVALID);
+			throw new Unauthorized(ResponseErrorCode.TOKEN_INVALID);
 		} else if (EXTEND_TOKEN_DURATION_AUTOMATICALLY) {
 			const tokenExpiresIn = tokenData.exp - Date.now() / 1000;
 			// Do not extend token more often than every EXTEND_TOKEN_FREQUENCY_S seconds
 			if (tokenExpiresIn < JWT_EXPIRATION_TIME_S - EXTEND_TOKEN_FREQUENCY_S) {
-				res.cookie('token', await this.authService.extendToken(token, tokenData));
+				setSessionCookie(res, await this.authService.extendToken(token, tokenData));
 			}
 		}
 
@@ -45,7 +46,7 @@ export class AuthMiddleware {
 		if (options.passUser) {
 			const user = await this.userService.fetch({ uuid: tokenData.uuid });
 			if (!user) {
-				throw new Forbidden(ResponseErrorCode.TOKEN_INVALID, {
+				throw new Unauthorized(ResponseErrorCode.TOKEN_INVALID, {
 					email: tokenData.email,
 				});
 			}
