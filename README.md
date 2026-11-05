@@ -6,7 +6,7 @@ This onboarding project gets you building a real app against an API you don't co
 
 ## 0. Prerequisites
 
-- Node.js 24.18.1
+- Node.js 24.22.1
 - pnpm 11.18.0
 
 `api/` pins these versions exactly (`engineStrict`), so a slightly different Node or pnpm version makes `pnpm install` fail there. The easiest way to get both is Mise, which picks them up from the `mise.toml` and `package.json` files in this repository. Run this once in the repository root:
